@@ -1,0 +1,2 @@
+rootProject.name = "Plagro.id"
+include ':app'

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "897417961035",
+    "project_id": "plagroid-d44aa",
+    "storage_bucket": "plagroid-d44aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897417961035:android:bcab34bcaa6394f6a137ce",
+        "android_client_info": {
+          "package_name": "com.adit.bangkit.plagroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897417961035-giu8v9q63dk81lmpvkacu4otvln4t6b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adit.bangkit.plagroid",
+            "certificate_hash": "3977e89be026aab1cf273d615ce80f47c2ae9a7b"
+          }
+        },
+        {
+          "client_id": "897417961035-rkb95c7irqcjofli9itiqs6hp7n52g62.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi2WHs90vDM_jmcyEk8qhuaLP4EJ9r-F0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897417961035-rkb95c7irqcjofli9itiqs6hp7n52g62.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
