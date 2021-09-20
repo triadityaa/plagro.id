@@ -1,8 +1,10 @@
 package com.adit.bangkit.plagroid.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.adit.bangkit.plagroid.databinding.ActivityMainBinding
+import com.adit.bangkit.plagroid.utils.Constants
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -10,5 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sharedPreferences = getSharedPreferences(Constants.PLAGRO_PREFERENCES, Context.MODE_PRIVATE)
+        val username = sharedPreferences.getString(Constants.PLAGRO_PREFERENCES,  "")!!
+        binding.tvMain.text = "Hello $username \n Welcome to Plagro.id"
     }
 }

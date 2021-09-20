@@ -1,5 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Plagro.id</string>
     <string name="splash_name">PLAGRO.ID</string>
+
+    <string name="content_description">Image</string>
+    <string name="title_login">Login</string>
+    <string name="er_hint_email_id">Email</string>
+    <string name="et_hint_password">Password</string>
+    <string name="lbl_forgot_password">Forgot Password?</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_lbl_login">Login</string>
+    <string name="dont_have_account">Don\'t Have Account?</string>
+    <string name="register">Register</string>
     <string name="logo">logo</string>
+
+    <string name="create_an_account">CREATE AN ACCOUNT</string>
+
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="et_hint_confirm_password">Confirm Password</string>
+
+    <string name="i_agree_to_the">I Agree To The</string>
+    <string name="terms_condition"><u> Terms And Condition</u></string>
+    <string name="btn_lbl_register">Register</string>
+
+    <string name="already_have_an_account">Already Have An Account?</string>
+    <string name="login"><u>Login</u></string>
+
+    <string name="err_msg_enter_first_name">Please Enter Your First Name</string>
+    <string name="err_msg_enter_last_name">Please Enter Your Last Name</string>
+    <string name="err_msg_enter_email">Please Enter Your Email</string>
+    <string name="err_msg_enter_password">Please Enter Your Password</string>
+    <string name="err_msg_enter_password_length">Please Enter At Least 8 Character For Your Password</string>
+    <string name="err_msg_enter_confirm_pass">Please Confirm Your Password</string>
+    <string name="err_msg_missMatch_password">Your Password Is Not Match</string>
+    <string name="err_msg_terms_condition">You Need To Agree With Our Terms and Condition</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="registering_acc">Registering Your Account</string>
+    <string name="forgot_pass_msg">Enter Your Email Address And We\'ll Send You An Email To Reset Your Password</string>
+
+    <string name="msg_register_success">You Are Registered Successfully</string>
+    <string name="msg_login_success">You Are Logged In</string>
+    <string name="err_msg_forgot_password">Please Enter Your Email To Reset Password</string>
+    <string name="forgot_password_success">Email Has Been Send, Check Your Email</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">no</string>
+
 </resources>

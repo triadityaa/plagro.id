@@ -23,16 +23,18 @@ open class BaseActivity : AppCompatActivity() {
         snackbar.show()
     }
 
-    fun showProgressDialog(){
+    fun showProgressDialog(text: String){
         mProgressDialog = Dialog(this)
 
-        /*mengatur konten dari layout resource
+        /*
+        mengatur konten dari layout resource
         resource akan ......... , ditambahkan ke layer paling atas pada layar
          */
         mProgressDialog.setContentView(R.layout.dialog_progress)
 
         mProgressDialog.setCancelable(false)
         mProgressDialog.setCanceledOnTouchOutside(false)
+
         //menampilkan dialog di layar
         mProgressDialog.show()
     }

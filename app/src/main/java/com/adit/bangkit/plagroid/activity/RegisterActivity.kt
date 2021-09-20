@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityRegisterBinding
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
+import com.adit.bangkit.plagroid.firestore.FireStoreClass
+import com.adit.bangkit.plagroid.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -32,17 +33,6 @@ class RegisterActivity : BaseActivity() {
             )
         }
 
-//        AlertDialog.Builder(this)
-//            .setTitle("Abort Register")
-//            .setMessage("Are You Sure?")
-//            .setNegativeButton(R.string.no, null)
-//            .setPositiveButton(R.string.yes, object : DialogInterface.OnClickListener{
-//                override fun onClick(dialog: DialogInterface?, which: Int) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//            })
-
 
         binding.toolbarRegisterActivity.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         binding.toolbarRegisterActivity.setNavigationOnClickListener {
@@ -54,7 +44,7 @@ class RegisterActivity : BaseActivity() {
 
         binding.btnRegister.setOnClickListener {
             validateRegisterDetails()
-            RegisterUser()
+            registerUser()
         }
 
 
@@ -87,7 +77,7 @@ class RegisterActivity : BaseActivity() {
                 false
             }
 
-            binding.etPasswordReg.length() <= 8 ->{
+            binding.etPasswordReg.length() < 8 ->{
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_password_length), true)
                 false
             }
@@ -108,35 +98,56 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             else ->{
-                showErrorSnackBar(resources.getString(R.string.data_complete), false)
+                showErrorSnackBar(resources.getString(R.string.please_wait), false)
                 true
             }
         }
     }
 
-    private fun RegisterUser(){
+    private fun registerUser(){
 
         if (validateRegisterDetails()){
 
-            showProgressDialog()
+            showProgressDialog(resources.getString(R.string.registering_acc))
 
             val email: String = binding.etEmailReg.text.toString().trim { it<=' ' }
             val password: String = binding.etPasswordReg.text.toString().trim { it<=' ' }
 
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(
-                    OnCompleteListener<AuthResult> { task ->
+                .addOnCompleteListener { task ->
 
-                    hideProgresDialog()
 
-                    if (task.isSuccessful){
+                    if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
+                        val user = User(
+                            firebaseUser.uid,
+                            binding.etFirstName.text.toString().trim { it <= ' ' },
+                            binding.etLastName.text.toString().trim { it <= ' ' },
+                            binding.etEmailReg.text.toString().trim { it <= ' ' },
+                        )
 
-                        showErrorSnackBar(R.string.msg_register_success.toString() , false)
-                    }else{
+                        showErrorSnackBar(resources.getString(R.string.msg_register_success), false)
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            resources.getString(R.string.msg_register_success), Toast.LENGTH_LONG
+                        ).show()
+                        FireStoreClass().registerUser(this@RegisterActivity, user)
+
+                        FirebaseAuth.getInstance().signOut()
+                        finish()
+                    } else {
+                        hideProgresDialog()
                         showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
-                })
+                }
         }
+    }
+
+    fun userRegistrationSuccess(){
+        hideProgresDialog()
+
+        Toast.makeText(
+            this@RegisterActivity, resources.getString(R.string.msg_register_success)
+            ,Toast.LENGTH_LONG).show()
     }
 }

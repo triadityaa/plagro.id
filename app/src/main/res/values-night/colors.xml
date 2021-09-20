@@ -11,13 +11,13 @@
     <color name="dark_purple2">#322A5A</color>
 
     <color name="red">#FF0000</color>
-    
+
     <color name="primary_text">#222934</color>
     <color name="secondary_text">#989898</color>
 
     <color name="green">#81D742</color>
     <color name="green_btn">#61CE70</color>
     <color name="dark_green">#419845</color>
-    
+
     <color name="colorLightGrey">#F1F1F1</color>
 </resources>
