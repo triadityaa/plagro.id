@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context=".activity.SplashActivity">
 
     <ImageView
@@ -13,7 +12,7 @@
         android:layout_height="200dp"
         android:layout_marginTop="-200dp"
         android:contentDescription="@string/logo"
-        android:src="@drawable/logo_color"
+        android:src="@drawable/logo_color_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="60dp"
         android:text="@string/splash_name"
-        android:textColor="@color/white"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/splash_text_size"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,5 +13,7 @@ class User (
     val mobile: Long = 0,
     val address: String = "",
     val gender: String = "",
+    val codepos: Int = 0,
     val profileComplete: Int = 0,
-        ):Parcelable
+    val userType: Int = 1
+):Parcelable

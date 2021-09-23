@@ -112,15 +112,20 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
 
-        if (user.profileComplete == 0){
-            //jika profile user belum complete arahkan user ke activity UserProfileActivity
-            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
-            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-            startActivity(intent)
+        if (user.userType == 0){
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         }else{
-            //jika profile user sudah complete langsung arahkan ke MainActivity
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            if (user.profileComplete == 0){
+                //jika profile user belum complete arahkan user ke activity UserProfileActivity
+                val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+                intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+                startActivity(intent)
+            }else{
+                //jika profile user sudah complete langsung arahkan ke MainActivity
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            }
+            finish()
         }
-        finish()
     }
+
 }

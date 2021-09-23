@@ -18,32 +18,52 @@
     <string name="hint_last_name">Last Name</string>
     <string name="hint_first_name">First Name</string>
     <string name="et_hint_confirm_password">Confirm Password</string>
+    <string name="et_hint_address">Address</string>
 
     <string name="i_agree_to_the">I Agree To The</string>
     <string name="terms_condition"><u> Terms And Condition</u></string>
     <string name="btn_lbl_register">Register</string>
 
-    <string name="already_have_an_account">Already Have An Account?</string>
+    <string name="already_have_an_account">Already have an account?</string>
     <string name="login"><u>Login</u></string>
 
-    <string name="err_msg_enter_first_name">Please Enter Your First Name</string>
-    <string name="err_msg_enter_last_name">Please Enter Your Last Name</string>
-    <string name="err_msg_enter_email">Please Enter Your Email</string>
-    <string name="err_msg_enter_password">Please Enter Your Password</string>
-    <string name="err_msg_enter_password_length">Please Enter At Least 8 Character For Your Password</string>
-    <string name="err_msg_enter_confirm_pass">Please Confirm Your Password</string>
-    <string name="err_msg_missMatch_password">Your Password Is Not Match</string>
-    <string name="err_msg_terms_condition">You Need To Agree With Our Terms and Condition</string>
+    <string name="err_msg_enter_first_name">Please enter your first name</string>
+    <string name="err_msg_enter_last_name">Please enter your last name</string>
+    <string name="err_msg_enter_email">Please enter your email</string>
+    <string name="err_msg_enter_password">Please enter your password</string>
+    <string name="err_msg_enter_mobile_number">Please enter your mobile number</string>
+    <string name="err_msg_enter_address">Please enter your address</string>
+    <string name="err_msg_enter_password_length">Please enter at least 8 character for your password</string>
+    <string name="err_msg_enter_confirm_pass">Please confirm your password</string>
+    <string name="err_msg_missMatch_password">Your password is not match</string>
+    <string name="err_msg_terms_condition">You need to agree with our terms and condition</string>
     <string name="please_wait">Please Wait</string>
-    <string name="registering_acc">Registering Your Account</string>
-    <string name="forgot_pass_msg">Enter Your Email Address And We\'ll Send You An Email To Reset Your Password</string>
+    <string name="registering_acc">Please wait \n registering your account</string>
+    <string name="forgot_pass_msg">Enter your email address and we\'ll send you an email to reset your password</string>
 
-    <string name="msg_register_success">You Are Registered Successfully</string>
-    <string name="msg_login_success">You Are Logged In</string>
-    <string name="err_msg_forgot_password">Please Enter Your Email To Reset Password</string>
-    <string name="forgot_password_success">Email Has Been Send, Check Your Email</string>
+    <string name="msg_register_success">You are registered successfully</string>
+    <string name="msg_login_success">You are logged in</string>
+    <string name="err_msg_forgot_password">Please enter your email to reset password</string>
+    <string name="forgot_password_success">Email has been send, check your email</string>
+
+    <string name="tittle_complete_profile">COMPLETE PROFILE</string>
+    <string name="et_hint_mobile_number">Mobile Number</string>
+    <string name="gender_lbl_male">MALE</string>
+    <string name="gender_lbl_female">FEMALE</string>
+    <string name="btn_lbl_save">SAVE</string>
 
     <string name="yes">Yes</string>
-    <string name="no">no</string>
+    <string name="no">No</string>
+    <string name="profile_picture">profile picture</string>
+
+    <string name="storage_permission">you already have the storage permission</string>
+    <string name="read_storage_permission_granted">the storage permission is granted.</string>
+    <string name="read_storage_permission_denied">Oops, you just denied the permission for storage. You can also allow it from settings.</string>
+    <string name="image_selection_failed">image selection failed</string>
+    <string name="valid_profile">Your profile is valid, you can update them on setting.</string>
+    <string name="profile_update_success">Your profile is updated successfully.</string>
+    <string name="upload_image_success">Your image is uploaded successfully. Image URL is %imageURL</string>
+    <string name="hello_user">Hello %1$s, Welcome To <b>Plagro.id</b></string>
+    <string name="err_msg_enter_pos_code">Please enter your postal code</string>
 
 </resources>
