@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -107,11 +106,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         //hide progress bar
         hideProgresDialog()
 
-        //print user detail di log
-        Log.i("First Name: ", user.firstName)
-        Log.i("Last Name: ", user.lastName)
-        Log.i("Email: ", user.email)
-
         if (user.userType == 0){
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         }else{
@@ -122,7 +116,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 startActivity(intent)
             }else{
                 //jika profile user sudah complete langsung arahkan ke MainActivity
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
             }
             finish()
         }

@@ -142,6 +142,11 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 false
             }
 
+            binding.etAddress.length() < 25 ->{
+                showErrorSnackBar(resources.getString(R.string.address_length), true)
+                false
+            }
+
             TextUtils.isEmpty(binding.etAddress.text.toString().trim {it <= ' '}) ->{
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_address), true)
                 false
@@ -188,6 +193,8 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
 
         userHashMap[Constants.GENDER] = gender
+
+        userHashMap[Constants.COMPLETE_PROFILE] = 1
 
         FireStoreClass().updateUserProfileData(this, userHashMap)
     }

@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.adit.bangkit.plagroid">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,15 +12,18 @@
         android:theme="@style/Theme.Plagroid"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".activity.DashboardActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".activity.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".activity.BaseActivity" />
         <activity
             android:name=".activity.RegisterActivity"
@@ -34,8 +35,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".activity.MainActivity"
-            android:theme="@style/Theme.Plagroid"/>
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.Plagroid" />
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -48,5 +50,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

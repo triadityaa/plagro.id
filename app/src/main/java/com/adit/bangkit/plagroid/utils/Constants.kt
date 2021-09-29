@@ -1,7 +1,6 @@
 package com.adit.bangkit.plagroid.utils
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
@@ -20,6 +19,7 @@ object Constants {
     const val ADDRESS: String = "address"
     const val GENDER: String = "gender"
     const val CODEPOS: String = "kodepos"
+    const val COMPLETE_PROFILE: String = "profileComplete"
     const val IMAGE: String = "image"
     const val USER_PROFILE_IMAGE: String = "user_profile_image"
 

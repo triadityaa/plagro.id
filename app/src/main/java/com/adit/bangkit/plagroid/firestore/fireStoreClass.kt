@@ -50,6 +50,7 @@ class FireStoreClass {
         return currentUserID
     }
 
+
     @SuppressLint("CommitPrefEdits")
     fun getUsersDetails(activity: Activity){
         mFirestore.collection(Constants.USERS)
@@ -60,19 +61,21 @@ class FireStoreClass {
 
                 //menerima document snapshot yang akan dikonversi ke User Data model object.
                 val user = document.toObject(User::class.java)!!
+                val username = " " + user.firstName + " " + user.lastName
 
-                val sharedPreferenes = activity.getSharedPreferences(
+                val sharedPreferences = activity.getSharedPreferences(
                     Constants.PLAGRO_PREFERENCES,
                     Context.MODE_PRIVATE
                 )
 
-                val editor: SharedPreferences.Editor= sharedPreferenes.edit()
+                val editor: SharedPreferences.Editor= sharedPreferences.edit()
                 editor.putString(
                     //key = logged_in_username
                     //value = firstname dan lastname
                     Constants.LOGGED_IN_USERNAME,
-                    "${user.firstName} ${user.lastName}"
+                    username
                 )
+                editor.apply()
 
 
                 //START
