@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UserProfileActivity">
+    tools:context=".ui.activity.UserProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_user_profile_activity"
@@ -52,15 +52,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/tv_user_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/profile_user_photo_margin"
                     android:background="@color/colorLightGrey"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_user_placeholder"
-                    android:contentDescription="@string/profile_picture" />
+                    android:contentDescription="@string/profile_picture"
+                    />
 
                 <View
                     android:layout_width="match_parent"

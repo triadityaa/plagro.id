@@ -15,6 +15,9 @@ object Constants {
     const val PICK_IMAGE_REQUEST_CODE = 1
     const val MALE: String = "male"
     const val FEMALE: String = "female"
+    const val FIRST_NAME: String = "firstname"
+    const val LAST_NAME: String = "lastname"
+    const val EMAIL: String = "email"
     const val MOBILE: String = "mobile"
     const val ADDRESS: String = "address"
     const val GENDER: String = "gender"

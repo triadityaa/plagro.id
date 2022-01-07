@@ -18,7 +18,8 @@
     <string name="hint_last_name">Last Name</string>
     <string name="hint_first_name">First Name</string>
     <string name="et_hint_confirm_password">Confirm Password</string>
-    <string name="et_hint_address">Address</string>
+    <string name="et_hint_address">Address, ex : jalan, kecamatan, kabupaten </string>
+    <string name="et_hint_codepos">Postal Code </string>
 
     <string name="i_agree_to_the">I Agree To The</string>
     <string name="terms_condition"><u> Terms And Condition</u></string>
@@ -47,7 +48,7 @@
     <string name="forgot_password_success">Email has been send, check your email</string>
 
     <string name="tittle_complete_profile">COMPLETE PROFILE</string>
-    <string name="et_hint_mobile_number">Mobile Number</string>
+    <string name="et_hint_mobile_number">Mobile Number, ex : +6281234567890</string>
     <string name="gender_lbl_male">MALE</string>
     <string name="gender_lbl_female">FEMALE</string>
     <string name="btn_lbl_save">SAVE</string>
@@ -72,5 +73,17 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+    <string name="favorite">Favorite</string>
+    <string name="title_products">Products</string>
+    <string name="title_orders">Orders</string>
+
+    <string name="tittle_setting">Settings</string>
+    <string name="lbl_edit">Edit</string>
+    <string name="lbl_address">Addresses</string>
+    <string name="lbl_btn_logout">Logout</string>
+    <string name="Wishlist">Wishlist</string>
+    <string name="title_edit_profile">EDIT PROFILE</string>
 
 </resources>

@@ -3,38 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.adit.bangkit.plagroid.activity.ui.fragments.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
-    </fragment>
+    app:startDestination="@+id/navigation_dashboard">
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.adit.bangkit.plagroid.activity.ui.fragments.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
-        <action
-            android:id="@+id/action_navigation_dashboard_to_navigation_notifications"
-            app:destination="@id/navigation_notifications" />
+        android:name="com.adit.bangkit.plagroid.ui.fragments.DashboardFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_products" >
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.adit.bangkit.plagroid.activity.ui.fragments.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" >
-        <action
-            android:id="@+id/action_navigation_notifications_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
-        <action
-            android:id="@+id/action_navigation_notifications_to_navigation_home"
-            app:destination="@id/navigation_home" />
+        android:id="@+id/navigation_products"
+        android:name="com.adit.bangkit.plagroid.ui.fragments.ProductsFragment"
+        android:label="@string/title_products"
+        tools:layout="@layout/fragment_dashboard" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_orders"
+        android:name="com.adit.bangkit.plagroid.ui.fragments.OrdersFragment"
+        android:label="@string/title_orders"
+        tools:layout="@layout/fragment_orders" >
     </fragment>
 </navigation>

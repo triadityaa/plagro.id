@@ -6,10 +6,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import com.adit.bangkit.plagroid.activity.LoginActivity
-import com.adit.bangkit.plagroid.activity.RegisterActivity
-import com.adit.bangkit.plagroid.activity.UserProfileActivity
+import com.adit.bangkit.plagroid.ui.activity.LoginActivity
+import com.adit.bangkit.plagroid.ui.activity.RegisterActivity
+import com.adit.bangkit.plagroid.ui.activity.UserProfileActivity
 import com.adit.bangkit.plagroid.model.User
+import com.adit.bangkit.plagroid.ui.activity.SettingsActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -80,8 +81,11 @@ class FireStoreClass {
 
                 //START
                 when(activity){
-                    is LoginActivity ->{
+                    is LoginActivity -> {
                         activity.userLoggedInSuccess(user)
+                    }
+                    is SettingsActivity -> {
+                        activity.loadUserDetailsSuccess(user)
                     }
                 }
                 //END
@@ -89,6 +93,9 @@ class FireStoreClass {
             .addOnFailureListener { e ->
             when(activity){
                 is LoginActivity ->{
+                    activity.hideProgresDialog()
+                }
+                is SettingsActivity -> {
                     activity.hideProgresDialog()
                 }
             }
@@ -161,6 +168,4 @@ class FireStoreClass {
                 )
             }
     }
-
-
 }

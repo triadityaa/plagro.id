@@ -3,46 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.adit.bangkit.plagroid">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Plagroid"
+        android:theme="@style/Theme.App.starting"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".activity.DashboardActivity"
-            android:label="@string/app_name" />
+            android:name=".ui.activity.WishlistActivity"
+            android:theme="@style/Theme.Plagroid" />
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:theme="@style/Theme.Plagroid"/>
         <activity
-            android:name=".activity.UserProfileActivity"
+            android:name=".ui.activity.DashboardActivity"
+            android:theme="@style/Theme.Plagroid"/>
+        <activity
+            android:name=".ui.activity.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activity.ForgotPasswordActivity"
+            android:name=".ui.activity.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".ui.activity.BaseActivity" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
+<!--        <activity-->
+<!--            android:name=".ui.activity.LoginActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/Theme.Plagroid.NoActionBar"-->
+<!--            tools:ignore="LockedOrientationActivity" />-->
         <activity
-            android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Plagroid.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:theme="@style/Theme.Plagroid" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Plagroid.NoActionBar"
-            tools:ignore="LockedOrientationActivity">
+            android:theme="@style/Theme.App.starting"
+            tools:ignore="LockedOrientationActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,6 +59,5 @@
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
