@@ -17,14 +17,6 @@ import com.adit.bangkit.plagroid.firestore.FireStoreClass
 import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.activity_user_profile.*
-import kotlinx.android.synthetic.main.activity_user_profile.btn_gender_male
-import kotlinx.android.synthetic.main.activity_user_profile.et_address
-import kotlinx.android.synthetic.main.activity_user_profile.et_mobile_number
-import kotlinx.android.synthetic.main.activity_user_profile.et_pos_code
-import kotlinx.android.synthetic.main.activity_user_profile.toolbar_user_profile_activity
-import kotlinx.android.synthetic.main.activity_user_profile.tv_user_image
 import java.io.IOException
 
 open class UserProfileActivity : BaseActivity(), View.OnClickListener {
@@ -59,9 +51,9 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }else{
             binding.tvTittle.text = resources.getString(R.string.title_edit_profile)
             setupActionBar()
-            GlideLoader(this@UserProfileActivity).loadUserPicture(mUserDetails.image, tv_user_image)
+            GlideLoader(this@UserProfileActivity).loadUserPicture(mUserDetails.image, binding.tvUserImage)
             if (mUserDetails.mobile != 0L){
-                et_mobile_number.setText(mUserDetails.mobile.toString())
+                binding.etMobileNumber.setText(mUserDetails.mobile.toString())
             }
             binding.etAddress.setText(mUserDetails.address)
             binding.etPosCode.setText(mUserDetails.codepos)
@@ -81,14 +73,14 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
     private fun setupActionBar(){
 
-        setSupportActionBar(toolbar_user_profile_activity)
+        setSupportActionBar(binding.toolbarUserProfileActivity)
 
         val actionBar = supportActionBar
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
         }
-        toolbar_user_profile_activity.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbarUserProfileActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
 
@@ -156,7 +148,7 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
                          mSelectedImageFileUri = data.data!!
 
 
-                        GlideLoader(this).loadUserPicture(mSelectedImageFileUri!!, tv_user_image)
+                        GlideLoader(this).loadUserPicture(mSelectedImageFileUri!!, binding.tvUserImage)
                     }catch (e : IOException){
                         e.printStackTrace()
                         Toast.makeText(
@@ -207,24 +199,24 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
     private fun updateUserProfileDetails(){
         val userHashMap = HashMap<String, Any>()
 
-        val firstName = et_first_name.text.toString().trim{ it <= ' '}
+        val firstName = binding.etFirstName.text.toString().trim{ it <= ' '}
         if (firstName != mUserDetails.firstName){
             userHashMap[Constants.FIRST_NAME] = firstName
         }
-        val lastName = et_last_name.text.toString().trim{ it <= ' '}
+        val lastName = binding.etLastName.text.toString().trim{ it <= ' '}
         if (lastName != mUserDetails.lastName){
             userHashMap[Constants.LAST_NAME] = lastName
         }
 
-        val email = et_email_reg.text.toString().trim{ it <= ' '}
+        val email = binding.etEmailReg.text.toString().trim{ it <= ' '}
         if (email != mUserDetails.email){
             userHashMap[Constants.EMAIL] = email
         }
 
-        val mobileNumber = et_mobile_number.text.toString().trim { it <= ' ' }
-        val address = et_address.text.toString().trim{ it <= ' '}
-        val codepos = et_pos_code.text.toString().trim { it <= ' ' }
-        val gender = if (btn_gender_male.isChecked){
+        val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
+        val address = binding.etAddress.text.toString().trim{ it <= ' '}
+        val codepos = binding.etPosCode.text.toString().trim { it <= ' ' }
+        val gender = if (binding.btnGenderFemale.isChecked){
             Constants.MALE
         }else{
             Constants.FEMALE

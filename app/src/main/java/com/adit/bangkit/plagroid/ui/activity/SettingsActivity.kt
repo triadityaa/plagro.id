@@ -13,8 +13,6 @@ import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class SettingsActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySettingsBinding
@@ -57,12 +55,12 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         mUserDetails = user
         hideProgresDialog()
 
-        GlideLoader(this@SettingsActivity).loadUserPicture(user.image, tv_user_image)
+        GlideLoader(this@SettingsActivity).loadUserPicture(user.image, binding.tvUserImageSetting)
         binding.etFirstNameSetting.setText(user.firstName)
         binding.etLastNameSetting.setText(user.lastName)
         binding.etEmailSetting.setText(user.email)
         if (mUserDetails.mobile != 0L){
-            et_mobile_number_setting.setText(mUserDetails.mobile.toString())
+            binding.etMobileNumberSetting.setText(mUserDetails.mobile.toString())
         }
         binding.etAddressSetting.setText(user.address)
         binding.etPosCodeSetting.setText(user.codepos)

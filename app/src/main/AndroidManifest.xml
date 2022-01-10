@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.App.starting"
+        android:theme="@style/Theme.Plagroid"
         tools:ignore="AllowBackup">
         <activity
             android:name=".ui.activity.WishlistActivity"
@@ -37,18 +37,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-<!--        <activity-->
-<!--            android:name=".ui.activity.LoginActivity"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.Plagroid.NoActionBar"-->
-<!--            tools:ignore="LockedOrientationActivity" />-->
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Plagroid.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:theme="@style/Theme.Plagroid" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.App.starting"
+            android:theme="@style/Theme.Plagroid"
             tools:ignore="LockedOrientationActivity"
             android:exported="true">
             <intent-filter>

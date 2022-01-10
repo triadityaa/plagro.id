@@ -1,41 +1,30 @@
 package com.adit.bangkit.plagroid.ui.activity
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
-import androidx.activity.viewModels
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityLoginBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
 import com.adit.bangkit.plagroid.model.User
-import com.adit.bangkit.plagroid.ui.activity.viewmodel.LoginViewModel
 import com.adit.bangkit.plagroid.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepVisibleCondition{
-                viewModel.isLoading.value
-            }
-        }
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.title = " "
+        supportActionBar?.hide()
 
         binding.tvForgotPassword.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
     }
+
 
     private fun validateLoginDetails():Boolean{
         return when{
@@ -117,7 +106,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 startActivity(intent)
             }else{
                 //jika profile user sudah complete langsung arahkan ke MainActivity
-                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+                startActivity(intent)
             }
             finish()
         }
