@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.fragments.notifications
+package com.adit.bangkit.plagroid.ui.activity.user.fragments.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

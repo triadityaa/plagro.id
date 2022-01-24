@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.activity
+package com.adit.bangkit.plagroid.ui.activity.user
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

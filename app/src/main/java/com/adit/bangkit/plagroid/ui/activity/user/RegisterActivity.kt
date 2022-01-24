@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.activity
+package com.adit.bangkit.plagroid.ui.activity.user
 
 import android.content.Intent
 import android.os.Build
@@ -10,13 +10,20 @@ import android.widget.Toast
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityRegisterBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
+import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
+import com.adit.bangkit.plagroid.ui.activity.BaseActivity
+import com.adit.bangkit.plagroid.ui.activity.seller.SellerActivity
+import com.adit.bangkit.plagroid.ui.admin.AdminActivity
+import com.adit.bangkit.plagroid.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 
 class RegisterActivity : BaseActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var user: User
+    private lateinit var seller: Seller
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -52,6 +59,35 @@ class RegisterActivity : BaseActivity() {
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (FirebaseAuth.getInstance().currentUser != null){
+            when(user.userType){
+                0 -> {
+                    val intent = Intent(this@RegisterActivity, AdminActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                    finish()
+                }
+                1 -> {
+                    val intent = Intent(this@RegisterActivity, DashboardActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                    finish()
+                }
+                2 -> {
+                    val intent = Intent(this@RegisterActivity, SellerActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                    finish()
+                }
+            }
         }
     }
 

@@ -14,43 +14,53 @@
         android:theme="@style/Theme.Plagroid"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".ui.activity.WishlistActivity"
+            android:name=".ui.activity.seller.UpdateSellerProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.seller.SellerProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.user.WishlistActivity"
             android:theme="@style/Theme.Plagroid" />
-        <activity android:name=".ui.activity.SettingsActivity"
-            android:theme="@style/Theme.Plagroid"/>
         <activity
-            android:name=".ui.activity.DashboardActivity"
-            android:theme="@style/Theme.Plagroid"/>
+            android:name=".ui.activity.user.SettingsActivity"
+            android:theme="@style/Theme.Plagroid" />
         <activity
-            android:name=".ui.activity.UserProfileActivity"
+            android:name=".ui.activity.user.DashboardActivity"
+            android:theme="@style/Theme.Plagroid" />
+        <activity
+            android:name=".ui.activity.user.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.activity.ForgotPasswordActivity"
+            android:name=".ui.activity.user.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity android:name=".ui.activity.BaseActivity" />
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name=".ui.activity.user.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.user.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.seller.SellerActivity"
             android:theme="@style/Theme.Plagroid" />
         <activity
             android:name=".ui.activity.SplashActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid"
-            tools:ignore="LockedOrientationActivity"
-            android:exported="true">
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,6 +68,7 @@
             </intent-filter>
         </activity>
     </application>
+
 
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.activity
+package com.adit.bangkit.plagroid.ui.activity.user
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -9,7 +9,10 @@ import androidx.navigation.ui.setupWithNavController
 import butterknife.ButterKnife
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityDashboardBinding
+import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 class DashboardActivity : BaseActivity() {
@@ -45,6 +48,11 @@ class DashboardActivity : BaseActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
     }
 
     override fun onBackPressed() {

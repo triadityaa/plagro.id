@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.activity
+package com.adit.bangkit.plagroid.ui.activity.user
 
 import android.app.Activity
 import android.content.Intent
@@ -15,6 +15,7 @@ import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityUserProfileBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
 import com.adit.bangkit.plagroid.model.User
+import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
 import java.io.IOException

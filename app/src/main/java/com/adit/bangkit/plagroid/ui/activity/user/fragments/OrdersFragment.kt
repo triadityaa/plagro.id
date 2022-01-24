@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.fragments
+package com.adit.bangkit.plagroid.ui.activity.user.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.FragmentOrdersBinding
-import com.adit.bangkit.plagroid.ui.activity.SettingsActivity
-import com.adit.bangkit.plagroid.ui.activity.WishlistActivity
+import com.adit.bangkit.plagroid.ui.activity.user.SettingsActivity
+import com.adit.bangkit.plagroid.ui.activity.user.WishlistActivity
 
 class OrdersFragment : Fragment() {
 

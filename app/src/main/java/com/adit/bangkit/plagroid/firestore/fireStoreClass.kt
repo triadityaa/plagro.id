@@ -1,16 +1,15 @@
 package com.adit.bangkit.plagroid.firestore
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import com.adit.bangkit.plagroid.ui.activity.LoginActivity
-import com.adit.bangkit.plagroid.ui.activity.RegisterActivity
-import com.adit.bangkit.plagroid.ui.activity.UserProfileActivity
 import com.adit.bangkit.plagroid.model.User
-import com.adit.bangkit.plagroid.ui.activity.SettingsActivity
+import com.adit.bangkit.plagroid.ui.activity.user.LoginActivity
+import com.adit.bangkit.plagroid.ui.activity.user.RegisterActivity
+import com.adit.bangkit.plagroid.ui.activity.user.SettingsActivity
+import com.adit.bangkit.plagroid.ui.activity.user.UserProfileActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,8 +51,9 @@ class FireStoreClass {
     }
 
 
-    @SuppressLint("CommitPrefEdits")
+
     fun getUsersDetails(activity: Activity){
+        if (getCurrentUserID().isNotEmpty()){
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .get()
@@ -104,6 +104,7 @@ class FireStoreClass {
                     e.toString()
                 )
             }
+        }
     }
 
     fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>){

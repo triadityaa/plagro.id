@@ -1,4 +1,4 @@
-package com.adit.bangkit.plagroid.ui.activity
+package com.adit.bangkit.plagroid.ui.activity.user
 
 import android.content.Intent
 import android.os.Build
@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityForgotPasswordBinding
+import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordActivity : BaseActivity() {

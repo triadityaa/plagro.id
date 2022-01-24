@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SettingsActivity">
+    tools:context=".ui.activity.user.SettingsActivity">
 
     <FrameLayout
         android:id="@+id/fl_header_bg"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingStart="-25dp"
+            android:paddingStart="-50dp"
             android:paddingEnd="0dp"
             android:text="@string/tittle_setting"
             android:textColor="@color/white"

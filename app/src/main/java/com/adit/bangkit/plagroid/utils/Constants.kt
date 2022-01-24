@@ -7,10 +7,18 @@ import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 
 object Constants {
+    //user
     const val USERS: String = "users"
+
+    //seller
+    const val SELLER: String = "seller"
+
+    //const untuk user dan seller
     const val PLAGRO_PREFERENCES: String = "PlagroPref"
+    const val LOGGED_IN_RETAILNAME: String = "logged_in_retailname"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
+    const val EXTRA_SELLER_DETAILS: String = "extra_seller_details"
     const val READ_STORAGE_PERMISSION_CODE = 2
     const val PICK_IMAGE_REQUEST_CODE = 1
     const val MALE: String = "male"
@@ -25,6 +33,7 @@ object Constants {
     const val COMPLETE_PROFILE: String = "profileComplete"
     const val IMAGE: String = "image"
     const val USER_PROFILE_IMAGE: String = "user_profile_image"
+    const val USER_TYPE: String = "user_type"
 
     fun showImageChooser(activity: Activity){
         val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

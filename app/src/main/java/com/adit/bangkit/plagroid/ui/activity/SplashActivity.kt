@@ -7,6 +7,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.adit.bangkit.plagroid.databinding.ActivitySplashBinding
+import com.adit.bangkit.plagroid.ui.activity.user.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding

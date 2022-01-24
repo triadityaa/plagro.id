@@ -78,12 +78,13 @@
     <string name="favorite">Favorite</string>
     <string name="title_products">Products</string>
     <string name="title_orders">Orders</string>
-    
+
     <string name="tittle_setting">Settings</string>
     <string name="lbl_edit">Edit</string>
     <string name="lbl_address">Addresses</string>
     <string name="lbl_btn_logout">Logout</string>
     <string name="Wishlist">Wishlist</string>
     <string name="title_edit_profile">EDIT PROFILE</string>
+    <string name="msg_login_seller_unsuccess">Oops, look like we have a trouble, comeback in a few moment.</string>
 
 </resources>
