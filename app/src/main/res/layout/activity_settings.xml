@@ -53,8 +53,10 @@
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fl_header_bg">
+        app:layout_constraintTop_toBottomOf="@id/fl_header_bg"
+        app:layout_constraintVertical_bias="0.835">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -69,43 +71,128 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/user_image_background" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/tv_user_image_setting"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/profile_user_photo_margin"
                     android:background="@color/colorLightGrey"
+                    android:contentDescription="@string/profile_picture"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_user_placeholder"
-                    android:contentDescription="@string/profile_picture" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/user_image_background"/>
+                    android:src="@drawable/ic_user_placeholder" />
             </FrameLayout>
 
 
-            <com.adit.bangkit.plagroid.utils.MSPTextView
-                android:id="@+id/tv_edit"
+            <RadioGroup
+                android:id="@+id/rg_gender"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_radio_button_height"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/btn_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_pos_code">
+
+                <com.adit.bangkit.plagroid.utils.MSPRadioButton
+                    android:id="@+id/btn_gender_male"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/profile_radio_button_marginStartEnd"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_gender_selector_tab"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="@string/gender_lbl_male"
+                    android:textColor="@drawable/drawable_gender_tab_text_color"
+                    android:textStyle="bold" />
+
+                <com.adit.bangkit.plagroid.utils.MSPRadioButton
+                    android:id="@+id/btn_gender_female"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/profile_radio_button_marginStartEnd"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_gender_selector_tab"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/gender_lbl_female"
+                    android:textColor="@drawable/drawable_gender_tab_text_color"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+
+            <com.adit.bangkit.plagroid.utils.MSPButton
+                android:id="@+id/btn_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_background"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/lbl_btn_logout"
+                android:textColor="@color/white"
+                android:textSize="@dimen/btn_textSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rg_gender" />
+
+
+            <com.adit.bangkit.plagroid.utils.MSPTextView
+                android:id="@+id/tv_store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:paddingStart="@dimen/setting_edit_label_marginStartEnd"
+                android:paddingTop="@dimen/setting_edit_label_marginTopBottom"
+                android:paddingEnd="@dimen/setting_edit_label_marginStartEnd"
+                android:paddingBottom="@dimen/setting_edit_label_marginTopBottom"
+                android:text="@string/open_store"
+                android:textAlignment="viewStart"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/setting_edit_label_textSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/til_first_name"
+                app:layout_constraintEnd_toStartOf="@+id/tv_edit"
+                app:layout_constraintHorizontal_bias="0.012"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fl_user_image" />
+
+            <com.adit.bangkit.plagroid.utils.MSPTextView
+                android:id="@+id/tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:paddingStart="@dimen/setting_edit_label_marginStartEnd"
+                android:paddingTop="@dimen/setting_edit_label_marginTopBottom"
+                android:paddingEnd="@dimen/setting_edit_label_marginStartEnd"
+                android:paddingBottom="@dimen/setting_edit_label_marginTopBottom"
                 android:text="@string/lbl_edit"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/secondary_text"
                 android:textSize="@dimen/setting_edit_label_textSize"
                 android:textStyle="bold"
-                android:layout_margin="16dp"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:paddingStart="@dimen/setting_edit_label_marginStartEnd"
-                android:paddingBottom="@dimen/setting_edit_label_marginTopBottom"
-                android:paddingEnd="@dimen/setting_edit_label_marginStartEnd"
-                android:paddingTop="@dimen/setting_edit_label_marginTopBottom"
-                app:layout_constraintTop_toBottomOf="@+id/fl_user_image"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/til_first_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/til_first_name"/>
-
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_store"
+                app:layout_constraintTop_toBottomOf="@+id/fl_user_image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_first_name"
@@ -128,7 +215,7 @@
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/et_textSize"/>
+                    android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -152,8 +239,9 @@
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/et_textSize"/>
+                    android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_email_reg"
@@ -176,7 +264,7 @@
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/et_textSize"/>
+                    android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -225,8 +313,9 @@
                     android:inputType="text"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/et_textSize"/>
+                    android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_pos_code"
@@ -249,74 +338,8 @@
                     android:inputType="number"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/et_textSize"/>
+                    android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <RadioGroup
-                android:id="@+id/rg_gender"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/profile_radio_button_height"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/btn_logout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_pos_code">
-
-                <com.adit.bangkit.plagroid.utils.MSPRadioButton
-                    android:id="@+id/btn_gender_male"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/profile_radio_button_marginStartEnd"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_gender_selector_tab"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="@string/gender_lbl_male"
-                    android:textColor="@drawable/drawable_gender_tab_text_color"
-                    android:textStyle="bold"/>
-
-                <com.adit.bangkit.plagroid.utils.MSPRadioButton
-                    android:id="@+id/btn_gender_female"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="@dimen/profile_radio_button_marginStartEnd"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_gender_selector_tab"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/gender_lbl_female"
-                    android:textColor="@drawable/drawable_gender_tab_text_color"
-                    android:textStyle="bold"/>
-            </RadioGroup>
-
-
-            <com.adit.bangkit.plagroid.utils.MSPButton
-                android:id="@+id/btn_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/button_background"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:paddingTop="@dimen/btn_padding"
-                android:paddingBottom="@dimen/btn_padding"
-                android:text="@string/lbl_btn_logout"
-                android:textColor="@color/white"
-                android:textSize="@dimen/btn_textSize"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rg_gender"/>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

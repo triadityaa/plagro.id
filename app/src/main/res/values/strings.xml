@@ -17,6 +17,7 @@
 
     <string name="hint_last_name">Last Name</string>
     <string name="hint_first_name">First Name</string>
+    <string name="hint_retail_name">Retail Name</string>
     <string name="et_hint_confirm_password">Confirm Password</string>
     <string name="et_hint_address">Address, ex : jalan, kecamatan, kabupaten </string>
     <string name="et_hint_codepos">Postal Code </string>
@@ -86,5 +87,7 @@
     <string name="Wishlist">Wishlist</string>
     <string name="title_edit_profile">EDIT PROFILE</string>
     <string name="msg_login_seller_unsuccess">Oops, look like we have a trouble, comeback in a few moment.</string>
+    <string name="complete_retail_profile">COMPLETE RETAIL PROFILE</string>
+    <string name="open_store">Open Store</string>
 
 </resources>

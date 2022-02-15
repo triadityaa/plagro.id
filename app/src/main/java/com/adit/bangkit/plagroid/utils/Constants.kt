@@ -12,6 +12,7 @@ object Constants {
 
     //seller
     const val SELLER: String = "seller"
+    const val RETAIL_NAME: String = "retail_name"
 
     //const untuk user dan seller
     const val PLAGRO_PREFERENCES: String = "PlagroPref"
@@ -33,7 +34,6 @@ object Constants {
     const val COMPLETE_PROFILE: String = "profileComplete"
     const val IMAGE: String = "image"
     const val USER_PROFILE_IMAGE: String = "user_profile_image"
-    const val USER_TYPE: String = "user_type"
 
     fun showImageChooser(activity: Activity){
         val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

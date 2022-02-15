@@ -164,24 +164,20 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         if (user.userType == 0){
             val intent = Intent(this@LoginActivity, AdminActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }else{
             if (user.profileComplete == 0){
                 //jika profile user belum complete arahkan user ke activity UserProfileActivity
                 val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
                 intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
             }else{
                 //jika profile user sudah complete langsung arahkan ke MainActivity
                 val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
                 intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
             }
             finish()
         }
     }
-
 }

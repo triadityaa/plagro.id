@@ -57,14 +57,16 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 binding.etMobileNumber.setText(mUserDetails.mobile.toString())
             }
             binding.etAddress.setText(mUserDetails.address)
-            binding.etPosCode.setText(mUserDetails.codepos)
+            if (mUserDetails.codepos != 0){
+                binding.etPosCode.setText(mUserDetails.codepos.toString())
+            }
             if (mUserDetails.gender == Constants.MALE){
                 binding.btnGenderMale.isChecked
             }else{
                 binding.btnGenderFemale.isChecked
             }
         }
-        
+
 
         binding.tvUserImage.setOnClickListener(this@UserProfileActivity)
 
@@ -235,7 +237,7 @@ open class UserProfileActivity : BaseActivity(), View.OnClickListener {
             userHashMap[Constants.ADDRESS] = address
         }
 
-        if (codepos.isNotEmpty()){
+        if (codepos.isNotEmpty() && codepos != mUserDetails.codepos.toString()){
             userHashMap[Constants.CODEPOS] = codepos.toLong()
         }
 

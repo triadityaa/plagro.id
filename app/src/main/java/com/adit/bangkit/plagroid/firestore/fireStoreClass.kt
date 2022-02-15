@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
+import com.adit.bangkit.plagroid.ui.activity.seller.SellerProfileActivity
 import com.adit.bangkit.plagroid.ui.activity.user.LoginActivity
 import com.adit.bangkit.plagroid.ui.activity.user.RegisterActivity
 import com.adit.bangkit.plagroid.ui.activity.user.SettingsActivity
@@ -33,6 +35,25 @@ class FireStoreClass {
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error While Registering User.",
+                    e
+                )
+            }
+    }
+
+
+    fun registerSeller(activity: SettingsActivity, sellerInfo: Seller){
+
+        mFirestore.collection(Constants.SELLER)
+            .document(sellerInfo.id)
+            .set(sellerInfo, SetOptions.merge())
+            .addOnSuccessListener{
+                activity.sellerRegistrationSuccess()
+            }
+            .addOnFailureListener {e ->
+                activity.hideProgresDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error While Registering Seller.",
                     e
                 )
             }
@@ -107,6 +128,63 @@ class FireStoreClass {
         }
     }
 
+
+
+    fun getSellersDetails(activity: Activity){
+        if (getCurrentUserID().isNotEmpty()){
+            mFirestore.collection(Constants.SELLER)
+                .document(getCurrentUserID())
+                .get()
+                .addOnSuccessListener {document ->
+                    Log.i(activity.javaClass.simpleName, document.toString())
+
+                    //menerima document snapshot yang akan dikonversi ke User Data model object.
+                    val seller = document.toObject(Seller::class.java)!!
+                    val retailName = " " + seller.retailName
+
+                    val sharedPreferences = activity.getSharedPreferences(
+                        Constants.PLAGRO_PREFERENCES,
+                        Context.MODE_PRIVATE
+                    )
+
+                    val editor: SharedPreferences.Editor= sharedPreferences.edit()
+                    editor.putString(
+                        //key = logged_in_username
+                        //value = firstname dan lastname
+                        Constants.LOGGED_IN_RETAILNAME,
+                        retailName
+                    )
+                    editor.apply()
+
+
+                    //START
+                    when(activity){
+                        is SettingsActivity -> {
+                            activity.sellerLoggedInSuccess(seller)
+                        }
+                        is SellerProfileActivity -> {
+//                            activity.loadUserDetailsSuccess(user)
+                        }
+                    }
+                    //END
+                }
+                .addOnFailureListener { e ->
+                    when(activity){
+                        is SettingsActivity ->{
+                            activity.hideProgresDialog()
+                        }
+                        is SellerProfileActivity -> {
+                            activity.hideProgresDialog()
+                        }
+                    }
+                    Log.e(
+                        activity.javaClass.simpleName,
+                        e.toString()
+                    )
+                }
+        }
+    }
+
     fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>){
         mFirestore.collection(Constants.USERS).document(getCurrentUserID())
             .update(userHashMap)
@@ -123,6 +201,32 @@ class FireStoreClass {
                     activity.hideProgresDialog()
                 }
             }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating the user details",
+                    e
+                )
+            }
+    }
+
+
+
+    fun updateSellerProfileData(activity: Activity, sellerHashMap: HashMap<String, Any>){
+        mFirestore.collection(Constants.SELLER).document(getCurrentUserID())
+            .update(sellerHashMap)
+            .addOnSuccessListener {
+                when (activity) {
+                    is SellerProfileActivity -> {
+                        activity.sellerProfileUpdateSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                when (activity) {
+                    is SellerProfileActivity -> {
+                        activity.hideProgresDialog()
+                    }
+                }
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while updating the user details",
@@ -152,6 +256,9 @@ class FireStoreClass {
                         is UserProfileActivity ->{
                             activity.imageUploadSuccess(uri.toString())
                         }
+                        is SellerProfileActivity ->{
+                            activity.imageUploadSuccess(uri.toString())
+                        }
                     }
                 }
 
@@ -159,6 +266,9 @@ class FireStoreClass {
             .addOnFailureListener { exception ->
                 when(activity){
                     is UserProfileActivity ->{
+                        activity.hideProgresDialog()
+                    }
+                    is SellerProfileActivity ->{
                         activity.hideProgresDialog()
                     }
                 }

@@ -1,11 +1,10 @@
 package com.adit.bangkit.plagroid.ui.activity.user
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
+import android.widget.Toast
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySettingsBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
@@ -14,41 +13,34 @@ import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerProfileActivity
-import com.adit.bangkit.plagroid.ui.activity.user.fragments.DashboardFragment
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class SettingsActivity : BaseActivity(), View.OnClickListener {
+
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var mUserDetails: User
+    private lateinit var mSellerDetails: Seller
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.hide()
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }
-        else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+
+        disableEditProfile()
 
         binding.toolbarUserProfileActivity.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         binding.toolbarUserProfileActivity.setNavigationOnClickListener {
-            val intent = Intent(this@SettingsActivity, DashboardFragment::class.java)
-            startActivity(intent)
-            finish()
+           onBackPressed()
         }
-        disableEditProfile()
 
         binding.btnLogout.setOnClickListener(this)
         binding.tvEdit.setOnClickListener(this)
+        binding.tvStore.setOnClickListener(this)
     }
 
     private fun getUserDetails(){
@@ -98,6 +90,20 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (v != null){
             when(v.id){
+                R.id.tv_store -> {
+                    var mSellerDetails = Seller("", "", "", "", "", "", "", "", "", 0, "", 0, 0, 2)
+                    if (mSellerDetails.profileComplete==0) {
+                        registerSeller()
+                        val intent = Intent(this@SettingsActivity, SellerProfileActivity::class.java)
+                        intent.putExtra(Constants.EXTRA_SELLER_DETAILS, mSellerDetails)
+                        startActivity(intent)
+                    }else{
+                        val intent = Intent(this@SettingsActivity, SellerActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                   }
+                }
                 R.id.tv_edit -> {
                     val intent = Intent(this@SettingsActivity, UserProfileActivity::class.java)
                     intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
@@ -113,6 +119,80 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+
+    private fun validateRegisterDetails():Boolean{
+        return when{
+            TextUtils.isEmpty(binding.etFirstNameSetting.text.toString().trim {it <= ' '}) ->{
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_first_name), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etLastNameSetting.text.toString().trim {it <= ' '}) ->{
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_last_name), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etEmailSetting.text.toString().trim {it <= ' '}) ->{
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
+                false
+            }
+            else ->{
+                showErrorSnackBar(resources.getString(R.string.please_wait), false)
+                true
+            }
+        }
+    }
+
+
+    private fun registerSeller(){
+
+        if (validateRegisterDetails()){
+
+            showProgressDialog(resources.getString(R.string.registering_acc))
+
+//            val email: String = binding.etEmailSetting.text.toString().trim { it<=' ' }
+//            val password: String = binding.etPasswordReg.text.toString().trim { it<=' ' }
+
+            FirebaseAuth.getInstance().signInAnonymously()
+                .addOnCompleteListener { task ->
+
+
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
+                        val seller = Seller(
+                            firebaseUser.uid,
+                            binding.etFirstNameSetting.text.toString().trim { it <= ' ' },
+                            binding.etLastNameSetting.text.toString().trim { it <= ' ' },
+                            binding.etEmailSetting.text.toString().trim { it <= ' ' },
+                        )
+
+                        showErrorSnackBar(resources.getString(R.string.msg_register_success), false)
+                        Toast.makeText(
+                            this@SettingsActivity,
+                            resources.getString(R.string.msg_register_success), Toast.LENGTH_LONG
+                        ).show()
+                        FireStoreClass().registerSeller(this@SettingsActivity, seller)
+
+                        FirebaseAuth.getInstance().signOut()
+                        finish()
+                    } else {
+                        hideProgresDialog()
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                    }
+                }
+        }
+    }
+
+
+    fun sellerRegistrationSuccess(){
+        hideProgresDialog()
+
+        Toast.makeText(
+            this@SettingsActivity, resources.getString(R.string.msg_register_success)
+            , Toast.LENGTH_LONG).show()
+    }
+
 
 
     fun sellerLoggedInSuccess(seller: Seller){

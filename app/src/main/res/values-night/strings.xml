@@ -86,5 +86,7 @@
     <string name="Wishlist">Wishlist</string>
     <string name="title_edit_profile">EDIT PROFILE</string>
     <string name="msg_login_seller_unsuccess">Oops, look like we have a trouble, comeback in a few moment</string>
+    <string name="complete_retail_profile">COMPLETE RETAIL PROFILE</string>
+    <string name="open_store">Open Store</string>
 
 </resources>
