@@ -5,19 +5,14 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-class Seller (
+class Seller(
     val id: String = "",
-    val firstName: String = "",
-    val lastName: String = "",
     val retailName: String = "",
     val email: String = "",
-    val image: String = "",
-    val productImage: String = "",
-    val productName: String = "",
-    val productCategory: String = "",
-    val mobile: Long = 0,
     val address: String = "",
+    val mobile: Long = 0,
     val codepos: Int = 0,
+    val image: String = "",
     val profileComplete: Int = 0,
     val userType: Int = 2
-        ):Parcelable
+):Parcelable

@@ -110,7 +110,7 @@
                 app:layout_constraintTop_toBottomOf="@id/til_retail_name">
 
                 <com.adit.bangkit.plagroid.utils.MSPEditText
-                    android:id="@+id/et_email_reg"
+                    android:id="@+id/et_email_seller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -197,7 +197,7 @@
 
 
             <com.adit.bangkit.plagroid.utils.MSPButton
-                android:id="@+id/btn_save"
+                android:id="@+id/btn_register_seller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -208,7 +208,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/btn_padding"
                 android:paddingBottom="@dimen/btn_padding"
-                android:text="@string/btn_lbl_save"
+                android:text="@string/btn_lbl_register"
                 android:textColor="@color/white"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"

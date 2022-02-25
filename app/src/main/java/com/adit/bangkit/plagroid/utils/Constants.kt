@@ -12,7 +12,7 @@ object Constants {
 
     //seller
     const val SELLER: String = "seller"
-    const val RETAIL_NAME: String = "retail_name"
+    const val RETAIL_NAME: String = "retailName"
 
     //const untuk user dan seller
     const val PLAGRO_PREFERENCES: String = "PlagroPref"
@@ -30,7 +30,7 @@ object Constants {
     const val MOBILE: String = "mobile"
     const val ADDRESS: String = "address"
     const val GENDER: String = "gender"
-    const val CODEPOS: String = "kodepos"
+    const val CODEPOS: String = "codepos"
     const val COMPLETE_PROFILE: String = "profileComplete"
     const val IMAGE: String = "image"
     const val USER_PROFILE_IMAGE: String = "user_profile_image"

@@ -41,7 +41,7 @@ class FireStoreClass {
     }
 
 
-    fun registerSeller(activity: SettingsActivity, sellerInfo: Seller){
+    fun registerSeller(activity: SellerProfileActivity, sellerInfo: Seller){
 
         mFirestore.collection(Constants.SELLER)
             .document(sellerInfo.id)

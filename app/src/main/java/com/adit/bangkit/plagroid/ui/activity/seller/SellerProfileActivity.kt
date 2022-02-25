@@ -15,14 +15,18 @@ import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySellerProfileBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
 import com.adit.bangkit.plagroid.model.Seller
+import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
 
 class SellerProfileActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySellerProfileBinding
     private lateinit var mSellerDetails: Seller
+    private lateinit var mUserDetails: User
     private var mSelectedImageFileUri: Uri? = null
     private var mSellerProfileImageURL: String = ""
 
@@ -34,12 +38,12 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
         supportActionBar?.hide()
 
         if (intent.hasExtra(Constants.EXTRA_SELLER_DETAILS)){
-            //get user details dari intent sebagai parcelable extra
+            //get seller details dari intent sebagai parcelable extra
             mSellerDetails = intent.getParcelableExtra(Constants.EXTRA_SELLER_DETAILS)!!
         }
 
-//            binding.etEmailReg.setText(mSellerDetails.email)
-//            binding.etMobileNumber.setText(mSellerDetails.mobile.toString())
+        loadUserDetailsSuccess(mUserDetails)
+
 
             if (mSellerDetails.profileComplete == 0){
                 binding.tvTittle.text = getString(R.string.complete_retail_profile)
@@ -53,6 +57,7 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
                 binding.tvTittle.text = resources.getString(R.string.title_edit_profile)
                 setupActionBar()
                 GlideLoader(this@SellerProfileActivity).loadUserPicture(mSellerDetails.image, binding.tvSellerImage)
+                binding.etRetailName.setText(mSellerDetails.retailName)
                 if (mSellerDetails.mobile != 0L){
                     binding.etMobileNumber.setText(mSellerDetails.mobile.toString())
                 }
@@ -64,7 +69,7 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
 
         binding.tvSellerImage.setOnClickListener(this@SellerProfileActivity)
 
-        binding.btnSave.setOnClickListener(this@SellerProfileActivity)
+        binding.btnRegisterSeller.setOnClickListener(this@SellerProfileActivity)
     }
 
     private fun setupActionBar(){
@@ -82,7 +87,7 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if(v != null){
             when(v.id){
-                R.id.tv_user_image ->{
+                R.id.tv_seller_image ->{
                     if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE
                         )== PackageManager.PERMISSION_GRANTED
                     ){
@@ -95,18 +100,10 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
 
-                R.id.btn_save -> {
-                    if (validateSellerProfileDetails()){
-                        showProgressDialog(resources.getString(R.string.please_wait))
-
-                        if (mSelectedImageFileUri != null){
-                            FireStoreClass().uploadImageToCloudStorage(this, mSelectedImageFileUri)
-                        }else{
-                            updateSellerProfileDetails()
-
-                            showErrorSnackBar(resources.getString(R.string.valid_profile), false)
-                        }
-                    }
+                R.id.btn_register_seller -> {
+                    validateSellerProfileDetails()
+                    registerSeller()
+                    updateSellerProfileDetails()
                 }
             }
         }
@@ -162,6 +159,11 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
 
     private fun validateSellerProfileDetails():Boolean{
         return when{
+            TextUtils.isEmpty(binding.etRetailName.text.toString().trim { it <= ' ' }) ->{
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_retail_name), true)
+                false
+            }
+
             TextUtils.isEmpty(binding.etMobileNumber.text.toString().trim {it <= ' '}) ->{
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_mobile_number), true)
                 false
@@ -189,6 +191,44 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
     }
 
 
+    private fun registerSeller(){
+
+        if (validateSellerProfileDetails()){
+
+            showProgressDialog(resources.getString(R.string.registering_acc))
+
+            val email: String = binding.etEmailSeller.text.toString().trim { it<=' ' }
+            val password: String = binding.etRetailName.text.toString().trim { it<=' ' }
+
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+
+
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
+                        val seller = Seller(
+                            firebaseUser.uid,
+                            binding.etRetailName.text.toString().trim { it <= ' ' },
+                            binding.etEmailSeller.text.toString().trim { it <= ' ' },
+                            binding.etAddress.text.toString().trim { it <= ' ' },
+                        )
+
+                        showErrorSnackBar(resources.getString(R.string.msg_register_success), false)
+                        Toast.makeText(
+                            this@SellerProfileActivity,
+                            resources.getString(R.string.msg_register_success), Toast.LENGTH_LONG
+                        ).show()
+                        FireStoreClass().registerSeller(this@SellerProfileActivity, seller)
+
+                    } else {
+                        hideProgresDialog()
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                    }
+                }
+        }
+    }
+
+
 
     private fun updateSellerProfileDetails(){
         val sellerHashMap = HashMap<String, Any>()
@@ -198,7 +238,7 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
             sellerHashMap[Constants.RETAIL_NAME] = retailName
         }
 
-        val email = binding.etEmailReg.text.toString().trim{ it <= ' '}
+        val email = binding.etEmailSeller.text.toString().trim{ it <= ' '}
         if (email != mSellerDetails.email){
             sellerHashMap[Constants.EMAIL] = email
         }
@@ -231,15 +271,39 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
         FireStoreClass().updateSellerProfileData(this, sellerHashMap)
     }
 
+    fun sellerRegistrationSuccess(){
+        hideProgresDialog()
+
+        Toast.makeText(
+            this@SellerProfileActivity, resources.getString(R.string.msg_register_success)
+            , Toast.LENGTH_LONG).show()
+    }
 
 
     fun sellerProfileUpdateSuccess(){
+//        val seller = Seller()
         hideProgresDialog()
         Toast.makeText(this@SellerProfileActivity,
             resources.getString(R.string.profile_update_success), Toast.LENGTH_LONG).show()
 
-        startActivity(Intent(this@SellerProfileActivity, SellerActivity::class.java))
+        val intent = Intent(this@SellerProfileActivity, SellerActivity::class.java)
+        intent.putExtra(Constants.EXTRA_SELLER_DETAILS, mSellerDetails)
+        startActivity(intent)
         finish()
+    }
+
+    fun loadUserDetailsSuccess(user: User){
+        mUserDetails = user
+        hideProgresDialog()
+
+        binding.etEmailSeller.setText(user.email)
+        if (mUserDetails.mobile != 0L){
+            binding.etMobileNumber.setText(mUserDetails.mobile.toString())
+        }
+        binding.etAddress.setText(user.address)
+        if (mUserDetails.codepos != 0){
+            binding.etPosCode.setText(mUserDetails.codepos.toString())
+        }
     }
 
 
