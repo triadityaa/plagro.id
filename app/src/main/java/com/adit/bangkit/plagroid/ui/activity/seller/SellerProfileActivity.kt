@@ -69,7 +69,7 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
 
         binding.tvSellerImage.setOnClickListener(this@SellerProfileActivity)
 
-        binding.btnRegisterSeller.setOnClickListener(this@SellerProfileActivity)
+        binding.btnSaveSeller.setOnClickListener(this@SellerProfileActivity)
     }
 
     private fun setupActionBar(){
@@ -100,9 +100,8 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
 
-                R.id.btn_register_seller -> {
+                R.id.btn_save_seller -> {
                     validateSellerProfileDetails()
-                    registerSeller()
                     updateSellerProfileDetails()
                 }
             }
@@ -187,44 +186,6 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
                 showErrorSnackBar(resources.getString(R.string.please_wait), false)
                 true
             }
-        }
-    }
-
-
-    private fun registerSeller(){
-
-        if (validateSellerProfileDetails()){
-
-            showProgressDialog(resources.getString(R.string.registering_acc))
-
-            val email: String = binding.etEmailSeller.text.toString().trim { it<=' ' }
-            val password: String = binding.etRetailName.text.toString().trim { it<=' ' }
-
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-
-
-                    if (task.isSuccessful) {
-                        val firebaseUser: FirebaseUser = task.result!!.user!!
-                        val seller = Seller(
-                            firebaseUser.uid,
-                            binding.etRetailName.text.toString().trim { it <= ' ' },
-                            binding.etEmailSeller.text.toString().trim { it <= ' ' },
-                            binding.etAddress.text.toString().trim { it <= ' ' },
-                        )
-
-                        showErrorSnackBar(resources.getString(R.string.msg_register_success), false)
-                        Toast.makeText(
-                            this@SellerProfileActivity,
-                            resources.getString(R.string.msg_register_success), Toast.LENGTH_LONG
-                        ).show()
-                        FireStoreClass().registerSeller(this@SellerProfileActivity, seller)
-
-                    } else {
-                        hideProgresDialog()
-                        showErrorSnackBar(task.exception!!.message.toString(), true)
-                    }
-                }
         }
     }
 

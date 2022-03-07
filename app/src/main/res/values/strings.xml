@@ -4,12 +4,15 @@
 
     <string name="content_description">Image</string>
     <string name="title_login">Login</string>
+    <string name="title_login_seller">Login Seller</string>
     <string name="er_hint_email_id">Email</string>
     <string name="et_hint_password">Password</string>
     <string name="lbl_forgot_password">Forgot Password?</string>
     <string name="btn_submit">Submit</string>
     <string name="btn_lbl_login">Login</string>
+    <string name="btn_lbl_login_seller">Login As Seller</string>
     <string name="dont_have_account">Don\'t Have Account?</string>
+    <string name="dont_have_seller_account">Don\'t Have Seller Account?</string>
     <string name="register">Register</string>
     <string name="logo">logo</string>
 
@@ -27,6 +30,7 @@
     <string name="btn_lbl_register">Register</string>
 
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="already_have_an_account_seller">Already have a seller account?</string>
     <string name="login"><u>Login</u></string>
 
     <string name="err_msg_enter_retail_name">Please enter your retail name</string>

@@ -4,8 +4,8 @@
 
     <string name="content_description">Image</string>
     <string name="title_login">Login</string>
-    <string name="er_hint_email_id">Email</string>
     <string name="et_hint_password">Password</string>
+    <string name="er_hint_email_id">Email</string>
     <string name="lbl_forgot_password">Forgot Password?</string>
     <string name="btn_submit">Submit</string>
     <string name="btn_lbl_login">Login</string>

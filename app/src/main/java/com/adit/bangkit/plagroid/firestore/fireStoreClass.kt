@@ -7,6 +7,8 @@ import android.net.Uri
 import android.util.Log
 import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
+import com.adit.bangkit.plagroid.ui.activity.seller.LoginSellerActivity
+import com.adit.bangkit.plagroid.ui.activity.seller.RegisterSellerActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerProfileActivity
 import com.adit.bangkit.plagroid.ui.activity.user.LoginActivity
 import com.adit.bangkit.plagroid.ui.activity.user.RegisterActivity
@@ -41,7 +43,7 @@ class FireStoreClass {
     }
 
 
-    fun registerSeller(activity: SellerProfileActivity, sellerInfo: Seller){
+    fun registerSeller(activity: RegisterSellerActivity, sellerInfo: Seller){
 
         mFirestore.collection(Constants.SELLER)
             .document(sellerInfo.id)
@@ -159,7 +161,7 @@ class FireStoreClass {
 
                     //START
                     when(activity){
-                        is SettingsActivity -> {
+                        is LoginSellerActivity -> {
                             activity.sellerLoggedInSuccess(seller)
                         }
                         is SellerProfileActivity -> {
