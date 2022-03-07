@@ -15,18 +15,14 @@ import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySellerProfileBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
 import com.adit.bangkit.plagroid.model.Seller
-import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
 
 class SellerProfileActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySellerProfileBinding
     private lateinit var mSellerDetails: Seller
-    private lateinit var mUserDetails: User
     private var mSelectedImageFileUri: Uri? = null
     private var mSellerProfileImageURL: String = ""
 
@@ -42,7 +38,6 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
             mSellerDetails = intent.getParcelableExtra(Constants.EXTRA_SELLER_DETAILS)!!
         }
 
-        loadUserDetailsSuccess(mUserDetails)
 
 
             if (mSellerDetails.profileComplete == 0){
@@ -232,38 +227,29 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
         FireStoreClass().updateSellerProfileData(this, sellerHashMap)
     }
 
-    fun sellerRegistrationSuccess(){
-        hideProgresDialog()
 
-        Toast.makeText(
-            this@SellerProfileActivity, resources.getString(R.string.msg_register_success)
-            , Toast.LENGTH_LONG).show()
-    }
 
 
     fun sellerProfileUpdateSuccess(){
-//        val seller = Seller()
         hideProgresDialog()
         Toast.makeText(this@SellerProfileActivity,
             resources.getString(R.string.profile_update_success), Toast.LENGTH_LONG).show()
 
-        val intent = Intent(this@SellerProfileActivity, SellerActivity::class.java)
-        intent.putExtra(Constants.EXTRA_SELLER_DETAILS, mSellerDetails)
-        startActivity(intent)
-        finish()
     }
 
-    fun loadUserDetailsSuccess(user: User){
-        mUserDetails = user
+    fun loadSellerDetailsSuccess(seller: Seller){
+        mSellerDetails = seller
         hideProgresDialog()
 
-        binding.etEmailSeller.setText(user.email)
-        if (mUserDetails.mobile != 0L){
-            binding.etMobileNumber.setText(mUserDetails.mobile.toString())
+        GlideLoader(this@SellerProfileActivity).loadUserPicture(seller.image, binding.tvSellerImage)
+        binding.etRetailName.setText(seller.retailName)
+        binding.etEmailSeller.setText(seller.email)
+        binding.etAddress.setText(seller.address)
+        if (mSellerDetails.mobile != 0L){
+            binding.etMobileNumber.setText(mSellerDetails.mobile.toString())
         }
-        binding.etAddress.setText(user.address)
-        if (mUserDetails.codepos != 0){
-            binding.etPosCode.setText(mUserDetails.codepos.toString())
+        if (mSellerDetails.codepos != 0){
+            binding.etPosCode.setText(mSellerDetails.codepos.toString())
         }
     }
 

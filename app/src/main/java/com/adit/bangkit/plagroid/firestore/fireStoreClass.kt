@@ -165,7 +165,7 @@ class FireStoreClass {
                             activity.sellerLoggedInSuccess(seller)
                         }
                         is SellerProfileActivity -> {
-//                            activity.loadUserDetailsSuccess(user)
+                            activity.loadSellerDetailsSuccess(seller)
                         }
                     }
                     //END

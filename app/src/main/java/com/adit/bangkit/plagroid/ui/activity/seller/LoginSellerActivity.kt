@@ -128,7 +128,7 @@ class LoginSellerActivity : BaseActivity(), View.OnClickListener {
 
                     if (task.isSuccessful) {
                         showErrorSnackBar(R.string.msg_login_success.toString(), false)
-                        FireStoreClass().getUsersDetails(this@LoginSellerActivity)
+                        FireStoreClass().getSellersDetails(this@LoginSellerActivity)
                     } else {
                         hideProgresDialog()
                         showErrorSnackBar(task.exception!!.message.toString(), true)
@@ -162,24 +162,17 @@ class LoginSellerActivity : BaseActivity(), View.OnClickListener {
         //hide progress bar
         hideProgresDialog()
 
-        //userType 0 = admin...... userType 1 = user....... userType 2 = seller
-        if (seller.userType == 2){
-            val intent = Intent(this@LoginSellerActivity, AdminActivity::class.java)
-            intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
-            startActivity(intent)
-        }else{
             if (seller.profileComplete == 0){
                 //jika profile user belum complete arahkan user ke activity UserProfileActivity
-                val intent = Intent(this@LoginSellerActivity, UserProfileActivity::class.java)
+                val intent = Intent(this@LoginSellerActivity, SellerProfileActivity::class.java)
                 intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
                 startActivity(intent)
             }else{
                 //jika profile user sudah complete langsung arahkan ke MainActivity
-                val intent = Intent(this@LoginSellerActivity, DashboardActivity::class.java)
+                val intent = Intent(this@LoginSellerActivity, SellerActivity::class.java)
                 intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
                 startActivity(intent)
             }
             finish()
         }
     }
-}
