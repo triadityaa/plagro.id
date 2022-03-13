@@ -8,6 +8,7 @@ class User (
     val id: String = "",
     val firstName: String = "",
     val lastName: String = "",
+    val retailName: String = "",
     val email: String = "",
     val image: String = "",
     val mobile: Long = 0,
@@ -15,5 +16,6 @@ class User (
     val gender: String = "",
     val codepos: Int = 0,
     val profileComplete: Int = 0,
+    val sellerProfileComplete: Int = 0,
     val userType: Int = 1
 ):Parcelable

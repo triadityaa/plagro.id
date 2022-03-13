@@ -36,7 +36,7 @@ class ProductsFragment : Fragment() {
         val textView: TextView = binding.textHome
         textView.text = "this is products fragment"
         val progressBar: ProgressBar = binding.progressBar
-        progressBar.visibility=
+        progressBar.visibility
 
         return root
     }

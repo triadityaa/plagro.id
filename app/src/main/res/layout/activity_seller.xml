@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.seller.MainActivity">
+    tools:context=".ui.activity.seller.SellerActivity">
 
     <TextView
         android:id="@+id/tv_main"

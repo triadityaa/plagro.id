@@ -5,24 +5,25 @@ import android.os.Bundle
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySellerBinding
 import com.adit.bangkit.plagroid.model.Seller
+import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.utils.Constants
 
 class SellerActivity : BaseActivity() {
     private lateinit var binding: ActivitySellerBinding
-    private lateinit var mSellerDetails: Seller
+    private lateinit var mUserDetails: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySellerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (intent.hasExtra(Constants.EXTRA_SELLER_DETAILS)){
+        if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)){
             //get user details dari intent sebagai parcelable extra
-            mSellerDetails = intent.getParcelableExtra(Constants.EXTRA_SELLER_DETAILS)!!
+            mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
 
         val sharedPreferences = getSharedPreferences(Constants.PLAGRO_PREFERENCES, Context.MODE_PRIVATE)
-        val retailName = sharedPreferences.getString(Constants.LOGGED_IN_RETAILNAME,  "")!!
+        val retailName = sharedPreferences.getString(mUserDetails.retailName,  "")!!
         binding.tvMain.text =
             resources.getString(R.string.hello_user) +
                     retailName +

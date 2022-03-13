@@ -6,9 +6,12 @@ import android.view.View
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySettingsBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
+import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.LoginSellerActivity
+import com.adit.bangkit.plagroid.ui.activity.seller.SellerActivity
+import com.adit.bangkit.plagroid.ui.activity.seller.SellerProfileActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
 import com.google.firebase.auth.FirebaseAuth
@@ -85,8 +88,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         if (v != null){
             when(v.id){
                 R.id.tv_store -> {
-                    val intent = Intent(this@SettingsActivity, LoginSellerActivity::class.java)
-                    startActivity(intent)
+                    sellerLoggedInSuccess(mUserDetails)
                 }
                 R.id.tv_edit -> {
                     val intent = Intent(this@SettingsActivity, UserProfileActivity::class.java)
@@ -104,5 +106,26 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun sellerLoggedInSuccess(user: User){
+        //hide progress bar
+        hideProgresDialog()
+
+        if (user.sellerProfileComplete == 0){
+            //jika profile user belum complete arahkan user ke activity UserProfileActivity
+            val intent = Intent(this@SettingsActivity, SellerProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
+        }else{
+            //jika profile user sudah complete langsung arahkan ke MainActivity
+            val intent = Intent(this@SettingsActivity, SellerActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
+        }
+        finish()
+    }
 
 }
