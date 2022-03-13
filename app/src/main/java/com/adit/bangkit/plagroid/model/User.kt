@@ -17,5 +17,5 @@ class User (
     val codepos: Int = 0,
     val profileComplete: Int = 0,
     val sellerProfileComplete: Int = 0,
-    val userType: Int = 1
+    var userType: Int = 1
 ):Parcelable

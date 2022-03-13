@@ -1,6 +1,7 @@
 package com.adit.bangkit.plagroid.ui.activity.user
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import com.adit.bangkit.plagroid.R
@@ -12,6 +13,7 @@ import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.LoginSellerActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerProfileActivity
+import com.adit.bangkit.plagroid.ui.admin.AdminActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +22,8 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var mUserDetails: User
+    private lateinit var profil: SharedPreferences
+    private lateinit var seller: Seller
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,9 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         supportActionBar?.hide()
+        mUserDetails= User()
+        seller = Seller()
+        loginSession()
 
         disableEditProfile()
 
@@ -119,6 +126,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
             finish()
         }else{
             //jika profile user sudah complete langsung arahkan ke MainActivity
+            //buat 2 variable buat ngecek isUser sama isSeller login
             val intent = Intent(this@SettingsActivity, SellerActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -127,5 +135,32 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         }
         finish()
     }
+
+    private fun loginSession(){
+        profil = getSharedPreferences(Constants.PLAGRO_PREFERENCES, MODE_PRIVATE)
+        if (profil.getString(Constants.EXTRA_USER_DETAILS, null) != null) {
+            when(mUserDetails.userType){
+                0 -> {
+                    val intent = Intent(this@SettingsActivity, AdminActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
+                    startActivity(intent)
+                    finish()
+                }
+                1 -> {
+                    val intent = Intent(this@SettingsActivity, DashboardActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
+                    startActivity(intent)
+                    finish()
+                }
+                2 -> {
+                    val intent = Intent(this@SettingsActivity, SellerActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+    }
+
 
 }
