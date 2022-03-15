@@ -141,7 +141,7 @@ class FireStoreClass {
                     Log.i(activity.javaClass.simpleName, document.toString())
 
                     //menerima document snapshot yang akan dikonversi ke User Data model object.
-                    val seller = document.toObject(User::class.java)!!
+                    val seller = document.toObject(Seller::class.java)!!
                     val retailName = " " + seller.retailName
 
                     val sharedPreferences = activity.getSharedPreferences(
@@ -213,9 +213,9 @@ class FireStoreClass {
 
 
 
-    fun updateSellerProfileData(activity: Activity, userHashMap: HashMap<String, Any>){
-        mFirestore.collection(Constants.USERS).document(getCurrentUserID())
-            .update(userHashMap)
+    fun updateSellerProfileData(activity: Activity, sellerHashMap: HashMap<String, Any>){
+        mFirestore.collection(Constants.SELLER).document(getCurrentUserID())
+            .update(sellerHashMap)
             .addOnSuccessListener {
                 when (activity) {
                     is SellerProfileActivity -> {

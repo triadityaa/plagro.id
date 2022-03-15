@@ -29,43 +29,43 @@ class LoginSellerActivity : BaseActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        user = User()
-        seller = Seller()
-        loginSession()
+//        user = User()
+//        seller = Seller()
+//        loginSession()
 
         binding.tvForgotPassword.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (FirebaseAuth.getInstance().currentUser != null){
-            when(seller.userType){
-                0 -> {
-                    val intent = Intent(this@LoginSellerActivity, AdminActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+//    override fun onStart() {
+//        super.onStart()
+//        if (FirebaseAuth.getInstance().currentUser != null){
+//            when(seller.userType){
+//                0 -> {
+//                    val intent = Intent(this@LoginSellerActivity, AdminActivity::class.java)
+//                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//                1 -> {
+//                    val intent = Intent(this@LoginSellerActivity, DashboardActivity::class.java)
+//                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//                2 -> {
+//                    val intent = Intent(this@LoginSellerActivity, SellerActivity::class.java)
+//                    intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-                1 -> {
-                    val intent = Intent(this@LoginSellerActivity, DashboardActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-                2 -> {
-                    val intent = Intent(this@LoginSellerActivity, SellerActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
-    }
+//                    startActivity(intent)
+//                    finish()
+//                }
+//            }
+//        }
+//    }
 
     private fun loginSession(){
         profil = getSharedPreferences(Constants.PLAGRO_PREFERENCES, MODE_PRIVATE)
@@ -158,7 +158,7 @@ class LoginSellerActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    fun sellerLoggedInSuccess(seller: User){
+    fun sellerLoggedInSuccess(seller: Seller){
         //hide progress bar
         hideProgresDialog()
 

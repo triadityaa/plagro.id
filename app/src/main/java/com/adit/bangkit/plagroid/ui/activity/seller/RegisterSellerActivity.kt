@@ -135,8 +135,8 @@ class RegisterSellerActivity : BaseActivity() {
                             resources.getString(R.string.msg_register_success), Toast.LENGTH_LONG
                         ).show()
                         FireStoreClass().registerSeller(this@RegisterSellerActivity, seller)
+                        hideProgresDialog()
 
-                        FirebaseAuth.getInstance().signOut()
                         finish()
                     } else {
                         hideProgresDialog()

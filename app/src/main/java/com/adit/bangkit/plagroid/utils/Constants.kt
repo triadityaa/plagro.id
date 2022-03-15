@@ -32,7 +32,6 @@ object Constants {
     const val GENDER: String = "gender"
     const val CODEPOS: String = "codepos"
     const val COMPLETE_PROFILE: String = "profileComplete"
-    const val COMPLETE_SELLER_PROFILE: String = "sellerProfileComplete"
     const val IMAGE: String = "image"
     const val USER_PROFILE_IMAGE: String = "user_profile_image"
 

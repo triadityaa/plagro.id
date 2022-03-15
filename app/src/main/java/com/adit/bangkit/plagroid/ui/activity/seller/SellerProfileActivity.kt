@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySellerProfileBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
+import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.utils.Constants
@@ -22,7 +23,7 @@ import java.io.IOException
 
 class SellerProfileActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySellerProfileBinding
-    private lateinit var mUserDetails: User
+    private lateinit var mSellerDetails: Seller
     private var mSelectedImageFileUri: Uri? = null
     private var mSellerProfileImageURL: String = ""
 
@@ -33,23 +34,21 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
 //        var mSellerDetails = Seller()
         supportActionBar?.hide()
 
-        if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)){
+        if (intent.hasExtra(Constants.EXTRA_SELLER_DETAILS)){
             //get seller details dari intent sebagai parcelable extra
-            mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
+            mSellerDetails = intent.getParcelableExtra(Constants.EXTRA_SELLER_DETAILS)!!
         }
 
-        binding.etRetailName.setText(mUserDetails.retailName)
-        binding.etEmailSeller.setText(mUserDetails.email)
-        binding.etAddress.setText(mUserDetails.address)
-        binding.etMobileNumber.setText(mUserDetails.mobile.toString())
-        binding.etPosCode.setText(mUserDetails.codepos.toString())
+        binding.etRetailName.setText(mSellerDetails.retailName)
+        binding.etEmailSeller.setText(mSellerDetails.email)
+        binding.etAddress.setText(mSellerDetails.address)
+        binding.etMobileNumber.setText(mSellerDetails.mobile.toString())
+        binding.etPosCode.setText(mSellerDetails.codepos.toString())
 
-            if (mUserDetails.sellerProfileComplete == 0){
+            if (mSellerDetails.profileComplete == 0){
                 binding.tvTittle.text = getString(R.string.complete_retail_profile)
                 binding.etEmailSeller.isEnabled = false
                 binding.etAddress.isEnabled = false
-                binding.etMobileNumber.isEnabled = false
-                binding.etPosCode.isEnabled = false
             }else{
                 binding.toolbarSellerProfileActivity.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
                 binding.toolbarSellerProfileActivity.setOnClickListener {
@@ -59,15 +58,15 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 binding.tvTittle.text = resources.getString(R.string.title_edit_profile)
                 setupActionBar()
-                GlideLoader(this@SellerProfileActivity).loadUserPicture(mUserDetails.image, binding.tvSellerImage)
-                binding.etRetailName.setText(mUserDetails.retailName)
-                if (mUserDetails.mobile != 0L){
-                    binding.etMobileNumber.setText(mUserDetails.mobile.toString())
+                GlideLoader(this@SellerProfileActivity).loadUserPicture(mSellerDetails.image, binding.tvSellerImage)
+                binding.etRetailName.setText(mSellerDetails.retailName)
+                if (mSellerDetails.mobile != 0L){
+                    binding.etMobileNumber.setText(mSellerDetails.mobile.toString())
                 }
-                binding.etEmailSeller.setText(mUserDetails.email)
-                binding.etAddress.setText(mUserDetails.address)
-                if (mUserDetails.codepos != 0){
-                    binding.etPosCode.setText(mUserDetails.codepos.toString())
+                binding.etEmailSeller.setText(mSellerDetails.email)
+                binding.etAddress.setText(mSellerDetails.address)
+                if (mSellerDetails.codepos != 0){
+                    binding.etPosCode.setText(mSellerDetails.codepos.toString())
                 }
             }
 
@@ -204,16 +203,16 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun updateSellerProfileDetails(){
-        val userHashMap = HashMap<String, Any>()
+        val sellerHashMap = HashMap<String, Any>()
 
         val retailName = binding.etRetailName.text.toString().trim{ it <= ' '}
-        if (retailName != mUserDetails.retailName){
-            userHashMap[Constants.RETAIL_NAME] = retailName
+        if (retailName != mSellerDetails.retailName){
+            sellerHashMap[Constants.RETAIL_NAME] = retailName
         }
 
         val email = binding.etEmailSeller.text.toString().trim{ it <= ' '}
-        if (email != mUserDetails.email){
-            userHashMap[Constants.EMAIL] = email
+        if (email != mSellerDetails.email){
+            sellerHashMap[Constants.EMAIL] = email
         }
 
         val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
@@ -222,26 +221,26 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
 
 
         if (mSellerProfileImageURL.isNotEmpty()){
-            userHashMap[Constants.IMAGE] = mSellerProfileImageURL
+            sellerHashMap[Constants.IMAGE] = mSellerProfileImageURL
         }
 
-        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetails.mobile.toString()){
-            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+        if (mobileNumber.isNotEmpty() && mobileNumber != mSellerDetails.mobile.toString()){
+            sellerHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
 
         if (address.isNotEmpty()){
-            userHashMap[Constants.ADDRESS] = address
+            sellerHashMap[Constants.ADDRESS] = address
         }
 
         if (codepos.isNotEmpty()){
-            userHashMap[Constants.CODEPOS] = codepos.toLong()
+            sellerHashMap[Constants.CODEPOS] = codepos.toLong()
         }
 
 
 
-        userHashMap[Constants.COMPLETE_SELLER_PROFILE] = 1
+        sellerHashMap[Constants.COMPLETE_PROFILE] = 1
 
-        FireStoreClass().updateSellerProfileData(this, userHashMap)
+        FireStoreClass().updateSellerProfileData(this, sellerHashMap)
     }
 
 
@@ -256,23 +255,6 @@ class SellerProfileActivity : BaseActivity(), View.OnClickListener {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         finish()
     }
-
-    fun loadUserDetailsSuccess(user: User){
-        mUserDetails = user
-        hideProgresDialog()
-
-        GlideLoader(this@SellerProfileActivity).loadUserPicture(user.image, binding.tvSellerImage)
-        binding.etRetailName.setText(user.retailName)
-        binding.etEmailSeller.setText(user.email)
-        binding.etAddress.setText(user.address)
-        if (mUserDetails.mobile != 0L){
-            binding.etMobileNumber.setText(mUserDetails.mobile.toString())
-        }
-        if (mUserDetails.codepos != 0){
-            binding.etPosCode.setText(mUserDetails.codepos.toString())
-        }
-    }
-
 
 
     fun imageUploadSuccess(imageURL: String){
