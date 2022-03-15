@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Plagroid"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".ui.activity.seller.product.AddProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.seller.LoginSellerActivity"
             android:exported="false" />
         <activity

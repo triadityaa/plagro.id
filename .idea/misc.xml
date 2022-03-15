@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/drawable/ic_logo_plagro_2.xml" value="0.1" />
+        <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/activity_add_product.xml" value="0.2552083333333333" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/activity_admin.xml" value="0.18072916666666666" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/activity_login.xml" value="0.2552083333333333" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/activity_user_profile.xml" value="0.176" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/layout/item_row_product.xml" value="1.2209302325581395" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>

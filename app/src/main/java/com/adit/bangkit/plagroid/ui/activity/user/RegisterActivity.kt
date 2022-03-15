@@ -159,7 +159,6 @@ class RegisterActivity : BaseActivity() {
                             firebaseUser.uid,
                             binding.etFirstName.text.toString().trim { it <= ' ' },
                             binding.etLastName.text.toString().trim { it <= ' ' },
-                            binding.etEmailReg.text.toString().trim { it <= ' ' },
                         )
 
                         showErrorSnackBar(resources.getString(R.string.msg_register_success), false)

@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import com.adit.bangkit.plagroid.model.Product
 import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.seller.LoginSellerActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.RegisterSellerActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerProfileActivity
+import com.adit.bangkit.plagroid.ui.activity.seller.product.AddProductActivity
 import com.adit.bangkit.plagroid.ui.activity.user.LoginActivity
 import com.adit.bangkit.plagroid.ui.activity.user.RegisterActivity
 import com.adit.bangkit.plagroid.ui.activity.user.SettingsActivity
@@ -34,6 +36,27 @@ class FireStoreClass {
             }
             .addOnFailureListener {e ->
                 activity.hideProgresDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error While Registering User.",
+                    e
+                )
+            }
+    }
+
+
+    fun addProduct(activity: AddProductActivity, productInfo: Product){
+
+        mFirestore.collection(Constants.CATEGORY)
+            .document(productInfo.idCategory)
+            .collection(Constants.PRODUCT)
+            .document(productInfo.id)
+            .set(productInfo, SetOptions.merge())
+            .addOnSuccessListener{
+                activity.addProductSuccess()
+            }
+            .addOnFailureListener {e ->
+                activity.addProductSuccess()
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error While Registering User.",
