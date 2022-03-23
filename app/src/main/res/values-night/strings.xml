@@ -92,5 +92,14 @@
     <string name="description">description</string>
     <string name="products_price">product price</string>
     <string name="add_product">Add Product</string>
+    <string name="hint_product_name">Product Name</string>
+    <string name="hint_category_name">Category</string>
+    <string name="er_hint_product_price">Product Price</string>
+    <string name="et_hint_product_stock">Product Stock</string>
+    <string name="adding_product">Adding Product</string>
+    <string name="msg_add_product_success">Adding Product Success</string>
+    <string name="product_add_success">Product Added Successfully</string>
+    <string name="product_add_failed">Failed To Add Product</string>
+    <string name="lbl_btn_add_product">Add Product</string>
 
 </resources>

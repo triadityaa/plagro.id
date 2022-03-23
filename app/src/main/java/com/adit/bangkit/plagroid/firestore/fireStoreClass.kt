@@ -45,10 +45,12 @@ class FireStoreClass {
     }
 
 
-    fun addProduct(activity: AddProductActivity, productInfo: Product){
+    fun addProduct(activity: AddProductActivity, productInfo: Product, sellerInfo: Seller){
 
-        mFirestore.collection(Constants.CATEGORY)
-            .document(productInfo.idCategory)
+        mFirestore.collection(Constants.SELLER)
+            .document(sellerInfo.id)
+            .collection(Constants.CATEGORY)
+            .document(productInfo.category)
             .collection(Constants.PRODUCT)
             .document(productInfo.id)
             .set(productInfo, SetOptions.merge())

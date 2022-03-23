@@ -13,6 +13,7 @@ import com.adit.bangkit.plagroid.model.User
 import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.ui.activity.user.DashboardActivity
 import com.adit.bangkit.plagroid.ui.activity.user.ForgotPasswordActivity
+import com.adit.bangkit.plagroid.ui.activity.user.LoginActivity
 import com.adit.bangkit.plagroid.ui.admin.AdminActivity
 import com.adit.bangkit.plagroid.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,18 @@ class LoginSellerActivity : BaseActivity(), View.OnClickListener {
     private lateinit var profil: SharedPreferences
     private lateinit var user: User
     private lateinit var seller: Seller
+
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseAuthListener = FirebaseAuth.AuthStateListener {
+        val seller = firebaseAuth.currentUser?.uid
+        if (seller != null){
+            val intent = Intent(this@LoginSellerActivity, SellerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginSellerBinding.inflate(layoutInflater)
@@ -29,43 +42,27 @@ class LoginSellerActivity : BaseActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-//        user = User()
-//        seller = Seller()
-//        loginSession()
+        user = User()
+        seller = Seller()
+        loginSession()
 
         binding.tvForgotPassword.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        if (FirebaseAuth.getInstance().currentUser != null){
-//            when(seller.userType){
-//                0 -> {
-//                    val intent = Intent(this@LoginSellerActivity, AdminActivity::class.java)
-//                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                    startActivity(intent)
-//                    finish()
-//                }
-//                1 -> {
-//                    val intent = Intent(this@LoginSellerActivity, DashboardActivity::class.java)
-//                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                    startActivity(intent)
-//                    finish()
-//                }
-//                2 -> {
-//                    val intent = Intent(this@LoginSellerActivity, SellerActivity::class.java)
-//                    intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                    startActivity(intent)
-//                    finish()
-//                }
-//            }
-//        }
-//    }
+    override fun onStart() {
+        super.onStart()
+        firebaseAuth!!.addAuthStateListener(this.firebaseAuthListener!!)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this@LoginSellerActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
 
     private fun loginSession(){
         profil = getSharedPreferences(Constants.PLAGRO_PREFERENCES, MODE_PRIVATE)

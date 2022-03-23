@@ -18,7 +18,6 @@ class SplashActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -39,4 +38,6 @@ class SplashActivity : AppCompatActivity() {
 //        val typeface : Typeface = Typeface.createFromAsset(assets, "Montserrat-Bold.ttf")
 //        binding.tvAppName.typeface = typeface
     }
+
+
 }

@@ -101,40 +101,15 @@
 
     <string name="Products_name">Nama Pahlawan</string>
     <string name="add_product">Add Product</string>
-    <string-array name="data_name">
-        <item>Ahmad Dahlan</item>
-        <item>Ahmad Yani</item>
-        <item>Sutomo</item>
-        <item>Gatot Soebroto</item>
-        <item>Ki Hadjar Dewantara</item>
-        <item>Mohammad Hatta</item>
-        <item>Soedirman</item>
-        <item>Soekarno</item>
-        <item>Soepomo</item>
-    </string-array>
+    <string name="hint_product_name">Product Name</string>
+    <string name="hint_category_name">Category</string>
+    <string name="er_hint_product_price">Product Price</string>
+    <string name="et_hint_product_stock">Product Stock</string>
+    <string name="adding_product">Adding Product</string>
+    <string name="msg_add_product_success">Adding Product Success</string>
+    <string name="product_add_success">Product Added Successfully</string>
+    <string name="product_add_failed">Failed To Add Product</string>
+    <string name="lbl_btn_add_product">Add Product</string>
 
-    <string-array name="data_description">
-        <item>Rp.15.000 </item>
-        <item>Rp.25.000</item>
-        <item>Rp.20.000</item>
-        <item>Rp.12.000</item>
-        <item>Rp.18.000</item>
-        <item>Rp.15.000</item>
-        <item>Rp.22.000</item>
-        <item>Rp.15.000</item>
-        <item>Rp.30.000</item>
-    </string-array>
-
-    <integer-array name="data_photo">
-        <item>@drawable/gambar1</item>
-        <item>@drawable/gambar2</item>
-        <item>@drawable/gambar3</item>
-        <item>@drawable/gambar4</item>
-        <item>@drawable/gambar5</item>
-        <item>@drawable/gambar6</item>
-        <item>@drawable/gambar7</item>
-        <item>@drawable/gambar8</item>
-        <item>@drawable/gambar9</item>
-    </integer-array>
 
 </resources>

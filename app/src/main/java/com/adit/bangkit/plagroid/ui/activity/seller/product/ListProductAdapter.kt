@@ -22,19 +22,19 @@ class ListProductAdapter(private val listProduct: ArrayList<Product>) : Recycler
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (name, price, productPict) = listProduct[position]
-        holder.imgPhoto.setImageResource(productPict)
-        holder.tvName.text = name
-        holder.tvPrice.text = price
+        val product: Product = listProduct[position]
+        holder.productPict.setImageResource(product.productPict.toInt())
+        holder.productName.setText(product.productName)
+        holder.productPrice.setText(product.productPrice.toString())
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listProduct[holder.adapterPosition]) }
     }
 
     override fun getItemCount(): Int = listProduct.size
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
-        var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
-        var tvPrice: TextView = itemView.findViewById(R.id.tv_item_harga)
+        var productPict: ImageView = itemView.findViewById(R.id.img_item_photo)
+        var productName: TextView = itemView.findViewById(R.id.tv_item_name)
+        var productPrice: TextView = itemView.findViewById(R.id.tv_item_harga)
     }
 
     interface OnItemClickCallback {

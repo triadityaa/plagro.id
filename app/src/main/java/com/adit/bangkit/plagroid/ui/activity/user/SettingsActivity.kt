@@ -95,9 +95,11 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         if (v != null){
             when(v.id){
                 R.id.tv_store -> {
-                    val intent = Intent(this@SettingsActivity, LoginSellerActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
+                    FirebaseAuth.getInstance().signOut()
+                    Intent(this@SettingsActivity, LoginSellerActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
+                    finish()
                 }
                 R.id.tv_edit -> {
                     val intent = Intent(this@SettingsActivity, UserProfileActivity::class.java)
@@ -113,29 +115,6 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         }
-    }
-
-    fun sellerLoggedInSuccess(seller: Seller){
-        //hide progress bar
-        hideProgresDialog()
-
-        if (seller.profileComplete == 0){
-            //jika profile user belum complete arahkan user ke activity UserProfileActivity
-            val intent = Intent(this@SettingsActivity, SellerProfileActivity::class.java)
-            intent.putExtra(Constants.EXTRA_USER_DETAILS, seller)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            finish()
-        }else{
-            //jika profile user sudah complete langsung arahkan ke MainActivity
-            //buat 2 variable buat ngecek isUser sama isSeller login
-            val intent = Intent(this@SettingsActivity, SellerActivity::class.java)
-            intent.putExtra(Constants.EXTRA_USER_DETAILS, seller)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            finish()
-        }
-        finish()
     }
 
     private fun loginSession(){

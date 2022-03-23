@@ -10,7 +10,7 @@ import com.adit.bangkit.plagroid.databinding.ActivityLoginBinding
 import com.adit.bangkit.plagroid.firestore.FireStoreClass
 import com.adit.bangkit.plagroid.model.Seller
 import com.adit.bangkit.plagroid.model.User
-import com.adit.bangkit.plagroid.ui.activity.*
+import com.adit.bangkit.plagroid.ui.activity.BaseActivity
 import com.adit.bangkit.plagroid.ui.activity.seller.SellerActivity
 import com.adit.bangkit.plagroid.ui.admin.AdminActivity
 import com.adit.bangkit.plagroid.utils.Constants
@@ -19,8 +19,31 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var profil: SharedPreferences
-    private lateinit var user: User
+    private lateinit var userDetails: User
     private lateinit var seller: Seller
+
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseAuthListener = FirebaseAuth.AuthStateListener {
+        val user = firebaseAuth.currentUser?.uid
+        if (user != null){
+            if (userDetails.userType == 0){
+                val intent = Intent(this@LoginActivity, AdminActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            else if (userDetails.userType == 1){
+                val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            else if (seller.userType == 2){
+                val intent = Intent(this@LoginActivity, SellerActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -28,7 +51,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        user = User()
+        userDetails = User()
         seller = Seller()
         loginSession()
 
@@ -39,54 +62,30 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        if (FirebaseAuth.getInstance().currentUser != null){
-            when(user.userType){
-                0 -> {
-                    val intent = Intent(this@LoginActivity, AdminActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-                1 -> {
-                    val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-                2 -> {
-                    val intent = Intent(this@LoginActivity, SellerActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
+        firebaseAuth!!.addAuthStateListener(this.firebaseAuthListener!!)
     }
 
     private fun loginSession(){
         profil = getSharedPreferences(Constants.PLAGRO_PREFERENCES, MODE_PRIVATE)
         if (profil.getString(Constants.EXTRA_USER_DETAILS, null) != null) {
-            when(user.userType){
-                0 -> {
-                    val intent = Intent(this@LoginActivity, AdminActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-                    startActivity(intent)
-                    finish()
-                }
-                1 -> {
+            if(userDetails.userType == 0){
+                val intent = Intent(this@LoginActivity, AdminActivity::class.java)
+                intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                startActivity(intent)
+                finish()
+            }else{
+                if (userDetails.userType == 1){
                     val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
                     startActivity(intent)
                     finish()
-                }
-                2 -> {
-                    val intent = Intent(this@LoginActivity, SellerActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
-                    startActivity(intent)
-                    finish()
+                }else{
+                    if (seller.userType == 2){
+                        val intent = Intent(this@LoginActivity, SellerActivity::class.java)
+                        intent.putExtra(Constants.EXTRA_SELLER_DETAILS, seller)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
             }
         }
