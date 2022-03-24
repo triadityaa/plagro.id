@@ -95,7 +95,6 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         if (v != null){
             when(v.id){
                 R.id.tv_store -> {
-                    FirebaseAuth.getInstance().signOut()
                     Intent(this@SettingsActivity, LoginSellerActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
