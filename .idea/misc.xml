@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/activity_base.xml" value="0.1" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/activity_login.xml" value="0.15172101449275363" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/activity_main.xml" value="0.14130434782608695" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/activity_splash.xml" value="0.14130434782608695" />
+        <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/activity_user_profile.xml" value="0.1" />
+        <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/activity_wishlist.xml" value="0.1" />
+        <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/layout/item_row_product.xml" value="0.1" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/admin/src/main/res/menu/bottom_nav_menu.xml" value="0.1890625" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/drawable/app_gradient_color_background.xml" value="0.175" />
         <entry key="..\:/Kuli-ah/Program TA/plagroid/app/src/main/res/drawable/drawable_gender_tab_selector.xml" value="0.1" />
