@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">PLAGRO.ID</string>
+    <string name="app_name">ADMIN PLAGRO.ID</string>
 
     <string name="content_description">image</string>
-    <string name="title_login">LOGIN</string>
+    <string name="title_login">LOGIN ADMIN</string>
     <string name="et_hint_email_id">Email ID</string>
     <string name="et_hint_password">Password</string>
     <string name="lbl_forgot_password">Forgot Password?</string>
@@ -174,5 +174,8 @@
     <string name="no_products_sold_out_yet">No products sold out yet!</string>
 
     <string name="title_sold_product_details">SOLD PRODUCT DETAILS</string>
+    <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+    <string name="search">Search</string>
 
 </resources>

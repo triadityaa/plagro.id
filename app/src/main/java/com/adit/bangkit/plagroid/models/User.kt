@@ -1,0 +1,19 @@
+package com.adit.bangkit.plagroid.models
+
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class User(
+    val id: String = "",
+    val firstName: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val image: String = "",
+    val mobile: Long = 0,
+    val address: String = "",
+    val gender: String = "",
+    val codepos: Int = 0,
+    val profileCompleted: Int = 0,
+    val userType: Int = 1
+):Parcelable
