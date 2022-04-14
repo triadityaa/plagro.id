@@ -19,6 +19,7 @@ class DashboardFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentDashboardBinding.inflate(layoutInflater)
         // If we want to use the option menu in fragment we need to add it.
         setHasOptionsMenu(true)
     }
@@ -29,9 +30,7 @@ class DashboardFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-
-        return root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

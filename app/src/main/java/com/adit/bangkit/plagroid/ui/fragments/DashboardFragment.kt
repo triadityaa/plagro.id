@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.FragmentDashboardBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
-import com.adit.bangkit.plagroid.ui.activities.CartListActivity
+import com.adit.bangkit.plagroid.models.Product
 import com.adit.bangkit.plagroid.ui.activities.ProductDetailsActivity
 import com.adit.bangkit.plagroid.ui.activities.SettingsActivity
 import com.adit.bangkit.plagroid.ui.adapters.DashboardItemsListAdapter
-import com.adit.bangkit.plagroid.models.Product
 import com.adit.bangkit.plagroid.utils.Constants
 
 class DashboardFragment : BaseFragment() {
@@ -19,6 +18,7 @@ class DashboardFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentDashboardBinding.inflate(layoutInflater)
         // If we want to use the option menu in fragment we need to add it.
         setHasOptionsMenu(true)
     }
@@ -29,9 +29,9 @@ class DashboardFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        //val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
-        return root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -50,10 +50,10 @@ class DashboardFragment : BaseFragment() {
                 return true
             }
 
-            R.id.action_cart -> {
-                startActivity(Intent(activity, CartListActivity::class.java))
-                return true
-            }
+//            R.id.action_cart -> {
+//                startActivity(Intent(activity, CartListActivity::class.java))
+//                return true
+//            }
         }
         return super.onOptionsItemSelected(item)
     }

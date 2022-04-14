@@ -33,7 +33,7 @@ class FirestoreClass {
     /**
      * A function to make an entry of the registered user in the FireStore database.
      */
-    fun registerUser(activity: RegisterActivity, adminInfo: Admin) {
+    fun registerAdmin(activity: RegisterActivity, adminInfo: Admin) {
 
         // The "users" is collection name. If the collection is already created then it will not create the same one again.
         mFireStore.collection(Constants.ADMIN)

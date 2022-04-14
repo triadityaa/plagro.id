@@ -75,11 +75,6 @@ class RegisterActivity : BaseActivity() {
                 false
             }
 
-            TextUtils.isEmpty(binding.etLastName.text.toString().trim { it <= ' ' }) -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_enter_last_name), true)
-                false
-            }
-
             TextUtils.isEmpty(binding.etEmail.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
                 false
@@ -145,15 +140,14 @@ class RegisterActivity : BaseActivity() {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
 
                             // Instance of User data model class.
-                            val user = Admin(
+                            val admin = Admin(
                                 firebaseUser.uid,
                                 binding.etFirstName.text.toString().trim { it <= ' ' },
-                                binding.etLastName.text.toString().trim { it <= ' ' },
                                 binding.etEmail.text.toString().trim { it <= ' ' }
                             )
 
                             // Pass the required values in the constructor.
-                            FirestoreClass().registerUser(this@RegisterActivity, user)
+                            FirestoreClass().registerAdmin(this@RegisterActivity, admin)
                         } else {
 
                             // Hide the progress dialog

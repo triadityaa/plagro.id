@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:id="@+id/fl_header_image"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/auth_header_image_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

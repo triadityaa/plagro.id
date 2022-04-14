@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:id="@+id/fl_header_image"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/auth_header_image_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <com.adit.bangkit.plagroid.utils.MSPTextView
+        <com.adit.bangkit.plagroid.utils.MSPEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_email">
 
-        <com.adit.bangkit.plagroid.utils.MSPTextView
+        <com.adit.bangkit.plagroid.utils.MSPEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

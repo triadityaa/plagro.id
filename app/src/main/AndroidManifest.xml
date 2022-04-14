@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.adit.bangkit.plagroid">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,58 +13,40 @@
         android:theme="@style/Theme.Plagroid"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".ui.activity.seller.product.AddProductActivity"
+            android:name=".ui.activities.AddProductActivity"
             android:exported="false" />
+
+
+
         <activity
-            android:name=".ui.activity.seller.LoginSellerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.seller.RegisterSellerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.seller.UpdateSellerProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.seller.SellerProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.admin.AdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.user.WishlistActivity"
+            android:name=".ui.activities.SettingsActivity"
             android:theme="@style/Theme.Plagroid" />
         <activity
-            android:name=".ui.activity.user.SettingsActivity"
+            android:name=".ui.activities.DashboardActivity"
             android:theme="@style/Theme.Plagroid" />
         <activity
-            android:name=".ui.activity.user.DashboardActivity"
-            android:theme="@style/Theme.Plagroid" />
-        <activity
-            android:name=".ui.activity.user.UserProfileActivity"
+            android:name=".ui.activities.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.activity.user.ForgotPasswordActivity"
+            android:name=".ui.activities.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".ui.activity.BaseActivity" />
+        <activity android:name=".ui.activities.BaseActivity" />
         <activity
-            android:name=".ui.activity.user.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Plagroid.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ui.activity.user.LoginActivity"
+            android:name=".ui.activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.activity.seller.SellerActivity"
-            android:theme="@style/Theme.Plagroid" />
+            android:name=".ui.activities.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Plagroid.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name=".ui.activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Plagroid"
@@ -76,6 +59,6 @@
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
 </manifest>

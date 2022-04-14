@@ -23,6 +23,7 @@ class ProductsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentProductsBinding.inflate(layoutInflater)
         setHasOptionsMenu(true)
     }
 
@@ -31,8 +32,8 @@ class ProductsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mRootView = inflater.inflate(R.layout.fragment_products, container, false)
-        return mRootView
+//        mRootView = inflater.inflate(R.layout.fragment_products, container, false)
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

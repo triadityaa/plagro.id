@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.adit.bangkit.plagroid.databinding.ActivitySplashBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 
-
+@Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {

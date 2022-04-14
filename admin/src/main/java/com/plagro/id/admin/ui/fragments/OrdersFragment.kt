@@ -22,8 +22,8 @@ class OrdersFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_orders, container, false)
-        return root
+        binding = FragmentOrdersBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onResume() {

@@ -40,7 +40,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
-        binding = com.adit.bangkit.plagroid.databinding.ActivityUserProfileBinding.inflate(layoutInflater)
+        binding = ActivityUserProfileBinding.inflate(layoutInflater)
         // This is used to align the xml view to this class
         setContentView(binding.root)
 

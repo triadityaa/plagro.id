@@ -274,11 +274,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
         // Here we get the text from editText and trim the space
         val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
-        val gender = if (binding.rbMale.isChecked) {
-            Constants.MALE
-        } else {
-            Constants.FEMALE
-        }
+
 
         if (mUserProfileImageURL.isNotEmpty()) {
             adminHashMap[Constants.IMAGE] = mUserProfileImageURL

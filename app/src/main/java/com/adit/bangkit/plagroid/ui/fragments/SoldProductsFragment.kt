@@ -21,8 +21,10 @@ class SoldProductsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentSoldProductsBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sold_products, container, false)
+            //return inflater.inflate(R.layout.fragment_sold_products, container, false)
+        return binding.root
     }
 
     override fun onResume() {
