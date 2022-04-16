@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <stroke
-        android:width="@dimen/user_image_profile_stroke"
+        android:width="@dimen/user_image_background_stroke"
         android:color="@color/secondary_text"/>
 
     <corners android:radius="@dimen/user_image_background_corner_radius"/>

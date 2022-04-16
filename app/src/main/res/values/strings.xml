@@ -54,6 +54,9 @@
 
     <string name="msg_profile_update_success">Your profile is updated successfully.</string>
 
+    <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+    <string name="search">Search</string>
 
     <string name="title_activity_dashboard">MainActivity</string>
 
@@ -174,5 +177,6 @@
     <string name="no_products_sold_out_yet">No products sold out yet!</string>
 
     <string name="title_sold_product_details">SOLD PRODUCT DETAILS</string>
+    <string name="title_home">Home</string>
 
 </resources>

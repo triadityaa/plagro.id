@@ -11,9 +11,7 @@ data class User(
     val email: String = "",
     val image: String = "",
     val mobile: Long = 0,
-    val address: String = "",
     val gender: String = "",
-    val codepos: Int = 0,
     val profileCompleted: Int = 0,
     val userType: Int = 1
 ):Parcelable

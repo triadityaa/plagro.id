@@ -4,6 +4,9 @@
     package="com.adit.bangkit.plagroid">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,12 +18,9 @@
         <activity
             android:name=".ui.activities.AddProductActivity"
             android:exported="false" />
-
-
-
         <activity
             android:name=".ui.activities.SettingsActivity"
-            android:theme="@style/Theme.Plagroid" />
+            android:theme="@style/Theme.Plagroid.NoActionBar" />
         <activity
             android:name=".ui.activities.DashboardActivity"
             android:theme="@style/Theme.Plagroid" />
@@ -49,7 +49,7 @@
             android:name=".ui.activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Plagroid"
+            android:theme="@style/Theme.Plagroid.NoActionBar"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +58,4 @@
             </intent-filter>
         </activity>
     </application>
-
-
-
 </manifest>

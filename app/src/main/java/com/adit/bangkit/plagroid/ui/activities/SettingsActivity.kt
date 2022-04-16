@@ -1,6 +1,5 @@
 package com.adit.bangkit.plagroid.ui.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,9 +7,9 @@ import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivitySettingsBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.models.User
-import com.google.firebase.auth.FirebaseAuth
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Setting screen of the app.
@@ -104,7 +103,6 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
     /**
      * A function to receive the user details and populate it in the UI.
      */
-    @SuppressLint("SetTextI18n")
     fun userDetailsSuccess(user: User) {
 
         mUserDetails = user
@@ -114,8 +112,8 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
 
         // Load the image using the Glide Loader class.
         GlideLoader(this@SettingsActivity).loadUserPicture(user.image, binding.ivUserPhoto)
-
-        binding.tvName.text = "${user.firstName} ${user.lastName}"
+        binding.tvName.text = user.firstName
+        binding.tvName.text = user.lastName
         binding.tvGender.text = user.gender
         binding.tvEmail.text = user.email
         binding.tvMobileNumber.text = "${user.mobile}"

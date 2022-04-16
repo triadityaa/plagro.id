@@ -61,7 +61,6 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/settings_user_picture_margin"
                 android:contentDescription="@string/content_description"
-                android:scaleType="fitXY"
                 android:src="@drawable/ic_user_placeholder" />
 
             <View
@@ -88,15 +87,15 @@
             android:textSize="@dimen/settings_edit_label_textSize" />
 
         <com.plagro.id.admin.utils.MSPTextViewBold
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fl_user_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/settings_name_marginTop"
-            android:textColor="@color/colorDarkGrey"
-            android:textSize="@dimen/settings_name_textSize"
-            tools:text="Denis Panjuta" />
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fl_user_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/settings_name_marginTop"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/settings_name_textSize"
+                tools:text="Tri Aditya" />
 
         <com.plagro.id.admin.utils.MSPTextView
             android:id="@+id/tv_gender"
@@ -118,7 +117,7 @@
             android:layout_marginTop="@dimen/settings_info_marginTop"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/settings_info_textSize"
-            tools:text="denis.panjuta@gmail.com" />
+            tools:text="triaditya@gmail.com" />
 
         <com.plagro.id.admin.utils.MSPTextView
             android:id="@+id/tv_mobile_number"
@@ -129,7 +128,7 @@
             android:layout_marginTop="@dimen/settings_info_marginTop"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/settings_info_textSize"
-            tools:text="123456789" />
+            tools:text="+6281234567890" />
 
         <LinearLayout
             android:id="@+id/ll_address"
