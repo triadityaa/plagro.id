@@ -54,10 +54,10 @@
                 android:textSize="@dimen/checkout_lbl_textSize" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cart_list_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_product_items" />
+                    android:id="@+id/rv_cart_list_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_product_items" />
 
             <com.adit.bangkit.plagroid.utils.MSPTextView
                 android:id="@+id/tv_selected_address"

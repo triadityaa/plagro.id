@@ -8,6 +8,7 @@ import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.FragmentDashboardBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.models.Product
+import com.adit.bangkit.plagroid.ui.activities.CartListActivity
 import com.adit.bangkit.plagroid.ui.activities.ProductDetailsActivity
 import com.adit.bangkit.plagroid.ui.activities.SettingsActivity
 import com.adit.bangkit.plagroid.ui.adapters.DashboardItemsListAdapter
@@ -44,8 +45,12 @@ class DashboardFragment : BaseFragment() {
 
         when (id) {
 
-            R.id.action_settings -> {
+            R.id.action_cart ->{
+                startActivity(Intent(activity, CartListActivity::class.java))
+                return true
+            }
 
+            R.id.action_settings -> {
                 startActivity(Intent(activity, SettingsActivity::class.java))
                 return true
             }
@@ -64,7 +69,7 @@ class DashboardFragment : BaseFragment() {
      */
     private fun getDashboardItemsList() {
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getDashboardItemsList(this@DashboardFragment)
     }

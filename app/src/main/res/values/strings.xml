@@ -173,10 +173,16 @@
     <string name="order_status_in_process">In Process</string>
     <string name="order_status_delivered">Delivered</string>
 
-    <string name="title_sold_products">Sold Products</string>
+    <string name="title_sold_products">History Transaction</string>
     <string name="no_products_sold_out_yet">No products sold out yet!</string>
 
     <string name="title_sold_product_details">SOLD PRODUCT DETAILS</string>
     <string name="title_home">Home</string>
+    <string name="title_history">Transaction</string>
+    <string name="hint_pickup_location">Pickup Location</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="products_price">Price</string>
+    <string name="products_name">Product Name</string>
+    <string name="btn_pickup_location">FIND YOUR LOCATION</string>
 
 </resources>

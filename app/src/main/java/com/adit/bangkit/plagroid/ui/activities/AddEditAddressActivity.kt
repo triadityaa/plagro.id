@@ -1,14 +1,30 @@
 package com.adit.bangkit.plagroid.ui.activities
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityAddEditAddressBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.models.Address
 import com.adit.bangkit.plagroid.utils.Constants
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
+import java.util.*
+
 
 /**
  * Add edit address screen.
@@ -17,10 +33,10 @@ class AddEditAddressActivity : BaseActivity() {
 
     private var mAddressDetails: Address? = null
     private lateinit var binding: ActivityAddEditAddressBinding
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    /**
-     * This function is auto created by Android when the Activity Class is created.
-     */
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
@@ -73,6 +89,112 @@ class AddEditAddressActivity : BaseActivity() {
 
         binding.btnSubmitAddress.setOnClickListener {
             saveAddressToFirestore()
+        }
+
+        binding.etPickupLocation.setOnClickListener {
+            startActivity(Intent(this, MapsActivity::class.java))
+        }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        binding.btnLocation.setOnClickListener {
+            getCurrentLocation()
+        }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun getCurrentLocation(){
+        if (checkPermission()){
+            if (isLocationEnable()){
+                fusedLocationClient.lastLocation.addOnSuccessListener {
+                    if (it != null){
+                        val latLng = LatLng(it.latitude, it.longitude)
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+                        if (addresses.isNotEmpty()){
+                            val address = addresses[0]
+                            val addressText = StringBuilder()
+                            for (i in 0 until address.maxAddressLineIndex){
+                                addressText.append(address.getAddressLine(i)).append("\n")
+                            }
+                            binding.etAddress.setText(address.thoroughfare + " " + address.subThoroughfare + ", " + address.subAdminArea+ ", " + address.locality + ", " + address.adminArea)
+                            binding.etZipCode.setText(address.postalCode)
+                            binding.etPickupLocation.text = address.latitude.toString() + " , " + address.longitude.toString()
+                        }
+                    }
+                }
+            }else{
+                //open settings here
+                Toast.makeText(this, "Please enable location", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        }else{
+            //request permission here
+            requestPermission()
+        }
+    }
+
+    private fun isLocationEnable(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION), Constants.PERMISSION_REQUEST_ACCESS_LOCATION
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun checkPermission(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ),
+                Constants.PERMISSION_REQUEST_ACCESS_LOCATION
+            )
+            return false
+        } else {
+            return true
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode==Constants.PERMISSION_REQUEST_ACCESS_LOCATION){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+                getCurrentLocation()
+            }else{
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -152,7 +274,7 @@ class AddEditAddressActivity : BaseActivity() {
         if (validateData()) {
 
             // Show the progress dialog.
-            showProgressDialog(resources.getString(R.string.please_wait))
+            showProgressDialog()
 
             val addressType: String = when {
                 binding.rbHome.isChecked -> {
@@ -212,4 +334,5 @@ class AddEditAddressActivity : BaseActivity() {
         setResult(RESULT_OK)
         finish()
     }
+
 }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="@color/colorWhite"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -70,21 +71,24 @@
         </FrameLayout>
 
         <com.adit.bangkit.plagroid.utils.MSPTextView
-            android:id="@+id/tv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fl_header_bg"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"
-            android:background="@drawable/item_grey_border_background"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:paddingStart="@dimen/settings_edit_label_marginStartEnd"
-            android:paddingTop="@dimen/settings_edit_label_marginTopBottom"
-            android:paddingEnd="@dimen/settings_edit_label_marginStartEnd"
-            android:paddingBottom="@dimen/settings_edit_label_marginTopBottom"
-            android:text="@string/lbl_edit"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/settings_edit_label_textSize" />
+                android:id="@+id/tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fl_header_bg"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/item_grey_border_background"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:paddingStart="@dimen/settings_edit_label_marginStartEnd"
+                android:paddingTop="@dimen/settings_edit_label_marginTopBottom"
+                android:paddingEnd="@dimen/settings_edit_label_marginStartEnd"
+                android:paddingBottom="@dimen/settings_edit_label_marginTopBottom"
+                android:text="@string/lbl_edit"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/settings_edit_label_textSize"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp" />
 
         <com.adit.bangkit.plagroid.utils.MSPTextViewBold
                 android:id="@+id/tv_name"
@@ -98,15 +102,15 @@
                 tools:text="Tri Aditya" />
 
         <com.adit.bangkit.plagroid.utils.MSPTextView
-            android:id="@+id/tv_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/settings_info_marginTop"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/settings_info_textSize"
-            tools:text="Male" />
+                android:id="@+id/tv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/settings_info_marginTop"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/settings_info_textSize"
+                tools:text="Male" />
 
         <com.adit.bangkit.plagroid.utils.MSPTextView
             android:id="@+id/tv_email"
@@ -159,23 +163,23 @@
         </LinearLayout>
 
         <com.adit.bangkit.plagroid.utils.MSPButton
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_address"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/settings_button_marginStartEnd"
-            android:layout_marginTop="@dimen/settings_button_marginTopBottom"
-            android:layout_marginEnd="@dimen/settings_button_marginStartEnd"
-            android:layout_marginBottom="@dimen/settings_button_marginTopBottom"
-            android:background="@drawable/button_background"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:paddingTop="@dimen/btn_padding"
-            android:paddingBottom="@dimen/btn_padding"
-            android:text="@string/btn_lbl_logout"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/btn_textSize" />
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_address"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/settings_button_marginStartEnd"
+                android:layout_marginTop="@dimen/settings_button_marginTopBottom"
+                android:layout_marginEnd="@dimen/settings_button_marginStartEnd"
+                android:layout_marginBottom="@dimen/settings_button_marginTopBottom"
+                android:background="@drawable/button_background"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_lbl_logout"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize" />
 
     </RelativeLayout>
 </ScrollView>

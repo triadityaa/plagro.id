@@ -1,25 +1,40 @@
 package com.adit.bangkit.plagroid.ui.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityCheckoutBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
-import com.adit.bangkit.plagroid.models.Address
-import com.adit.bangkit.plagroid.models.Cart
-import com.adit.bangkit.plagroid.models.Order
-import com.adit.bangkit.plagroid.models.Product
+import com.adit.bangkit.plagroid.models.*
 import com.adit.bangkit.plagroid.ui.adapters.CartItemsListAdapter
 import com.adit.bangkit.plagroid.utils.Constants
+import com.google.firebase.firestore.FirebaseFirestore
+import com.midtrans.sdk.corekit.core.MidtransSDK
+import com.midtrans.sdk.corekit.core.TransactionRequest
+import com.midtrans.sdk.corekit.core.themes.CustomColorTheme
+import com.midtrans.sdk.corekit.models.BillingAddress
+import com.midtrans.sdk.corekit.models.CustomerDetails
+import com.midtrans.sdk.corekit.models.ItemDetails
+import com.midtrans.sdk.corekit.models.ShippingAddress
+import com.midtrans.sdk.uikit.SdkUIFlowBuilder
+
 
 /**
  * A CheckOut activity screen.
  */
 class CheckoutActivity : BaseActivity() {
+
+    //A global variable for user details
+    private lateinit var mUserDetails: User
 
     // A global variable for the selected address details.
     private var mAddressDetails: Address? = null
@@ -54,6 +69,7 @@ class CheckoutActivity : BaseActivity() {
 
         setupActionBar()
 
+
         if (intent.hasExtra(Constants.EXTRA_SELECTED_ADDRESS)) {
             mAddressDetails =
                 intent.getParcelableExtra<Address>(Constants.EXTRA_SELECTED_ADDRESS)!!
@@ -62,7 +78,8 @@ class CheckoutActivity : BaseActivity() {
         if (mAddressDetails != null) {
             binding.tvCheckoutAddressType.text = mAddressDetails?.type
             binding.tvCheckoutFullName.text = mAddressDetails?.name
-            binding.tvCheckoutAddress.text = "${mAddressDetails!!.address}, ${mAddressDetails!!.zipCode}"
+            binding.tvCheckoutAddress.text =
+                "${mAddressDetails!!.address}, ${mAddressDetails!!.zipCode}"
             binding.tvCheckoutAdditionalNote.text = mAddressDetails?.additionalNote
 
             if (mAddressDetails?.otherDetails!!.isNotEmpty()) {
@@ -71,11 +88,110 @@ class CheckoutActivity : BaseActivity() {
             binding.tvCheckoutMobileNumber.text = mAddressDetails?.mobileNumber
         }
 
+        SdkUIFlowBuilder.init()
+            .setClientKey(Constants.CLIENT_KEY) // client_key is mandatory
+            .setContext(applicationContext) // context is mandatory
+            .setTransactionFinishedCallback { result ->
+                if (result.status == Constants.STATUS_PENDING) {
+                    hideProgressDialog()
+
+                    Toast.makeText(
+                        this@CheckoutActivity, "Your order placed successfully.\n " +
+                                "Please select your payment method", Toast.LENGTH_SHORT
+                    ).show()
+
+                    val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                }
+
+            }
+            // Handle finished transaction here.
+            // set transaction finish callback (sdk callback)
+            .setMerchantBaseUrl("https://plagroid.samuraibalifarm.com/index.php/") //set merchant url (required)
+            .enableLog(true) // enable sdk log (optional)
+            .setColorTheme(CustomColorTheme("#81D742", "#61CE70", "#419845"))
+            .setLanguage("id") //`en` for English and `id` for Bahasa
+            .buildSDK()
+
         binding.btnPlaceOrder.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_PHONE_STATE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_PHONE_STATE),
+                    101
+                )
+            }
+
+            Log.e("totalHarga", mTotalAmount.toInt().toString())
+            val transactionRequest = TransactionRequest(
+                "PLAGRO.ID-" + System.currentTimeMillis().toString(),
+                mTotalAmount
+            )
+            val itemDetails = ArrayList<ItemDetails>()
+            for (mCartItemsList in mCartItemsList) {
+                val detail = ItemDetails(
+                    mCartItemsList.product_id,
+                    mCartItemsList.price.toDouble(),
+                    mCartItemsList.cart_quantity.toInt(),
+                    mCartItemsList.title
+                )
+                itemDetails.add(detail)
+            }
+            val shippingDetails = ItemDetails("Shipping", 10000.0, 1, "PLAGRO")
+            itemDetails.add(shippingDetails)
+            uiKitDetails(transactionRequest, mUserDetails)
+            transactionRequest.itemDetails = itemDetails
+            MidtransSDK.getInstance().transactionRequest = transactionRequest
+            MidtransSDK.getInstance().startPaymentUiFlow(this)
+
             placeAnOrder()
+            updateSoldProduct(mCartItemsList, mOrderDetails)
         }
 
         getProductList()
+        getUserDetails()
+    }
+
+
+    // a function to get user details from firebase in order to send data to midtrans
+    fun uiKitDetails(transactionRequest: TransactionRequest, user: User) {
+        hideProgressDialog()
+        mUserDetails = user
+        val customerDetails = CustomerDetails()
+        customerDetails.customerIdentifier = user.id
+        customerDetails.phone = user.mobile.toString()
+        customerDetails.firstName = user.firstName
+        customerDetails.lastName = user.lastName
+        customerDetails.email = user.email
+
+        val shippingAddress = ShippingAddress()
+        shippingAddress.address = mAddressDetails?.address
+        shippingAddress.city = (mAddressDetails?.lon?.plus(mAddressDetails?.lat!!)).toString()
+        shippingAddress.postalCode = mAddressDetails?.zipCode
+        customerDetails.shippingAddress = shippingAddress
+
+        val billingAddress = BillingAddress()
+        billingAddress.address = mAddressDetails?.address
+        billingAddress.city = (mAddressDetails?.lon?.plus(mAddressDetails?.lat!!)).toString()
+        billingAddress.postalCode = mAddressDetails?.zipCode
+        customerDetails.billingAddress = billingAddress
+
+        transactionRequest.customerDetails = customerDetails
+    }
+
+    private fun getUserDetails() {
+
+        // Show the progress dialog
+//        showProgressDialog(resources.getString(R.string.please_wait))
+
+        // Call the function of Firestore class to get the user details from firestore which is already created.
+        FirestoreClass().getUserDetails(this@CheckoutActivity)
     }
 
     /**
@@ -100,7 +216,7 @@ class CheckoutActivity : BaseActivity() {
     private fun getProductList() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getAllProductsList(this@CheckoutActivity)
     }
@@ -164,15 +280,15 @@ class CheckoutActivity : BaseActivity() {
             }
         }
 
-        binding.tvCheckoutSubTotal.text = "$$mSubTotal"
+        binding.tvCheckoutSubTotal.text = "Rp.$mSubTotal"
         // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
-        binding.tvCheckoutShippingCharge.text = "$10.0"
+        binding.tvCheckoutShippingCharge.text = "Rp.10.000"
 
         if (mSubTotal > 0) {
             binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
-            mTotalAmount = mSubTotal + 10.0
-            binding.tvCheckoutTotalAmount.text = "$$mTotalAmount"
+            mTotalAmount = mSubTotal + 10000.0
+            binding.tvCheckoutTotalAmount.text = "Rp.$mTotalAmount"
         } else {
             binding.llCheckoutPlaceOrder.visibility = View.GONE
         }
@@ -184,18 +300,20 @@ class CheckoutActivity : BaseActivity() {
     private fun placeAnOrder() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         mOrderDetails = Order(
             FirestoreClass().getCurrentUserID(),
             mCartItemsList,
             mAddressDetails!!,
-            "My order ${System.currentTimeMillis()}",
+            "PLAGRO.ID-${System.currentTimeMillis()}",
             mCartItemsList[0].image,
             mSubTotal.toString(),
-            "10.0", // The Shipping Charge is fixed as $10 for now in our case.
+            "10.000", // The Shipping Charge is fixed as $10 for now in this case.
             mTotalAmount.toString(),
-            System.currentTimeMillis()
+            Order().order_datetime,
+            Order().id,
+            Order().admin_id,
         )
 
         FirestoreClass().placeOrder(this@CheckoutActivity, mOrderDetails)
@@ -217,12 +335,44 @@ class CheckoutActivity : BaseActivity() {
         // Hide the progress dialog.
         hideProgressDialog()
 
-        Toast.makeText(this@CheckoutActivity, "Your order placed successfully.", Toast.LENGTH_SHORT)
+        Toast.makeText(
+            this@CheckoutActivity, "Your order placed successfully.\n " +
+                    "Please select your payment method", Toast.LENGTH_SHORT
+        )
             .show()
 
-        val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
+//        val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        startActivity(intent)
+//        finish()
+    }
+
+    fun updateSoldProduct(cartList: ArrayList<Cart>, order: Order) {
+        val mFireStore = FirebaseFirestore.getInstance()
+        val writeBatch = mFireStore.batch()
+
+        // Prepare the sold product details
+        for (cart in cartList) {
+
+            val soldProduct = SoldProduct(
+                FirestoreClass().getCurrentUserID(),
+                cart.title,
+                cart.price,
+                cart.cart_quantity,
+                cart.image,
+                order.title,
+                order.order_datetime,
+                order.sub_total_amount,
+                order.shipping_charge,
+                order.total_amount,
+                order.address,
+                order.id,
+                order.admin_id
+            )
+
+            val documentReference = mFireStore.collection(Constants.SOLD_PRODUCTS)
+                .document()
+            writeBatch.set(documentReference, soldProduct)
+        }
     }
 }

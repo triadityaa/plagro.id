@@ -64,6 +64,32 @@ object Constants {
     const val OFFICE: String = "Office"
     const val OTHER: String = "Other"
 
+    //Maps
+    const val GEOFENCE_RADIUS = 200
+    const val GEOFENCE_ID = "REMINDER_GEOFENCE_ID"
+    const val GEOFENCE_EXPIRATION = 10 * 24 * 60 * 60 * 1000 // 10 days
+    const val GEOFENCE_DWELL_DELAY =  10 * 1000 // 10 secs // 2 minutes
+    const val GEOFENCE_LOCATION_REQUEST_CODE = 12345
+    const val CAMERA_ZOOM_LEVEL = 13f
+    const val LOCATION_REQUEST_CODE = 123
+    const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
+
+    //Payment
+    const val CLIENT_KEY = "SB-Mid-client-zS17TygMBI02Ta0o"
+    const val STATUS_SUCCESS = "success"
+    const val STATUS_FAILED = "failed"
+    const val STATUS_PENDING = "pending"
+    const val STATUS_CANCELLED = "cancelled"
+    const val STATUS_EXPIRED = "expired"
+    const val STATUS_UNKNOWN = "unknown"
+    const val STATUS_PROCESSING = "processing"
+    const val STATUS_REFUNDED = "refunded"
+    const val STATUS_DISPUTE = "disputed"
+    const val STATUS_CHARGEBACK = "chargeback"
+    const val STATUS_REVERSED = "reversed"
+    const val STATUS_FRAUD = "fraud"
+    const val STATUS_REJECTED = "rejected"
+
     /**
      * A function for user profile image selection from phone storage.
      */
