@@ -94,7 +94,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
     private fun getUserDetails() {
 
         // Show the progress dialog
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         // Call the function of Firestore class to get the user details from firestore which is already created.
         FirestoreClass().getAdminDetails(this@SettingsActivity)

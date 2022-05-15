@@ -10,6 +10,7 @@ import com.adit.bangkit.plagroid.databinding.ActivityCartListBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.models.Cart
 import com.adit.bangkit.plagroid.models.Product
+import com.adit.bangkit.plagroid.models.User
 import com.adit.bangkit.plagroid.ui.adapters.CartItemsListAdapter
 import com.adit.bangkit.plagroid.utils.Constants
 
@@ -72,7 +73,7 @@ class CartListActivity : BaseActivity() {
     private fun getProductList() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getAllProductsList(this@CartListActivity)
     }
@@ -148,15 +149,15 @@ class CartListActivity : BaseActivity() {
                 }
             }
 
-            binding.tvSubTotal.text = "$$subTotal"
+            binding.tvSubTotal.text = "Rp.$subTotal"
             // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
-            binding.tvShippingCharge.text = "$10.0"
+            binding.tvShippingCharge.text = "Rp.10.000"
 
             if (subTotal > 0) {
                 binding.llCheckout.visibility = View.VISIBLE
 
-                val total = subTotal + 10
-                binding.tvTotalAmount.text = "$$total"
+                val total = subTotal + 10000
+                binding.tvTotalAmount.text = "Rp.$total"
             } else {
                 binding.llCheckout.visibility = View.GONE
             }

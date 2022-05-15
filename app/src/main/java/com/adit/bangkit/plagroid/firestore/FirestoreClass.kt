@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.midtrans.sdk.corekit.core.TransactionRequest
 
 
 /**
@@ -86,6 +87,7 @@ class FirestoreClass {
 
                 // Here we have received the document snapshot which is converted into the User Data model object.
                 val user = document.toObject(User::class.java)!!
+                val transactionRequest = TransactionRequest(" ",0.0," ")
 
                 val sharedPreferences =
                     activity.getSharedPreferences(
@@ -111,6 +113,11 @@ class FirestoreClass {
                         // Call a function of base activity for transferring the result to it.
                         activity.userDetailsSuccess(user)
                     }
+
+                    is CheckoutActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        activity.uiKitDetails(transactionRequest, user)
+                    }
                 }
             }
             .addOnFailureListener { e ->
@@ -120,6 +127,9 @@ class FirestoreClass {
                         activity.hideProgressDialog()
                     }
                     is SettingsActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is CheckoutActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
@@ -801,7 +811,9 @@ class FirestoreClass {
                 order.sub_total_amount,
                 order.shipping_charge,
                 order.total_amount,
-                order.address
+                order.address,
+                order.id,
+                order.admin_id
             )
 
             val documentReference = mFireStore.collection(Constants.SOLD_PRODUCTS)

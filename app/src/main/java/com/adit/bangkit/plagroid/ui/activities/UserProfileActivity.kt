@@ -127,7 +127,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                     if (validateUserProfileDetails()) {
 
                         // Show the progress dialog.
-                        showProgressDialog(resources.getString(R.string.please_wait))
+                        showProgressDialog()
 
                         if (mSelectedImageFileUri != null) {
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.FragmentOrdersBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.ui.adapters.MyOrdersListAdapter
@@ -38,7 +37,7 @@ class OrdersFragment : BaseFragment() {
      */
     private fun getMyOrdersList() {
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getMyOrdersList(this@OrdersFragment)
     }
@@ -56,7 +55,7 @@ class OrdersFragment : BaseFragment() {
         if (ordersList.size > 0) {
 
             binding.rvMyOrderItems.visibility = View.VISIBLE
-            binding.rvMyOrderItems.visibility = View.GONE
+            binding.tvNoOrdersFound.visibility = View.GONE
 
             binding.rvMyOrderItems.layoutManager = LinearLayoutManager(activity)
             binding.rvMyOrderItems.setHasFixedSize(true)
@@ -65,7 +64,7 @@ class OrdersFragment : BaseFragment() {
             binding.rvMyOrderItems.adapter = myOrdersAdapter
         } else {
             binding.rvMyOrderItems.visibility = View.GONE
-            binding.rvMyOrderItems.visibility = View.VISIBLE
+            binding.tvNoOrdersFound.visibility = View.VISIBLE
         }
     }
 }

@@ -92,7 +92,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         )
 
         // Show the progress dialog
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().addCartItems(this@ProductDetailsActivity, addToCart)
     }
@@ -119,7 +119,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
     private fun getProductDetails() {
 
         // Show the product dialog
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         // Call the function of FirestoreClass to get the product details.
         FirestoreClass().getProductDetails(this@ProductDetailsActivity, mProductId)

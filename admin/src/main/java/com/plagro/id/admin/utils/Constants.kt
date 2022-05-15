@@ -55,6 +55,7 @@ object Constants {
     const val FIRST_NAME: String = "firstName"
     const val LAST_NAME: String = "lastName"
     const val USER_ID: String = "user_id"
+    const val ADMIN_ID: String = "admin_id"
     const val PRODUCT_ID: String = "product_id"
 
     const val USER_PROFILE_IMAGE: String = "User_Profile_Image"

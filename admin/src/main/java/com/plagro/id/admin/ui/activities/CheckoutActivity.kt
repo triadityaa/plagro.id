@@ -100,7 +100,7 @@ class CheckoutActivity : BaseActivity() {
     private fun getProductList() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getAllProductsList(this@CheckoutActivity)
     }
@@ -183,7 +183,7 @@ class CheckoutActivity : BaseActivity() {
     private fun placeAnOrder() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         mOrderDetails = Order(
             FirestoreClass().getCurrentUserID(),

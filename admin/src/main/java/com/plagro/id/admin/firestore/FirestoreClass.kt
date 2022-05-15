@@ -803,7 +803,9 @@ class FirestoreClass {
                 order.sub_total_amount,
                 order.shipping_charge,
                 order.total_amount,
-                order.address
+                order.address,
+                order.id,
+                order.admin_id
             )
 
             val documentReference = mFireStore.collection(Constants.SOLD_PRODUCTS)
@@ -854,7 +856,7 @@ class FirestoreClass {
      */
     fun getMyOrdersList(fragment: OrdersFragment) {
         mFireStore.collection(Constants.ORDERS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo(Constants.ADMIN_ID, getCurrentUserID())
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
                 Log.e(fragment.javaClass.simpleName, document.documents.toString())
@@ -887,7 +889,7 @@ class FirestoreClass {
     fun getSoldProductsList(fragment: SoldProductsFragment) {
         // The collection name for SOLD PRODUCTS
         mFireStore.collection(Constants.SOLD_PRODUCTS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo(Constants.ADMIN_ID, getCurrentUserID())
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
                 // Here we get the list of sold products in the form of documents.

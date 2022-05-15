@@ -36,6 +36,8 @@ class AddressListActivity : BaseActivity() {
         // This is used to align the xml view to this class
         setContentView(binding.root)
 
+
+
         if (intent.hasExtra(Constants.EXTRA_SELECT_ADDRESS)) {
             mSelectAddress =
                 intent.getBooleanExtra(Constants.EXTRA_SELECT_ADDRESS, false)
@@ -69,6 +71,7 @@ class AddressListActivity : BaseActivity() {
      * @param data An Intent, which can return result data to the caller
      *               (various data can be attached to Intent "extras").
      */
+    @Deprecated("Deprecated in Java")
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -104,7 +107,7 @@ class AddressListActivity : BaseActivity() {
     private fun getAddressList() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getAddressesList(this@AddressListActivity)
     }
@@ -150,7 +153,7 @@ class AddressListActivity : BaseActivity() {
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                         // Show the progress dialog.
-                        showProgressDialog(resources.getString(R.string.please_wait))
+                        showProgressDialog()
 
                         FirestoreClass().deleteAddress(
                             this@AddressListActivity,

@@ -104,7 +104,7 @@ class AddressListActivity : BaseActivity() {
     private fun getAddressList() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getAddressesList(this@AddressListActivity)
     }
@@ -150,7 +150,7 @@ class AddressListActivity : BaseActivity() {
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                         // Show the progress dialog.
-                        showProgressDialog(resources.getString(R.string.please_wait))
+                        showProgressDialog()
 
                         FirestoreClass().deleteAddress(
                             this@AddressListActivity,

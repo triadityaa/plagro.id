@@ -34,7 +34,7 @@ class MyOrderDetailsActivity : AppCompatActivity() {
 
         setupActionBar()
 
-        var myOrderDetails: Order = Order()
+        var myOrderDetails = Order()
 
         if (intent.hasExtra(Constants.EXTRA_MY_ORDER_DETAILS)) {
             myOrderDetails =

@@ -59,7 +59,7 @@ open class CartItemsListAdapter(
             GlideLoader(context).loadProductPicture(model.image, holder.itemView.iv_cart_item_image)
 
             holder.itemView.tv_cart_item_title.text = model.title
-            holder.itemView.tv_cart_item_price.text = "$${model.price}"
+            holder.itemView.tv_cart_item_price.text = "Rp. ${model.price}"
             holder.itemView.tv_cart_quantity.text = model.cart_quantity
 
             if (model.cart_quantity == "0") {
@@ -117,7 +117,7 @@ open class CartItemsListAdapter(
                     // Show the progress dialog.
 
                     if (context is CartListActivity) {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
+                        context.showProgressDialog()
                     }
 
                     FirestoreClass().updateMyCart(context, model.id, itemHashMap)
@@ -136,7 +136,7 @@ open class CartItemsListAdapter(
 
                     // Show the progress dialog.
                     if (context is CartListActivity) {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
+                        context.showProgressDialog()
                     }
 
                     FirestoreClass().updateMyCart(context, model.id, itemHashMap)
@@ -157,7 +157,7 @@ open class CartItemsListAdapter(
 
                 when (context) {
                     is CartListActivity -> {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
+                        context.showProgressDialog()
                     }
                 }
 

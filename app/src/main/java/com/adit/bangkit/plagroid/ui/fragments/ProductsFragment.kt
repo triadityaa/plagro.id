@@ -59,7 +59,7 @@ class ProductsFragment : BaseFragment() {
 
     private fun getProductListFromFireStore() {
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         // Call the function of Firestore class.
         FirestoreClass().getProductsList(this@ProductsFragment)
@@ -136,7 +136,7 @@ class ProductsFragment : BaseFragment() {
         builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
 
             // Show the progress dialog.
-            showProgressDialog(resources.getString(R.string.please_wait))
+            showProgressDialog()
 
             // Call the function of Firestore class.
             FirestoreClass().deleteProduct(this@ProductsFragment, productID)

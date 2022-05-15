@@ -8,7 +8,6 @@ import com.plagro.id.admin.R
 import com.plagro.id.admin.databinding.FragmentDashboardBinding
 import com.plagro.id.admin.firestore.FirestoreClass
 import com.plagro.id.admin.models.Product
-import com.plagro.id.admin.ui.activities.CartListActivity
 import com.plagro.id.admin.ui.activities.ProductDetailsActivity
 import com.plagro.id.admin.ui.activities.SettingsActivity
 import com.plagro.id.admin.ui.adapters.DashboardItemsListAdapter
@@ -67,7 +66,7 @@ class DashboardFragment : BaseFragment() {
      */
     private fun getDashboardItemsList() {
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().getDashboardItemsList(this@DashboardFragment)
     }

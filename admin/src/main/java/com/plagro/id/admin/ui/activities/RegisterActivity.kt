@@ -123,7 +123,7 @@ class RegisterActivity : BaseActivity() {
         if (validateRegisterDetails()) {
 
             // Show the progress dialog.
-            showProgressDialog(resources.getString(R.string.please_wait))
+            showProgressDialog()
 
             val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
             val password: String = binding.etPassword.text.toString().trim { it <= ' ' }

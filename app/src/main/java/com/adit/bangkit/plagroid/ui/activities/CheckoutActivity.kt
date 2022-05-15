@@ -2,8 +2,10 @@ package com.adit.bangkit.plagroid.ui.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -152,6 +154,7 @@ class CheckoutActivity : BaseActivity() {
 
             placeAnOrder()
             updateSoldProduct(mCartItemsList, mOrderDetails)
+            sendEmail(mUserDetails, mOrderDetails)
         }
 
         getProductList()
@@ -373,6 +376,41 @@ class CheckoutActivity : BaseActivity() {
             val documentReference = mFireStore.collection(Constants.SOLD_PRODUCTS)
                 .document()
             writeBatch.set(documentReference, soldProduct)
+        }
+    }
+
+    fun sendEmail(user: User, order: Order) {
+        Log.i("Send email", "")
+//        val TO = arrayOf("")
+        val CC = arrayOf("")
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.data = Uri.parse("mailto:")
+        emailIntent.type = "text/plain"
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, user.email)
+        emailIntent.putExtra(Intent.EXTRA_CC, CC)
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "PLAGRO.ID Order")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hai ${user.firstName} {${user.lastName},\n\n" +
+                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
+                "Berikut ini adalah detail order anda:\n\n" +
+                "Order ID: ${order.id}\n" +
+                "Tanggal Pemesanan: ${order.order_datetime}\n" +
+                "Sub Total: ${order.sub_total_amount}\n" +
+                "Biaya Pengiriman: ${order.shipping_charge}\n" +
+                "Total Biaya: ${order.total_amount}\n" +
+                "Alamat Pengiriman: ${order.address}\n\n" +
+                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
+                "Salam,\n" +
+                "PLAGRO.ID")
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+            finish()
+            Log.i("Finished sending email...", "")
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(
+                this@CheckoutActivity,
+                "There is no email client installed.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

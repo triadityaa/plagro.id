@@ -152,7 +152,7 @@ class AddEditAddressActivity : BaseActivity() {
         if (validateData()) {
 
             // Show the progress dialog.
-            showProgressDialog(resources.getString(R.string.please_wait))
+            showProgressDialog()
 
             val addressType: String = when {
                 binding.rbHome.isChecked -> {

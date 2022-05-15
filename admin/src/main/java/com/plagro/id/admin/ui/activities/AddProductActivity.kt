@@ -203,7 +203,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
      */
     private fun uploadProductImage() {
 
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().uploadImageToCloudStorage(
             this@AddProductActivity,

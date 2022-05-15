@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.FragmentSoldProductsBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.models.SoldProduct
@@ -35,7 +34,7 @@ class SoldProductsFragment : BaseFragment() {
 
     private fun getSoldProductsList() {
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         // Call the function of Firestore class.
         FirestoreClass().getSoldProductsList(this@SoldProductsFragment)

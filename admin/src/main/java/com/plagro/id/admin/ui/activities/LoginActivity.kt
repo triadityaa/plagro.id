@@ -99,7 +99,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         if (validateLoginDetails()) {
 
             // Show the progress dialog.
-            showProgressDialog(resources.getString(R.string.please_wait))
+            showProgressDialog()
 
             // Get the text from editText and trim the space
             val email = binding.etEmail.text.toString().trim { it <= ' ' }

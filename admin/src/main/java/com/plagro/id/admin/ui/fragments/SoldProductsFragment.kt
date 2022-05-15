@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.plagro.id.admin.R
 import com.plagro.id.admin.databinding.FragmentSoldProductsBinding
 import com.plagro.id.admin.firestore.FirestoreClass
 import com.plagro.id.admin.models.SoldProduct
 import com.plagro.id.admin.ui.adapters.SoldProductsListAdapter
-import com.plagro.id.admin.ui.fragments.BaseFragment
 
 /**
  * Sold Products Listing Fragment.
@@ -36,7 +34,7 @@ class SoldProductsFragment : BaseFragment() {
 
     private fun getSoldProductsList() {
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         // Call the function of Firestore class.
         FirestoreClass().getSoldProductsList(this@SoldProductsFragment)

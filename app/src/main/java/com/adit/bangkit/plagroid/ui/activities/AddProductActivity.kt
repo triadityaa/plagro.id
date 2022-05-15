@@ -19,7 +19,6 @@ import com.adit.bangkit.plagroid.models.Product
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_add_product.*
-import kotlinx.android.synthetic.main.activity_forgot_password.*
 import java.io.IOException
 
 /**
@@ -205,7 +204,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
      */
     private fun uploadProductImage() {
 
-        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog()
 
         FirestoreClass().uploadImageToCloudStorage(
             this@AddProductActivity,

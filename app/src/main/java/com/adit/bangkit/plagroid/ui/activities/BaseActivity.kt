@@ -53,7 +53,7 @@ open class BaseActivity : AppCompatActivity() {
     /**
      * This function is used to show the progress dialog with the title and message to user.
      */
-    fun showProgressDialog(text: String) {
+    fun showProgressDialog() {
         mProgressDialog = Dialog(this)
 
         /*Set the screen content from a layout resource.
