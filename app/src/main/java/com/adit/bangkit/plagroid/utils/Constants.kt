@@ -90,6 +90,11 @@ object Constants {
     const val STATUS_FRAUD = "fraud"
     const val STATUS_REJECTED = "rejected"
 
+    //sending email
+    const val EMAIL_SUBJECT = "Order Confirmation"
+    const val EMAIL_SENDER = "plagro.id@gmail.com"
+    const val EMAIL_PASSWORD = "php2d2020"
+
     /**
      * A function for user profile image selection from phone storage.
      */

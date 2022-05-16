@@ -13,9 +13,11 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.md'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/license.txt'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.md'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
@@ -84,6 +86,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+//    implementation 'com.google.firebase:firebase-messaging-ktx'
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
@@ -119,4 +122,8 @@ dependencies {
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.1'
     implementation 'me.saket:better-link-movement-method:2.2.0'
     implementation 'ru.rambler.android:swipe-layout:1.1.0'
+
+    //email sender
+    implementation 'com.sun.mail:android-mail:1.6.6'
+    implementation 'com.sun.mail:android-activation:1.6.7'
 }

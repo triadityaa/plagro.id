@@ -2,10 +2,8 @@ package com.adit.bangkit.plagroid.ui.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,6 +15,7 @@ import com.adit.bangkit.plagroid.R
 import com.adit.bangkit.plagroid.databinding.ActivityCheckoutBinding
 import com.adit.bangkit.plagroid.firestore.FirestoreClass
 import com.adit.bangkit.plagroid.models.*
+import com.adit.bangkit.plagroid.models.Address
 import com.adit.bangkit.plagroid.ui.adapters.CartItemsListAdapter
 import com.adit.bangkit.plagroid.utils.Constants
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +27,10 @@ import com.midtrans.sdk.corekit.models.CustomerDetails
 import com.midtrans.sdk.corekit.models.ItemDetails
 import com.midtrans.sdk.corekit.models.ShippingAddress
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder
+import javax.mail.*
+import javax.mail.internet.AddressException
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
 
 
 /**
@@ -113,7 +116,7 @@ class CheckoutActivity : BaseActivity() {
             // set transaction finish callback (sdk callback)
             .setMerchantBaseUrl("https://plagroid.samuraibalifarm.com/index.php/") //set merchant url (required)
             .enableLog(true) // enable sdk log (optional)
-            .setColorTheme(CustomColorTheme("#81D742", "#61CE70", "#419845"))
+            .setColorTheme(CustomColorTheme("#81D742", "#419845", "#61CE70"))
             .setLanguage("id") //`en` for English and `id` for Bahasa
             .buildSDK()
 
@@ -154,7 +157,7 @@ class CheckoutActivity : BaseActivity() {
 
             placeAnOrder()
             updateSoldProduct(mCartItemsList, mOrderDetails)
-            sendEmail(mUserDetails, mOrderDetails)
+            mAddressDetails?.let { it1 -> sendEmail(mUserDetails, mOrderDetails, it1) }
         }
 
         getProductList()
@@ -379,38 +382,84 @@ class CheckoutActivity : BaseActivity() {
         }
     }
 
-    fun sendEmail(user: User, order: Order) {
-        Log.i("Send email", "")
-//        val TO = arrayOf("")
-        val CC = arrayOf("")
-        val emailIntent = Intent(Intent.ACTION_SEND)
-        emailIntent.data = Uri.parse("mailto:")
-        emailIntent.type = "text/plain"
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, user.email)
-        emailIntent.putExtra(Intent.EXTRA_CC, CC)
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "PLAGRO.ID Order")
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hai ${user.firstName} {${user.lastName},\n\n" +
+//    private fun sendEmail(user: User, order: Order) {
+//        Log.i("Send email", "")
+////        val TO = arrayOf("")
+//        val CC = arrayOf("")
+//        val emailIntent = Intent(Intent.ACTION_SEND)
+//        emailIntent.data = Uri.parse("mailto:")
+//        emailIntent.type = "text/plain"
+//        emailIntent.putExtra(Intent.EXTRA_EMAIL, user.email)
+//        emailIntent.putExtra(Intent.EXTRA_CC, CC)
+//        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order PLAGRO.ID dengan id ${order.id}")
+//        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hai ${user.firstName} {${user.lastName},\n\n" +
+//                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
+//                "Berikut ini adalah detail order anda:\n\n" +
+//                "Order ID: ${order.id}\n" +
+//                "Tanggal Pemesanan: ${order.order_datetime}\n" +
+//                "Sub Total: ${order.sub_total_amount}\n" +
+//                "Biaya Pengiriman: ${order.shipping_charge}\n" +
+//                "Total Biaya: ${order.total_amount}\n" +
+//                "Alamat Pengiriman: ${order.address}\n\n" +
+//                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
+//                "Salam,\n" +
+//                "PLAGRO.ID")
+//        try {
+//            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+//            finish()
+//            Log.i("Finished sending email...", "")
+//        } catch (ex: ActivityNotFoundException) {
+//            Toast.makeText(
+//                this@CheckoutActivity,
+//                "There is no email client installed.",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        }
+//    }
+
+
+    private fun sendEmail(user: User, order: Order, address: Address) {
+        try {
+            val stringSenderEmail = Constants.EMAIL_SENDER
+            val stringReceiverEmail = user.email
+            val stringPasswordSenderEmail = Constants.EMAIL_PASSWORD
+            val stringHost = "smtp.gmail.com"
+            val properties = System.getProperties()
+            properties["mail.smtp.host"] = stringHost
+            properties["mail.smtp.port"] = "465"
+            properties["mail.smtp.ssl.enable"] = "true"
+            properties["mail.smtp.auth"] = "true"
+            val session = Session.getInstance(properties, object : Authenticator() {
+                override fun getPasswordAuthentication(): PasswordAuthentication {
+                    return PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail)
+                }
+            })
+            val mimeMessage = MimeMessage(session)
+            mimeMessage.addRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
+            mimeMessage.subject = "Subject: Order PLAGRO.ID dengan id PLAGRO.ID-" + System.currentTimeMillis().toString()
+            mimeMessage.setText("Hai ${user.firstName} ${user.lastName},\n\n" +
                 "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
                 "Berikut ini adalah detail order anda:\n\n" +
-                "Order ID: ${order.id}\n" +
-                "Tanggal Pemesanan: ${order.order_datetime}\n" +
-                "Sub Total: ${order.sub_total_amount}\n" +
-                "Biaya Pengiriman: ${order.shipping_charge}\n" +
-                "Total Biaya: ${order.total_amount}\n" +
-                "Alamat Pengiriman: ${order.address}\n\n" +
+                "Order ID: PLAGRO.ID-" + System.currentTimeMillis().toString() + "\n" +
+                "Sub Total: Rp. ${order.sub_total_amount}\n" +
+                "Biaya Pengiriman: Rp. ${order.shipping_charge}\n" +
+                "Total Biaya: Rp. ${order.total_amount}\n" +
+                "Alamat Pengiriman: ${address.address}\n\n" +
                 "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
                 "Salam,\n" +
                 "PLAGRO.ID")
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
-            finish()
-            Log.i("Finished sending email...", "")
-        } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(
-                this@CheckoutActivity,
-                "There is no email client installed.",
-                Toast.LENGTH_SHORT
-            ).show()
+            val thread = Thread {
+                try {
+                    Transport.send(mimeMessage)
+                } catch (e: MessagingException) {
+                    e.printStackTrace()
+                }
+            }
+            thread.start()
+        } catch (e: AddressException) {
+            e.printStackTrace()
+        } catch (e: MessagingException) {
+            e.printStackTrace()
         }
     }
 }
