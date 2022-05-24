@@ -28,14 +28,66 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     // A global variable for URI of a selected image from phone storage.
     private var mSelectedImageFileUri: Uri? = null
     private lateinit var binding: ActivityAddProductBinding
+    private lateinit var mProductDetails: Product
 
     // A global variable for uploaded product image URL.
     private var mProductImageURL: String = ""
+    private var mProductId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (intent.hasExtra(Constants.EXTRA_PRODUCT_ID)) {
+            // Get the user details from intent as a ParcelableExtra.
+            mProductId = intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
+        }
+
+        if (intent.hasExtra(Constants.EXTRA_PRODUCT_DETAILS)) {
+            // Get the user details from intent as a ParcelableExtra.
+            mProductDetails = intent.getParcelableExtra(Constants.EXTRA_PRODUCT_DETAILS)!!
+        }
+
+        var productOwnerId = ""
+
+        if (intent.hasExtra(Constants.EXTRA_PRODUCT_OWNER_ID)) {
+            productOwnerId =
+                intent.getStringExtra(Constants.EXTRA_PRODUCT_OWNER_ID)!!
+        }
+
+        if (FirestoreClass().getCurrentUserID() == productOwnerId) {
+            binding.tvTitle.text = resources.getString(R.string.update_product).uppercase()
+
+            // Load the image using the GlideLoader class with the use of Glide Library.
+            GlideLoader(this@AddProductActivity).loadUserPicture(mProductDetails.image, binding.ivProductImage)
+
+            // Set the existing values to the UI and allow user to edit except the Email ID.
+            binding.etProductTitle.setText(mProductDetails.title)
+
+            binding.etProductPrice.setText(mProductDetails.price)
+            binding.etProductDescription.setText(mProductDetails.description)
+            binding.etProductQuantity.setText(mProductDetails.stock_quantity)
+            binding.btnSubmit.text = resources.getString(R.string.update_product).uppercase()
+            binding.btnSubmit.setOnClickListener {
+                if (validateUpdateProductDetails()) {
+
+                    showProgressDialog()
+
+                    if (mSelectedImageFileUri != null) {
+
+                        FirestoreClass().uploadImageToCloudStorage(
+                            this@AddProductActivity,
+                            mSelectedImageFileUri,
+                            Constants.USER_PROFILE_IMAGE
+                        )
+                    } else {
+
+                        uploadProductDetails()
+                    }
+                }
+            }
+        }
 
         setupActionBar()
 
@@ -198,6 +250,48 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+
+
+
+    private fun validateUpdateProductDetails(): Boolean {
+        return when {
+
+//            mSelectedImageFileUri == null -> {
+//                showErrorSnackBar(resources.getString(R.string.err_msg_select_product_image), true)
+//                false
+//            }
+
+            TextUtils.isEmpty(binding.etProductTitle.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_title), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etProductPrice.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_price), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etProductDescription.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_product_description),
+                    true
+                )
+                false
+            }
+
+            TextUtils.isEmpty(binding.etProductQuantity.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_product_quantity),
+                    true
+                )
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
+
     /**
      * A function to upload the selected product image to firebase cloud storage.
      */
@@ -240,8 +334,19 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             binding.etProductQuantity.text.toString().trim { it <= ' ' },
             mProductImageURL
         )
+        FirestoreClass().deleteProductOnUpdate(this@AddProductActivity, mProductId)
 
         FirestoreClass().uploadProductDetails(this@AddProductActivity, product)
+    }
+
+    fun productDeleteSuccess(){
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText( this,
+            resources.getString(R.string.product_delete_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     /**
@@ -259,5 +364,45 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         ).show()
 
         finish()
+    }
+
+    private fun updateProductsDetails() {
+
+        val itemHashMap = HashMap<String, Any>()
+
+        // Get the FirstName from editText and trim the space
+        val productName = binding.etProductTitle.text.toString().trim { it <= ' ' }
+        if (productName != mProductDetails.title) {
+            itemHashMap[Constants.PRODUCT_NAME] = productName
+        }
+
+        // Here we get the text from editText and trim the space
+        val productPrice = binding.etProductPrice.text.toString().trim { it <= ' ' }
+
+
+        if (mProductImageURL.isNotEmpty()) {
+            itemHashMap[Constants.PRODUCT_IMAGE] = mProductImageURL
+        }
+
+        if (productPrice.isNotEmpty() && productPrice != mProductDetails.price) {
+            itemHashMap[Constants.PRODUCT_PRICE] = productPrice
+        }
+
+        val productDescription = binding.etProductDescription.text.toString().trim { it <= ' ' }
+        if (productDescription.isNotEmpty() && productDescription != mProductDetails.description) {
+            itemHashMap[Constants.PRODUCT_DESCRIPTION] = productDescription
+        }
+
+        val productStock = binding.etProductQuantity.text.toString().trim { it <= ' ' }
+        if (productStock.isNotEmpty() && productStock != mProductDetails.stock_quantity) {
+            itemHashMap[Constants.STOCK_QUANTITY] = productStock
+        }
+
+
+
+        // call the registerUser function of FireStore class to make an entry in the database.
+        FirestoreClass().updateProductData(
+            this@AddProductActivity, mProductId, itemHashMap
+        )
     }
 }

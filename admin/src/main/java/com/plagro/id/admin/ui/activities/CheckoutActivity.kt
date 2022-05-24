@@ -130,6 +130,7 @@ class CheckoutActivity : BaseActivity() {
      *
      * @param cartList
      */
+    @SuppressLint("SetTextI18n")
     fun successCartItemsList(cartList: ArrayList<Cart>) {
 
         // Hide progress dialog.
@@ -163,15 +164,15 @@ class CheckoutActivity : BaseActivity() {
             }
         }
 
-        binding.tvCheckoutSubTotal.text = "$$mSubTotal"
+        binding.tvCheckoutSubTotal.text = "Rp. $mSubTotal"
         // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
-        binding.tvCheckoutShippingCharge.text = "$10.0"
+        binding.tvCheckoutShippingCharge.text = "Rp. 10000.0"
 
         if (mSubTotal > 0) {
             binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
             mTotalAmount = mSubTotal + 10.0
-            binding.tvCheckoutTotalAmount.text = "$$mTotalAmount"
+            binding.tvCheckoutTotalAmount.text = "Rp. $mTotalAmount"
         } else {
             binding.llCheckoutPlaceOrder.visibility = View.GONE
         }

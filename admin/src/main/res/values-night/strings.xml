@@ -77,7 +77,7 @@
 
     <string name="title_add_product">ADD PRODUCT</string>
     <string name="et_hint_product_title">Product Title</string>
-    <string name="et_hint_product_price">Product Price ($)</string>
+    <string name="et_hint_product_price">Product Price (Rp)</string>
     <string name="et_hint_product_description">Product Description</string>
     <string name="et_hint_product_quantity">Product Quantity</string>
 
@@ -180,4 +180,8 @@
     <string name="products_name" tools:ignore="ExtraTranslation">Product Name</string>
     <string name="products_price" tools:ignore="ExtraTranslation">Product Name</string>
     <string name="hint_retail_name">Retail Name</string>
+    <string name="add_product">+</string>
+    <string name="remove_product">-</string>
+    <string name="update_product">Update Product</string>
+    <string name="msg_product_update_success">Product Update Success</string>
 </resources>

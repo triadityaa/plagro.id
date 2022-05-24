@@ -1,8 +1,10 @@
 package com.plagro.id.admin.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -13,6 +15,8 @@ import com.plagro.id.admin.models.Cart
 import com.plagro.id.admin.models.Product
 import com.plagro.id.admin.utils.Constants
 import com.plagro.id.admin.utils.GlideLoader
+import java.text.NumberFormat
+import java.util.*
 
 /**
  * Product Details Screen.
@@ -40,7 +44,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
                 intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
         }
 
-        var productOwnerId: String = ""
+        var productOwnerId = ""
 
         if (intent.hasExtra(Constants.EXTRA_PRODUCT_OWNER_ID)) {
             productOwnerId =
@@ -54,14 +58,19 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
             binding.btnGoToCart.visibility = View.GONE
         } else {
             binding.btnAddToCart.visibility = View.VISIBLE
+            binding.tvUpdateProduct.visibility = View.VISIBLE
         }
 
         binding.btnAddToCart.setOnClickListener(this)
         binding.btnGoToCart.setOnClickListener(this)
+        binding.addProductQuantity.setOnClickListener(this)
+        binding.removeProductQuantity.setOnClickListener(this)
+        binding.tvUpdateProduct.setOnClickListener(this)
 
         getProductDetails()
     }
 
+    @SuppressLint("SetTextI18n", "StringFormatMatches")
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
@@ -70,8 +79,79 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
                     addToCart()
                 }
 
-                R.id.btn_go_to_cart->{
+                R.id.btn_go_to_cart-> {
                     startActivity(Intent(this@ProductDetailsActivity, CartListActivity::class.java))
+                }
+
+                R.id.tv_update_product -> {
+                    val intent = Intent(this@ProductDetailsActivity, AddProductActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, mProductId)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, mProductDetails.user_id)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_DETAILS, mProductDetails)
+                    startActivity(intent)
+                }
+
+                R.id.add_product_quantity -> {
+                    val context: Context = this
+                    val product= Product()
+                    val productQuantity = product.stock_quantity
+                    var updateQuantity = productQuantity.toInt().toString()
+
+                    if (productQuantity >= 0.toString()) {
+                        binding.tvProductDetailsStockQuantity.text.toString().trim { it <= ' ' }.toInt()
+                        var itemHashMap = HashMap<String, Any>()
+
+                        itemHashMap[Constants.STOCK_QUANTITY] = (updateQuantity + 1)
+
+                        binding.tvProductDetailsStockQuantity.text = (updateQuantity + 1)
+                        // Show the progress dialog.
+                        if (context is CartListActivity) {
+                            context.showProgressDialog()
+                        }
+
+                        FirestoreClass().updateProductQuantity(context, product.product_id, itemHashMap)
+                    } else {
+                        if (context is CartListActivity) {
+                            context.showErrorSnackBar(
+                                context.resources.getString(
+                                    R.string.msg_for_available_stock,
+                                    product.stock_quantity
+                                ),
+                                true
+                            )
+                        }
+                    }
+                }
+
+                R.id.remove_product_quantity ->{
+                    val context: Context = this
+                    val product= Product()
+                    var productQuantity = product.stock_quantity
+
+                    if (productQuantity >= 0.toString()) {
+                        binding.tvProductDetailsStockQuantity.text.toString().trim { it <= ' ' }.toInt()
+                        var itemHashMap = HashMap<String, Any>()
+
+                        itemHashMap[Constants.STOCK_QUANTITY] = (productQuantity.toInt() - 1).toString()
+
+                        binding.tvProductDetailsStockQuantity.text = (productQuantity.toInt() - 1).toString()
+                        // Show the progress dialog.
+                        if (context is CartListActivity) {
+                            context.showProgressDialog()
+                        }
+
+                        FirestoreClass().updateProductQuantity(context, product.product_id, itemHashMap)
+                    } else {
+                        if (context is CartListActivity) {
+                            context.showErrorSnackBar(
+                                context.resources.getString(
+                                    R.string.msg_for_available_stock,
+                                    product.stock_quantity
+                                ),
+                                true
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -134,6 +214,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
     fun productDetailsSuccess(product: Product) {
 
         mProductDetails = product
+        val resultRupiah = formatRupiah(product.price.toDouble())
 
         // Populate the product details in the UI.
         GlideLoader(this@ProductDetailsActivity).loadProductPicture(
@@ -142,7 +223,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         )
 
         binding.tvProductDetailsTitle.text = product.title
-        binding.tvProductDetailsPrice.text = "$${product.price}"
+        binding.tvProductDetailsPrice.text = resultRupiah
         binding.tvProductDetailsDescription.text = product.description
         binding.tvProductDetailsStockQuantity.text = product.stock_quantity
 
@@ -207,5 +288,63 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         binding.btnAddToCart.visibility = View.GONE
         // Show the GoToCart button if the item is already in the cart. User can update the quantity from the cart list screen if he wants.
         binding.btnGoToCart.visibility = View.VISIBLE
+    }
+
+
+    private fun validateData(): Boolean {
+        return when {
+
+            TextUtils.isEmpty(binding.tvProductDetailsTitle.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_please_enter_full_name),
+                    true
+                )
+                false
+            }
+
+            TextUtils.isEmpty(binding.tvProductDetailsPrice.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_please_enter_phone_number),
+                    true
+                )
+                false
+            }
+
+            TextUtils.isEmpty(binding.tvProductDetailsLabel.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_address), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.tvProductDetailsDescription.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_zip_code), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.tvProductDetailsQuantity.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_zip_code), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.tvProductDetailsStockQuantity.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_zip_code), true)
+                false
+            }
+
+            else -> true
+        }
+    }
+
+
+    fun itemUpdateSuccess() {
+
+        hideProgressDialog()
+
+        getProductDetails()
+    }
+
+    private fun formatRupiah(number: Double): String? {
+        val localeID = Locale("in", "ID")
+        val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
+        return formatRupiah.format(number)
     }
 }

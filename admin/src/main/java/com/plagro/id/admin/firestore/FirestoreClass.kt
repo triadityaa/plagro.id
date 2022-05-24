@@ -175,6 +175,41 @@ class FirestoreClass {
             }
     }
 
+
+    fun updateProductData(activity: Activity, productId: String, itemHashMap: HashMap<String, Any>) {
+        // Collection Name
+        mFireStore.collection(Constants.PRODUCTS)
+            // Document ID against which the data to be updated. Here the document id is the current logged in user id.
+            .document(productId)
+            // A HashMap of fields which are to be updated.
+            .update(itemHashMap)
+            .addOnSuccessListener {
+
+                // Notify the success result.
+                when (activity) {
+                    is UserProfileActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        activity.userProfileUpdateSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+
+                when (activity) {
+                    is UserProfileActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating the user details.",
+                    e
+                )
+            }
+    }
+
     // A function to upload the image to the cloud storage.
     fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?, imageType: String) {
 
@@ -355,6 +390,41 @@ class FirestoreClass {
             }
     }
 
+
+//    fun updateProductData(activity: Activity, productId: String, itemHashMap: HashMap<String, Any>) {
+//        // Collection Name
+//        mFireStore.collection(Constants.PRODUCTS)
+//            // Document ID against which the data to be updated. Here the document id is the current logged in user id.
+//            .document(productId)
+//            // A HashMap of fields which are to be updated.
+//            .update(itemHashMap)
+//            .addOnSuccessListener {
+//
+//                // Notify the success result.
+//                when (activity) {
+//                    is AddProductActivity -> {
+//                        // Call a function of base activity for transferring the result to it.
+//                        activity.updateProductSuccess()
+//                    }
+//                }
+//            }
+//            .addOnFailureListener { e ->
+//
+//                when (activity) {
+//                    is AddProductActivity -> {
+//                        // Hide the progress dialog if there is any error. And print the error in log.
+//                        activity.hideProgressDialog()
+//                    }
+//                }
+//
+//                Log.e(
+//                    activity.javaClass.simpleName,
+//                    "Error while updating the user details.",
+//                    e
+//                )
+//            }
+//    }
+
     /**
      * A function to get the dashboard items list. The list will be an overall items list, not based on the user's id.
      */
@@ -414,6 +484,28 @@ class FirestoreClass {
             }
     }
 
+    fun deleteProductOnUpdate(activity: AddProductActivity, productId: String) {
+
+        mFireStore.collection(Constants.PRODUCTS)
+            .document(productId)
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result to the base class.
+                activity.productDeleteSuccess()
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while deleting the product.",
+                    e
+                )
+            }
+    }
     /**
      * A function to get the product details based on the product id.
      */
@@ -439,6 +531,61 @@ class FirestoreClass {
                 activity.hideProgressDialog()
 
                 Log.e(activity.javaClass.simpleName, "Error while getting the product details.", e)
+            }
+    }
+
+
+//    fun updateGetProduct(activity: AddProductActivity, productId: String, itemHashMap: HashMap<String, Any>) {
+//
+//        // The collection name for PRODUCTS
+//        mFireStore.collection(Constants.PRODUCTS)
+//            .document(productId)
+//            .update(itemHashMap) // Will get the document snapshots.
+//            .addOnSuccessListener {
+//
+//                // Convert the snapshot to the object of Product data model class.
+//                val product = Product()
+//
+//                activity.productDetailsSuccess(product)
+//            }
+//            .addOnFailureListener { e ->
+//
+//                // Hide the progress dialog if there is an error.
+//                activity.hideProgressDialog()
+//
+//                Log.e(activity.javaClass.simpleName, "Error while getting the product details.", e)
+//            }
+//    }
+
+    fun updateProductQuantity(context: Context, productId: String, itemHashMap: HashMap<String, Any>) {
+
+        // Cart items collection name
+        mFireStore.collection(Constants.PRODUCTS)
+            .document(productId) // product id
+            .update(itemHashMap) // A HashMap of fields which are to be updated.
+            .addOnSuccessListener {
+
+                // Notify the success result of the updated cart items list to the base class.
+                when (context) {
+                    is ProductDetailsActivity -> {
+                        context.itemUpdateSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is any error.
+                when (context) {
+                    is ProductDetailsActivity -> {
+                        context.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    context.javaClass.simpleName,
+                    "Error while updating the product.",
+                    e
+                )
             }
     }
 

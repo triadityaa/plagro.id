@@ -27,6 +27,7 @@ object Constants {
     // Intent extra constants.
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val EXTRA_PRODUCT_ID: String = "extra_product_id"
+    const val EXTRA_PRODUCT_DETAILS: String ="extra_product_details"
     const val EXTRA_PRODUCT_OWNER_ID: String = "extra_product_owner_id"
     const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
     const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
@@ -60,6 +61,9 @@ object Constants {
 
     const val USER_PROFILE_IMAGE: String = "User_Profile_Image"
     const val PRODUCT_IMAGE: String = "Product_Image"
+    const val PRODUCT_NAME: String = "title"
+    const val PRODUCT_PRICE: String = "price"
+    const val PRODUCT_DESCRIPTION: String = "description"
 
     const val CART_QUANTITY: String = "cart_quantity"
 

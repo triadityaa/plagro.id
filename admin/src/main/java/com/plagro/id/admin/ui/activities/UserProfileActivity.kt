@@ -81,11 +81,6 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             if (mUserDetails.mobile != 0L) {
                 binding.etMobileNumber.setText(mUserDetails.mobile.toString())
             }
-//            if (mUserDetails.gender == Constants.MALE) {
-//                binding.rbMale.isChecked = true
-//            } else {
-//                binding.rbFemale.isChecked = true
-//            }
         }
 
         // Assign the on click event to the user profile photo.

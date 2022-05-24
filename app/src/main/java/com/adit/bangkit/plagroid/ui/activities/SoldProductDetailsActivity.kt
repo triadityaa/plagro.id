@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import com.adit.bangkit.plagroid.R
+import com.adit.bangkit.plagroid.databinding.ActivitySoldProductDetailsBinding
 import com.adit.bangkit.plagroid.models.SoldProduct
 import com.adit.bangkit.plagroid.utils.Constants
 import com.adit.bangkit.plagroid.utils.GlideLoader
@@ -19,17 +20,19 @@ class SoldProductDetailsActivity : BaseActivity() {
     /**
      * This function is auto created by Android when the Activity Class is created.
      */
+    private lateinit var binding: ActivitySoldProductDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
-        setContentView(R.layout.activity_sold_product_details)
+        binding = ActivitySoldProductDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        var productDetails: SoldProduct = SoldProduct()
+        var productDetails = SoldProduct()
 
         if (intent.hasExtra(Constants.EXTRA_SOLD_PRODUCT_DETAILS)) {
             productDetails =
-                intent.getParcelableExtra<SoldProduct>(Constants.EXTRA_SOLD_PRODUCT_DETAILS)!!
+                intent.getParcelableExtra(Constants.EXTRA_SOLD_PRODUCT_DETAILS)!!
         }
 
         // TODO Step 2: Call the function to setup action bar.

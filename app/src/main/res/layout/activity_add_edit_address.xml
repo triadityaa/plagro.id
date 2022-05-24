@@ -189,7 +189,7 @@
                         android:drawablePadding="10dp"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/et_textSize"
-                        android:drawableStart="@drawable/ic_baseline_location" />
+                        android:drawableStart="@drawable/ic_baseline_location_on_24" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.adit.bangkit.plagroid.utils.MSPButton

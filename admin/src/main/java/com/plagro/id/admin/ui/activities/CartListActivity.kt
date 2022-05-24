@@ -1,5 +1,6 @@
 package com.plagro.id.admin.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,9 @@ import com.plagro.id.admin.databinding.ActivityCartListBinding
 import com.plagro.id.admin.firestore.FirestoreClass
 import com.plagro.id.admin.models.Product
 import com.plagro.id.admin.utils.Constants
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Cart list activity of the application.
@@ -102,6 +106,7 @@ class CartListActivity : BaseActivity() {
      *
      * @param cartList
      */
+    @SuppressLint("SetTextI18n")
     fun successCartItemsList(cartList: ArrayList<Cart>) {
 
         // Hide progress dialog.
@@ -134,7 +139,7 @@ class CartListActivity : BaseActivity() {
             val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartListItems, true)
             binding.rvCartItemsList.adapter = cartListAdapter
 
-            var subTotal: Double = 0.0
+            var subTotal = 0.0
 
             for (item in mCartListItems) {
 
@@ -147,16 +152,17 @@ class CartListActivity : BaseActivity() {
                     subTotal += (price * quantity)
                 }
             }
-
-            binding.tvSubTotal.text = "$$subTotal"
+            val subtotalRupiah = formatRupiah(subTotal)
+            binding.tvSubTotal.text = subtotalRupiah
             // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
-            binding.tvShippingCharge.text = "$10.0"
+            binding.tvShippingCharge.text = "Rp10.000"
 
             if (subTotal > 0) {
                 binding.llCheckout.visibility = View.VISIBLE
 
-                val total = subTotal + 10
-                binding.tvTotalAmount.text = "$$total"
+                val total = subTotal + 10000
+                val totalRupiah = formatRupiah(total)
+                binding.tvTotalAmount.text = totalRupiah
             } else {
                 binding.llCheckout.visibility = View.GONE
             }
@@ -192,5 +198,11 @@ class CartListActivity : BaseActivity() {
         hideProgressDialog()
 
         getCartItemsList()
+    }
+
+    private fun formatRupiah(number: Double): String? {
+        val localeID = Locale("in", "ID")
+        val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
+        return formatRupiah.format(number)
     }
 }
