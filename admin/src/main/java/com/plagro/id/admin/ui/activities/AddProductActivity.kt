@@ -8,10 +8,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.plagro.id.admin.R
 import com.plagro.id.admin.databinding.ActivityAddProductBinding
 import com.plagro.id.admin.firestore.FirestoreClass
@@ -40,13 +42,17 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         if (intent.hasExtra(Constants.EXTRA_PRODUCT_ID)) {
-            // Get the user details from intent as a ParcelableExtra.
+            // Get the user details from intent as a StringeExtra.
             mProductId = intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
         }
 
         if (intent.hasExtra(Constants.EXTRA_PRODUCT_DETAILS)) {
             // Get the user details from intent as a ParcelableExtra.
             mProductDetails = intent.getParcelableExtra(Constants.EXTRA_PRODUCT_DETAILS)!!
+        }
+
+        if (intent.hasExtra(Constants.PRODUCT_IMAGE)){
+            mProductImageURL = intent.getStringExtra(Constants.PRODUCT_IMAGE)!!
         }
 
         var productOwnerId = ""
@@ -56,7 +62,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 intent.getStringExtra(Constants.EXTRA_PRODUCT_OWNER_ID)!!
         }
 
-        if (FirestoreClass().getCurrentUserID() == productOwnerId) {
+        if (mProductDetails != null && FirestoreClass().getCurrentUserID() == productOwnerId) {
             binding.tvTitle.text = resources.getString(R.string.update_product).uppercase()
 
             // Load the image using the GlideLoader class with the use of Glide Library.
@@ -68,25 +74,37 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             binding.etProductPrice.setText(mProductDetails.price)
             binding.etProductDescription.setText(mProductDetails.description)
             binding.etProductQuantity.setText(mProductDetails.stock_quantity)
-            binding.btnSubmit.text = resources.getString(R.string.update_product).uppercase()
-            binding.btnSubmit.setOnClickListener {
-                if (validateUpdateProductDetails()) {
-
-                    showProgressDialog()
-
-                    if (mSelectedImageFileUri != null) {
-
-                        FirestoreClass().uploadImageToCloudStorage(
-                            this@AddProductActivity,
-                            mSelectedImageFileUri,
-                            Constants.USER_PROFILE_IMAGE
-                        )
-                    } else {
-
-                        uploadProductDetails()
-                    }
-                }
-            }
+//            binding.btnUpdate.text = resources.getString(R.string.update_product).uppercase()
+//            binding.btnUpdate.setOnClickListener {
+//                if (validateUpdateProductDetails()) {
+//
+//                    showProgressDialog()
+//
+//                    if (mSelectedImageFileUri == mProductImageURL.toUri()) {
+//
+//                        FirestoreClass().uploadImageToCloudStorage(
+//                            this@AddProductActivity,
+//                            mSelectedImageFileUri,
+//                            Constants.PRODUCT_IMAGE
+//                        )
+//                    } else {
+//
+//                        if (mSelectedImageFileUri == mProductImageURL.toUri()) {
+//
+//                            FirestoreClass().uploadImageToCloudStorage(
+//                                this@AddProductActivity,
+//                                mProductImageURL.toUri(),
+//                                Constants.PRODUCT_IMAGE
+//                            )
+//                        }
+//                        uploadProductDetails()
+//                        updateProductsDetails()
+//
+//                        startActivity(Intent(this@AddProductActivity, DashboardActivity::class.java))
+//                        finish()
+//                    }
+//                }
+//            }
         }
 
         setupActionBar()
@@ -128,6 +146,16 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                     if (validateProductDetails()) {
 
                         uploadProductImage()
+                    }else{
+//                        uploadProductDetails()
+                        updateProductsDetails()
+
+                        val intent= (Intent(this@AddProductActivity, DashboardActivity::class.java))
+                        intent.putExtra(Constants.EXTRA_PRODUCT_DETAILS, mProductDetails)
+                        intent.putExtra(Constants.EXTRA_PRODUCT_ID, mProductId)
+                        intent.putExtra(Constants.PRODUCT_IMAGE, mProductImageURL)
+                        startActivity(intent)
+                        finish()
                     }
                 }
             }
@@ -162,33 +190,35 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    @Deprecated("Deprecated in Java")
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
-            && data!!.data != null
-        ) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE) {
+                if (data != null) {
+                    try {
 
-            // Replace the add icon with edit icon once the image is selected.
-            binding.ivAddUpdateProduct.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this@AddProductActivity,
-                    R.drawable.ic_vector_edit
-                )
-            )
+                        // The uri of selected image from phone storage.
+                        mSelectedImageFileUri = data.data!!
 
-            // The uri of selection image from phone storage.
-            mSelectedImageFileUri = data.data!!
-
-            try {
-                // Load the product image in the ImageView.
-                GlideLoader(this@AddProductActivity).loadProductPicture(
-                    mSelectedImageFileUri!!,
-                    binding.ivProductImage
-                )
-            } catch (e: IOException) {
-                e.printStackTrace()
+                        GlideLoader(this@AddProductActivity).loadUserPicture(
+                            mSelectedImageFileUri!!,
+                            binding.ivProductImage
+                        )
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            this@AddProductActivity,
+                            resources.getString(R.string.image_selection_failed),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
             }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            // A log is printed when user close or cancel the image selection.
+            Log.e("Request Cancelled", "Image selection cancelled")
         }
     }
 
@@ -334,7 +364,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             binding.etProductQuantity.text.toString().trim { it <= ' ' },
             mProductImageURL
         )
-        FirestoreClass().deleteProductOnUpdate(this@AddProductActivity, mProductId)
+//        FirestoreClass().deleteProductOnUpdate(this@AddProductActivity, mProductId)
 
         FirestoreClass().uploadProductDetails(this@AddProductActivity, product)
     }
@@ -398,11 +428,26 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             itemHashMap[Constants.STOCK_QUANTITY] = productStock
         }
 
-
+//        FirestoreClass().deleteProductOnUpdate(this@AddProductActivity, mProductId)
 
         // call the registerUser function of FireStore class to make an entry in the database.
         FirestoreClass().updateProductData(
             this@AddProductActivity, mProductId, itemHashMap
         )
+    }
+
+    /**
+     * A function to notify the success result and proceed further accordingly after updating the user details.
+     */
+    fun productUpdateSuccess() {
+
+//        // Hide the progress dialog
+//        hideProgressDialog()
+
+        Toast.makeText(
+            this@AddProductActivity,
+            resources.getString(R.string.msg_product_update_success),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

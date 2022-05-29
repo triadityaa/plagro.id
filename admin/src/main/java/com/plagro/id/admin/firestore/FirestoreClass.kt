@@ -187,16 +187,16 @@ class FirestoreClass {
 
                 // Notify the success result.
                 when (activity) {
-                    is UserProfileActivity -> {
+                    is AddProductActivity -> {
                         // Call a function of base activity for transferring the result to it.
-                        activity.userProfileUpdateSuccess()
+                        activity.productUpdateSuccess()
                     }
                 }
             }
             .addOnFailureListener { e ->
 
                 when (activity) {
-                    is UserProfileActivity -> {
+                    is AddProductActivity -> {
                         // Hide the progress dialog if there is any error. And print the error in log.
                         activity.hideProgressDialog()
                     }
