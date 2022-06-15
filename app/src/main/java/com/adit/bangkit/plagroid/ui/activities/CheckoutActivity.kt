@@ -27,10 +27,12 @@ import com.midtrans.sdk.corekit.models.CustomerDetails
 import com.midtrans.sdk.corekit.models.ItemDetails
 import com.midtrans.sdk.corekit.models.ShippingAddress
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder
+import java.util.*
 import javax.mail.*
 import javax.mail.internet.AddressException
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
+import kotlin.collections.ArrayList
 
 
 /**
@@ -317,7 +319,7 @@ class CheckoutActivity : BaseActivity() {
             mSubTotal.toString(),
             "10.000", // The Shipping Charge is fixed as $10 for now in this case.
             mTotalAmount.toString(),
-            Order().order_datetime,
+            Date().time,
             Order().id,
             Order().admin_id,
         )

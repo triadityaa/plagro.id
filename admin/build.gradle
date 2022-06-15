@@ -53,14 +53,14 @@ dependencies {
 
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -88,6 +88,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation "io.grpc:grpc-okhttp:1.32.2"
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 
     // KTX for the Maps SDK for Android
     implementation 'com.google.maps.android:maps-ktx:3.2.1'
@@ -99,6 +100,9 @@ dependencies {
 
     //midtrans payment
     implementation 'com.midtrans:uikit:1.28.0-SANDBOX'
+
+    //chart
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 //    implementation 'com.midtrans:uikit:1.21.2'
 //    implementation 'com.github.stfalcon:smsverifycatcher:0.3.1'
 //    implementation 'me.saket:better-link-movement-method:2.2.0'

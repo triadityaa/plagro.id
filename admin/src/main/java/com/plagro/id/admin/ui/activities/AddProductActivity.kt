@@ -62,7 +62,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 intent.getStringExtra(Constants.EXTRA_PRODUCT_OWNER_ID)!!
         }
 
-        if (mProductDetails != null && FirestoreClass().getCurrentUserID() == productOwnerId) {
+        if (FirestoreClass().getCurrentUserID() == productOwnerId) {
             binding.tvTitle.text = resources.getString(R.string.update_product).uppercase()
 
             // Load the image using the GlideLoader class with the use of Glide Library.

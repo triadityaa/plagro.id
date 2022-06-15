@@ -121,49 +121,52 @@
             tools:text="triaditya@gmail.com" />
 
         <com.plagro.id.admin.utils.MSPTextView
-            android:id="@+id/tv_mobile_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_email"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/settings_info_marginTop"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/settings_info_textSize"
-            tools:text="+6281234567890" />
-
-        <LinearLayout
-            android:id="@+id/ll_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_mobile_number"
-            android:layout_margin="@dimen/settings_address_margin"
-            android:background="@drawable/item_grey_border_background"
-            android:foreground="?attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="@dimen/settings_address_padding">
-
-            <com.plagro.id.admin.utils.MSPTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/settings_lbl_addresses_margin"
-                android:layout_weight="1"
-                android:text="@string/lbl_addresses"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/settings_lbl_addresses_textSize" />
-
-            <ImageView
+                android:id="@+id/tv_mobile_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/content_description"
-                android:src="@drawable/ic_vector_chevron_right" />
+                android:layout_below="@id/tv_email"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/settings_info_marginTop"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/settings_info_textSize"
+                tools:text="+6281234567890" />
 
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--                android:id="@+id/ll_address"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/tv_mobile_number"-->
+<!--                android:background="@drawable/item_grey_border_background"-->
+<!--                android:foreground="?attr/selectableItemBackground"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="@dimen/settings_address_padding"-->
+<!--                android:layout_marginTop="@dimen/settings_address_margin"-->
+<!--                android:layout_marginStart="@dimen/settings_address_margin"-->
+<!--                android:layout_marginEnd="@dimen/settings_address_margin"-->
+<!--                android:layout_marginBottom="@dimen/settings_address_margin">-->
+
+<!--            <com.plagro.id.admin.utils.MSPTextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="@dimen/settings_lbl_addresses_margin"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="@string/lbl_addresses"-->
+<!--                    android:textColor="@color/colorSecondaryText"-->
+<!--                    android:textSize="@dimen/settings_lbl_addresses_textSize" />-->
+
+<!--            <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:contentDescription="@string/content_description"-->
+<!--                    android:src="@drawable/ic_vector_chevron_right" />-->
+
+<!--        </LinearLayout>-->
 
         <com.plagro.id.admin.utils.MSPButton
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_address"
+            android:layout_below="@id/tv_mobile_number"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/settings_button_marginStartEnd"
             android:layout_marginTop="@dimen/settings_button_marginTopBottom"

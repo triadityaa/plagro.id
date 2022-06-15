@@ -41,7 +41,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         // Click event assigned to Login button.
         binding.btnLogin.setOnClickListener(this)
         // Click event assigned to Register text.
-        binding.tvRegister.setOnClickListener(this)
     }
 
     /**
@@ -61,12 +60,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 R.id.btn_login -> {
 
                     logInRegisteredUser()
-                }
-
-                R.id.tv_register -> {
-                    // Launch the register screen when the user clicks on the text.
-                    val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-                    startActivity(intent)
                 }
             }
         }

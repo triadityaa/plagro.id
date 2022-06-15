@@ -16,6 +16,7 @@ import com.plagro.id.admin.ui.*
 import com.plagro.id.admin.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -449,7 +450,7 @@ class FirestoreClass {
                 }
 
                 // Pass the success result to the base fragment.
-                fragment.successDashboardItemsList(productsList)
+//                fragment.successDashboardItemsList(productsList)
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error which getting the dashboard items list.
@@ -1066,5 +1067,31 @@ class FirestoreClass {
                     e
                 )
             }
+    }
+
+    fun getAllOrders(fragment: DashboardFragment){
+        mFireStore.collection(Constants.ORDERS)
+            .orderBy("order_datetime", Query.Direction.ASCENDING)
+            .addSnapshotListener{ snapshot, exception ->
+            if (exception != null) {
+                Log.e(fragment.javaClass.simpleName, "Listen failed.", exception)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null) {
+                val list: ArrayList<Order> = ArrayList()
+
+                for (i in snapshot.documents) {
+
+                    val orderItem = i.toObject(Order::class.java)!!
+                    orderItem.id = i.id
+
+                    list.add(orderItem)
+                }
+                Log.e(fragment.javaClass.simpleName, list.toString())
+
+                fragment.showChartData(list)
+            }
+        }
     }
 }
