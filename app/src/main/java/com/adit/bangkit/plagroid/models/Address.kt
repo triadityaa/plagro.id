@@ -21,6 +21,5 @@ data class Address(
     var id: String = "",
 
     var key: String = "",
-    var lat: Double = 0.0,
-    var lon: Double = 0.0,
+    var latlng: Double = 0.0,
 ) : Parcelable

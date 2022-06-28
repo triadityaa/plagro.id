@@ -11,9 +11,9 @@ data class Cart(
     val user_id: String = "",
     val product_id: String = "",
     val title: String = "",
-    val price: String = "",
+    val price: Int = 0,
     val image: String = "",
-    var cart_quantity: String = "",
-    var stock_quantity: String = "",
+    var cart_quantity: Int = 0,
+    var stock_quantity: Int = 0,
     var id: String = "",
 ) : Parcelable

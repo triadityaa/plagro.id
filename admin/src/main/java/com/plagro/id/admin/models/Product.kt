@@ -11,9 +11,9 @@ data class Product(
     val user_id: String = "",
     val user_name: String = "",
     val title: String = "",
-    val price: String = "",
+    val price: Int = 0,
     val description: String = "",
-    val stock_quantity: String = "",
+    val stock_quantity: Int = 0,
     val image: String = "",
     var product_id: String = "",
 ) : Parcelable

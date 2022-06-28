@@ -16,7 +16,8 @@
         android:theme="@style/Theme.Plagroid"
         tools:replace="android:allowBackup">
         <activity
-                android:name=".ui.activities.DashboardActivity" />
+                android:name=".ui.activities.DashboardActivity"
+                android:theme="@style/Theme.Plagroid2"/>
         <activity
                 android:name=".ui.activities.SplashActivity"
                 android:screenOrientation="portrait"
@@ -41,7 +42,6 @@
                 android:theme="@style/Theme.Plagroid.NoActionBar" />
         <activity
                 android:name=".ui.activities.ForgotPasswordActivity"
-                android:label=""
                 android:screenOrientation="portrait"
                 android:theme="@style/Theme.Plagroid.NoActionBar" />
         <activity

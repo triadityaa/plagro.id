@@ -184,4 +184,5 @@
     <string name="remove_product">-</string>
     <string name="update_product">Update Product</string>
     <string name="msg_product_update_success">Product Update Success</string>
+    <string name="weekly_selling_report">Weekly Selling Report</string>
 </resources>

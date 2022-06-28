@@ -92,7 +92,7 @@ class SoldProductDetailsActivity : BaseActivity() {
         )
         binding.tvProductItemName.text = productDetails.title
         binding.tvProductItemPrice.text ="Rp. ${productDetails.price}"
-        binding.tvSoldProductQuantity.text = productDetails.sold_quantity
+        binding.tvSoldProductQuantity.text = productDetails.sold_quantity.toString()
 
         binding.tvSoldDetailsAddressType.text = productDetails.address.type
         binding.tvSoldDetailsFullName.text = productDetails.address.name
@@ -108,9 +108,9 @@ class SoldProductDetailsActivity : BaseActivity() {
         }
         binding.tvSoldDetailsMobileNumber.text = productDetails.address.mobileNumber
 
-        binding.tvSoldProductSubTotal.text = productDetails.sub_total_amount
-        binding.tvSoldProductShippingCharge.text = productDetails.shipping_charge
-        binding.tvSoldProductTotalAmount.text = productDetails.total_amount
+        binding.tvSoldProductSubTotal.text = productDetails.sub_total_amount.toString()
+        binding.tvSoldProductShippingCharge.text = productDetails.shipping_charge.toString()
+        binding.tvSoldProductTotalAmount.text = productDetails.total_amount.toString()
     }
     // END
 }

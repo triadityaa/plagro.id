@@ -50,7 +50,7 @@ open class CartItemsListAdapter(
      * of the given type. You can either create a new View manually or inflate it from an XML
      * layout file.
      */
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "StringFormatMatches")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
 
@@ -60,9 +60,9 @@ open class CartItemsListAdapter(
 
             holder.itemView.tv_cart_item_title.text = model.title
             holder.itemView.tv_cart_item_price.text = "Rp. ${model.price}"
-            holder.itemView.tv_cart_quantity.text = model.cart_quantity
+            holder.itemView.tv_cart_quantity.text = model.cart_quantity.toString()
 
-            if (model.cart_quantity == "0") {
+            if (model.cart_quantity == 0) {
                 holder.itemView.ib_remove_cart_item.visibility = View.GONE
                 holder.itemView.ib_add_cart_item.visibility = View.GONE
 
@@ -104,7 +104,7 @@ open class CartItemsListAdapter(
 
             holder.itemView.ib_remove_cart_item.setOnClickListener {
 
-                if (model.cart_quantity == "1") {
+                if (model.cart_quantity == 1) {
                     FirestoreClass().removeItemFromCart(context, model.id)
                 } else {
 

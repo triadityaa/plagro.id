@@ -162,7 +162,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         binding.tvProductDetailsTitle.text = product.title
         binding.tvProductDetailsPrice.text = resultRupiah
         binding.tvProductDetailsDescription.text = product.description
-        binding.tvProductDetailsStockQuantity.text = product.stock_quantity
+        binding.tvProductDetailsStockQuantity.text = product.stock_quantity.toString()
 
 
         if(product.stock_quantity.toInt() == 0){

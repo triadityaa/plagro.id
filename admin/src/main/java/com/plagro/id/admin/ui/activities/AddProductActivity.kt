@@ -359,9 +359,9 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             FirestoreClass().getCurrentUserID(),
             username,
             binding.etProductTitle.text.toString().trim { it <= ' ' },
-            binding.etProductPrice.text.toString().trim { it <= ' ' },
+            binding.etProductPrice.text.toString().trim { it <= ' ' }.toInt(),
             binding.etProductDescription.text.toString().trim { it <= ' ' },
-            binding.etProductQuantity.text.toString().trim { it <= ' ' },
+            binding.etProductQuantity.text.toString().trim { it <= ' ' }.toInt(),
             mProductImageURL
         )
 //        FirestoreClass().deleteProductOnUpdate(this@AddProductActivity, mProductId)
@@ -414,7 +414,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             itemHashMap[Constants.PRODUCT_IMAGE] = mProductImageURL
         }
 
-        if (productPrice.isNotEmpty() && productPrice != mProductDetails.price) {
+        if (productPrice.isNotEmpty() && productPrice != mProductDetails.price.toString()) {
             itemHashMap[Constants.PRODUCT_PRICE] = productPrice
         }
 
@@ -424,7 +424,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
 
         val productStock = binding.etProductQuantity.text.toString().trim { it <= ' ' }
-        if (productStock.isNotEmpty() && productStock != mProductDetails.stock_quantity) {
+        if (productStock.isNotEmpty() && productStock != mProductDetails.stock_quantity.toString()) {
             itemHashMap[Constants.STOCK_QUANTITY] = productStock
         }
 

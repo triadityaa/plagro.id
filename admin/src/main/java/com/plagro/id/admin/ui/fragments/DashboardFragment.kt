@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import androidx.recyclerview.widget.GridLayoutManager
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -14,11 +13,7 @@ import com.plagro.id.admin.R
 import com.plagro.id.admin.databinding.FragmentDashboardBinding
 import com.plagro.id.admin.firestore.FirestoreClass
 import com.plagro.id.admin.models.Order
-import com.plagro.id.admin.models.Product
-import com.plagro.id.admin.ui.activities.ProductDetailsActivity
 import com.plagro.id.admin.ui.activities.SettingsActivity
-import com.plagro.id.admin.ui.adapters.DashboardItemsListAdapter
-import com.plagro.id.admin.utils.Constants
 import java.text.SimpleDateFormat
 
 class DashboardFragment : BaseFragment() {
@@ -28,6 +23,15 @@ class DashboardFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentDashboardBinding.inflate(layoutInflater)
         // If we want to use the option menu in fragment we need to add it.
+        binding.chart.setOnClickListener {
+            val intent = Intent(context, SoldProductsFragment::class.java)
+            startActivity(intent)
+        }
+
+        binding.titleReport.setOnClickListener {
+            val intent = Intent(context, SoldProductsFragment::class.java)
+            startActivity(intent)
+        }
         setHasOptionsMenu(true)
     }
 
@@ -42,12 +46,22 @@ class DashboardFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         trsChartFormat()
+
+        binding.chart.setOnClickListener {
+            val intent = Intent(context, SoldProductsFragment::class.java)
+            startActivity(intent)
+        }
+
+        binding.titleReport.setOnClickListener {
+            val intent = Intent(context, SoldProductsFragment::class.java)
+            startActivity(intent)
+        }
     }
 
     fun showChartData(listOrder: List<Order>) {
         val sumOfData = listOrder.distinctBy { it.order_datetime }
         sumOfData.forEach { order ->
-            order.total_amount = listOrder.filter { it.order_datetime == order.order_datetime }.sumByDouble { it.total_amount.toDouble() }.toString()
+            order.total_amount = listOrder.filter { it.order_datetime == order.order_datetime }.sumOf { it.total_amount }
         }
         val allPenjualan = ArrayList<Entry>()
         val label = ArrayList<String>()
@@ -85,6 +99,7 @@ class DashboardFragment : BaseFragment() {
             invalidate()
             xAxis.valueFormatter = IndexAxisValueFormatter(label)
         }
+        hideProgressDialog()
     }
 
     private fun trsChartFormat() {
@@ -124,32 +139,29 @@ class DashboardFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        when (id) {
+        when (item.itemId) {
 
             R.id.action_settings -> {
                 startActivity(Intent(activity, SettingsActivity::class.java))
                 return true
             }
-
-//            R.id.action_cart -> {
-//                startActivity(Intent(activity, CartListActivity::class.java))
-//                return true
-//            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
         super.onResume()
-
+        getChartData()
 //        getDashboardItemsList()
     }
 
-//    /**
-//     * A function to get the dashboard items list from cloud firestore.
-//     */
+    private fun getChartData(){
+        showProgressDialog()
+
+        FirestoreClass().getAllOrders(this@DashboardFragment)
+    }
+
 //    private fun getDashboardItemsList() {
 //        // Show the progress dialog.
 //        showProgressDialog()

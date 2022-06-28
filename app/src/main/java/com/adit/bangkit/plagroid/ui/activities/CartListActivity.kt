@@ -114,7 +114,7 @@ class CartListActivity : BaseActivity() {
 
                     cart.stock_quantity = product.stock_quantity
 
-                    if (product.stock_quantity.toInt() == 0) {
+                    if (product.stock_quantity == 0) {
                         cart.cart_quantity = product.stock_quantity
                     }
                 }

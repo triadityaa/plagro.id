@@ -41,9 +41,8 @@ class DashboardFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        when (id) {
+        when (item.itemId) {
 
             R.id.action_cart ->{
                 startActivity(Intent(activity, CartListActivity::class.java))

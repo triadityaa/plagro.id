@@ -53,10 +53,10 @@ class CheckoutActivity : BaseActivity() {
     private lateinit var mCartItemsList: ArrayList<Cart>
 
     // A global variable for the SubTotal Amount.
-    private var mSubTotal: Double = 0.0
+    private var mSubTotal: Int = 0
 
     // A global variable for the Total Amount.
-    private var mTotalAmount: Double = 0.0
+    private var mTotalAmount: Int = 0
 
     // A global variable for Order details.
     private lateinit var mOrderDetails: Order
@@ -135,17 +135,17 @@ class CheckoutActivity : BaseActivity() {
                 )
             }
 
-            Log.e("totalHarga", mTotalAmount.toInt().toString())
+            Log.e("totalHarga", mTotalAmount.toString())
             val transactionRequest = TransactionRequest(
                 "PLAGRO.ID-" + System.currentTimeMillis().toString(),
-                mTotalAmount
+                mTotalAmount.toDouble()
             )
             val itemDetails = ArrayList<ItemDetails>()
             for (mCartItemsList in mCartItemsList) {
                 val detail = ItemDetails(
                     mCartItemsList.product_id,
                     mCartItemsList.price.toDouble(),
-                    mCartItemsList.cart_quantity.toInt(),
+                    mCartItemsList.cart_quantity,
                     mCartItemsList.title
                 )
                 itemDetails.add(detail)
@@ -180,13 +180,13 @@ class CheckoutActivity : BaseActivity() {
 
         val shippingAddress = ShippingAddress()
         shippingAddress.address = mAddressDetails?.address
-        shippingAddress.city = (mAddressDetails?.lon?.plus(mAddressDetails?.lat!!)).toString()
+        shippingAddress.city = (mAddressDetails?.latlng?.plus(mAddressDetails?.latlng!!)).toString()
         shippingAddress.postalCode = mAddressDetails?.zipCode
         customerDetails.shippingAddress = shippingAddress
 
         val billingAddress = BillingAddress()
         billingAddress.address = mAddressDetails?.address
-        billingAddress.city = (mAddressDetails?.lon?.plus(mAddressDetails?.lat!!)).toString()
+        billingAddress.city = (mAddressDetails?.latlng?.plus(mAddressDetails?.latlng!!)).toString()
         billingAddress.postalCode = mAddressDetails?.zipCode
         customerDetails.billingAddress = billingAddress
 
@@ -278,11 +278,11 @@ class CheckoutActivity : BaseActivity() {
 
         for (item in mCartItemsList) {
 
-            val availableQuantity = item.stock_quantity.toInt()
+            val availableQuantity = item.stock_quantity
 
             if (availableQuantity > 0) {
-                val price = item.price.toDouble()
-                val quantity = item.cart_quantity.toInt()
+                val price = item.price
+                val quantity = item.cart_quantity
 
                 mSubTotal += (price * quantity)
             }
@@ -295,8 +295,8 @@ class CheckoutActivity : BaseActivity() {
         if (mSubTotal > 0) {
             binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
-            mTotalAmount = mSubTotal + 10000.0
-            binding.tvCheckoutTotalAmount.text = "Rp.$mTotalAmount"
+            mTotalAmount = mSubTotal + 10000
+            binding.tvCheckoutTotalAmount.text = "Rp$mTotalAmount"
         } else {
             binding.llCheckoutPlaceOrder.visibility = View.GONE
         }
@@ -316,9 +316,9 @@ class CheckoutActivity : BaseActivity() {
             mAddressDetails!!,
             "PLAGRO.ID-${System.currentTimeMillis()}",
             mCartItemsList[0].image,
-            mSubTotal.toString(),
-            "10.000", // The Shipping Charge is fixed as $10 for now in this case.
-            mTotalAmount.toString(),
+            mSubTotal,
+            10000, // The Shipping Charge is fixed as $10 for now in this case.
+            mTotalAmount,
             Date().time,
             Order().id,
             Order().admin_id,

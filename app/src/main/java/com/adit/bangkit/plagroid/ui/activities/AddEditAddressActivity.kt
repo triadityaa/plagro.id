@@ -270,6 +270,7 @@ class AddEditAddressActivity : BaseActivity() {
         val zipCode: String = binding.etZipCode.text.toString().trim { it <= ' ' }
         val additionalNote: String = binding.etAdditionalNote.text.toString().trim { it <= ' ' }
         val otherDetails: String = binding.etOtherDetails.text.toString().trim { it <= ' ' }
+        val latlng: String = binding.etPickupLocation.text.toString().trim {it <= ' '}
 
         if (validateData()) {
 
@@ -296,7 +297,8 @@ class AddEditAddressActivity : BaseActivity() {
                 zipCode,
                 additionalNote,
                 addressType,
-                otherDetails
+                otherDetails,
+                latlng
             )
 
             if (mAddressDetails != null && mAddressDetails!!.id.isNotEmpty()) {

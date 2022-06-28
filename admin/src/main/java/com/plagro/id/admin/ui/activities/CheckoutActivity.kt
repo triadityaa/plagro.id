@@ -31,10 +31,10 @@ class CheckoutActivity : BaseActivity() {
     private lateinit var mCartItemsList: ArrayList<Cart>
 
     // A global variable for the SubTotal Amount.
-    private var mSubTotal: Double = 0.0
+    private var mSubTotal: Int = 0
 
     // A global variable for the Total Amount.
-    private var mTotalAmount: Double = 0.0
+    private var mTotalAmount: Int = 0
 
     // A global variable for Order details.
     private lateinit var mOrderDetails: Order
@@ -154,11 +154,11 @@ class CheckoutActivity : BaseActivity() {
 
         for (item in mCartItemsList) {
 
-            val availableQuantity = item.stock_quantity.toInt()
+            val availableQuantity = item.stock_quantity
 
             if (availableQuantity > 0) {
-                val price = item.price.toDouble()
-                val quantity = item.cart_quantity.toInt()
+                val price = item.price
+                val quantity = item.cart_quantity
 
                 mSubTotal += (price * quantity)
             }
@@ -171,7 +171,7 @@ class CheckoutActivity : BaseActivity() {
         if (mSubTotal > 0) {
             binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
-            mTotalAmount = mSubTotal + 10.0
+            mTotalAmount = mSubTotal + 10000
             binding.tvCheckoutTotalAmount.text = "Rp. $mTotalAmount"
         } else {
             binding.llCheckoutPlaceOrder.visibility = View.GONE
@@ -192,9 +192,9 @@ class CheckoutActivity : BaseActivity() {
             mAddressDetails!!,
             "My order ${System.currentTimeMillis()}",
             mCartItemsList[0].image,
-            mSubTotal.toString(),
-            "10.0", // The Shipping Charge is fixed as $10 for now in our case.
-            mTotalAmount.toString(),
+            mSubTotal,
+            10000, // The Shipping Charge is fixed as $10 for now in our case.
+            mTotalAmount,
             System.currentTimeMillis()
         )
 
