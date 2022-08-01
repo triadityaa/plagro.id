@@ -14,6 +14,7 @@ import com.plagro.id.admin.databinding.FragmentDashboardBinding
 import com.plagro.id.admin.firestore.FirestoreClass
 import com.plagro.id.admin.models.Order
 import com.plagro.id.admin.ui.activities.SettingsActivity
+import com.plagro.id.admin.ui.activities.SoldReportActivity
 import java.text.SimpleDateFormat
 
 class DashboardFragment : BaseFragment() {
@@ -48,12 +49,12 @@ class DashboardFragment : BaseFragment() {
         trsChartFormat()
 
         binding.chart.setOnClickListener {
-            val intent = Intent(context, SoldProductsFragment::class.java)
+            val intent = Intent(context, SoldReportActivity::class.java)
             startActivity(intent)
         }
 
         binding.titleReport.setOnClickListener {
-            val intent = Intent(context, SoldProductsFragment::class.java)
+            val intent = Intent(context, SoldReportActivity::class.java)
             startActivity(intent)
         }
     }

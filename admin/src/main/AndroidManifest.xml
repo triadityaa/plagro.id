@@ -4,25 +4,28 @@
         package="com.plagro.id.admin">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Plagroid"
-        tools:replace="android:allowBackup">
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.Plagroid"
+            tools:replace="android:allowBackup">
+        <activity
+                android:name=".ui.activities.SoldReportActivity"
+                android:exported="false" />
         <activity
                 android:name=".ui.activities.DashboardActivity"
-                android:theme="@style/Theme.Plagroid2"/>
+                android:theme="@style/Theme.Plagroid2" />
         <activity
                 android:name=".ui.activities.SplashActivity"
+                android:exported="true"
                 android:screenOrientation="portrait"
-                android:theme="@style/Theme.Plagroid.NoActionBar"
-                android:exported="true">
+                android:theme="@style/Theme.Plagroid.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
