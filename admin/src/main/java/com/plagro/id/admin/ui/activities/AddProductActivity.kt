@@ -71,7 +71,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             // Set the existing values to the UI and allow user to edit except the Email ID.
             binding.etProductTitle.setText(mProductDetails.title)
 
-            binding.etProductPrice.setText(mProductDetails.price)
+            binding.etProductPrice.setText(mProductDetails.price.toString())
             binding.etProductDescription.setText(mProductDetails.description)
             binding.etProductQuantity.setText(mProductDetails.stock_quantity)
 //            binding.btnUpdate.text = resources.getString(R.string.update_product).uppercase()
@@ -361,7 +361,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             binding.etProductTitle.text.toString().trim { it <= ' ' },
             binding.etProductPrice.text.toString().trim { it <= ' ' }.toInt(),
             binding.etProductDescription.text.toString().trim { it <= ' ' },
-            binding.etProductQuantity.text.toString().trim { it <= ' ' }.toInt(),
+            binding.etProductQuantity.text.toString().trim { it <= ' ' },
             mProductImageURL
         )
 //        FirestoreClass().deleteProductOnUpdate(this@AddProductActivity, mProductId)
@@ -415,7 +415,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
 
         if (productPrice.isNotEmpty() && productPrice != mProductDetails.price.toString()) {
-            itemHashMap[Constants.PRODUCT_PRICE] = productPrice
+            itemHashMap[Constants.PRODUCT_PRICE] = productPrice.toInt()
         }
 
         val productDescription = binding.etProductDescription.text.toString().trim { it <= ' ' }

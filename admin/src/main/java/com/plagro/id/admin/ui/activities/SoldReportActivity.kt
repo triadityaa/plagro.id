@@ -3,6 +3,7 @@ package com.plagro.id.admin.ui.activities
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.plagro.id.admin.R
 import com.plagro.id.admin.databinding.ActivitySoldReportBinding
 import com.plagro.id.admin.firestore.FirestoreClass
 import com.plagro.id.admin.models.SoldProduct
@@ -16,7 +17,21 @@ class SoldReportActivity : BaseActivity() {
         binding = ActivitySoldReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupActionBar()
         getSoldProductsList()
+    }
+
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding.toolbarSalesReportActivity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+        }
+
+        binding.toolbarSalesReportActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
     private fun getSoldProductsList() {

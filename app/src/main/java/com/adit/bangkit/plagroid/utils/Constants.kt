@@ -92,8 +92,9 @@ object Constants {
 
     //sending email
     const val EMAIL_SUBJECT = "Order Confirmation"
-    const val EMAIL_SENDER = "plagro.id@gmail.com"
-    const val EMAIL_PASSWORD = "php2d2020"
+    const val EMAIL_SENDER = "ecommerceplagro@gmail.com"
+    const val EMAIL_PASSWORD = "swgwrrpaqayrqleo"
+    const val EMAIL_ADMIN = "plagro.id@gmail.com"
 
     /**
      * A function for user profile image selection from phone storage.

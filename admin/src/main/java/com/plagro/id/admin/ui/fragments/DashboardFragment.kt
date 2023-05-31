@@ -25,12 +25,12 @@ class DashboardFragment : BaseFragment() {
         binding = FragmentDashboardBinding.inflate(layoutInflater)
         // If we want to use the option menu in fragment we need to add it.
         binding.chart.setOnClickListener {
-            val intent = Intent(context, SoldProductsFragment::class.java)
+            val intent = Intent(context, SoldReportActivity::class.java)
             startActivity(intent)
         }
 
         binding.titleReport.setOnClickListener {
-            val intent = Intent(context, SoldProductsFragment::class.java)
+            val intent = Intent(context, SoldReportActivity::class.java)
             startActivity(intent)
         }
         setHasOptionsMenu(true)

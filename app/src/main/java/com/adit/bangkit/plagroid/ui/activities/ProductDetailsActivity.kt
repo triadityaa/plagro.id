@@ -39,7 +39,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
                 intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
         }
 
-        var productOwnerId: String = ""
+        var productOwnerId = ""
 
         if (intent.hasExtra(Constants.EXTRA_PRODUCT_OWNER_ID)) {
             productOwnerId =
@@ -87,7 +87,8 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
             mProductDetails.title,
             mProductDetails.price,
             mProductDetails.image,
-            Constants.DEFAULT_CART_QUANTITY
+            1,
+            1
         )
 
         // Show the progress dialog
@@ -142,7 +143,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         binding.tvProductDetailsTitle.text = product.title
         binding.tvProductDetailsPrice.text = "Rp${product.price}"
         binding.tvProductDetailsDescription.text = product.description
-        binding.tvProductDetailsStockQuantity.text = product.stock_quantity.toString()
+        binding.tvProductDetailsStockQuantity.text = product.stock_quantity
 
 
         if(product.stock_quantity.toInt() == 0){

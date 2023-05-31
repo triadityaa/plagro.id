@@ -139,7 +139,7 @@ class CheckoutActivity : BaseActivity() {
         for (product in mProductsList) {
             for (cart in cartList) {
                 if (product.product_id == cart.product_id) {
-                    cart.stock_quantity = product.stock_quantity
+                    cart.stock_quantity = product.stock_quantity.toInt()
                 }
             }
         }

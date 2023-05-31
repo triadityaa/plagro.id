@@ -112,7 +112,7 @@ open class CartItemsListAdapter(
 
                     val itemHashMap = HashMap<String, Any>()
 
-                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity - 1).toString()
+                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity - 1)
 
                     // Show the progress dialog.
 
@@ -132,7 +132,7 @@ open class CartItemsListAdapter(
 
                     val itemHashMap = HashMap<String, Any>()
 
-                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1).toString()
+                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1)
 
                     // Show the progress dialog.
                     if (context is CartListActivity) {

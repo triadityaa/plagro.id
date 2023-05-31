@@ -27,12 +27,12 @@ import com.midtrans.sdk.corekit.models.CustomerDetails
 import com.midtrans.sdk.corekit.models.ItemDetails
 import com.midtrans.sdk.corekit.models.ShippingAddress
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.AddressException
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
-import kotlin.collections.ArrayList
 
 
 /**
@@ -160,6 +160,7 @@ class CheckoutActivity : BaseActivity() {
             placeAnOrder()
             updateSoldProduct(mCartItemsList, mOrderDetails)
             mAddressDetails?.let { it1 -> sendEmail(mUserDetails, mOrderDetails, it1) }
+            mAddressDetails?.let { address -> sendEmailToAdmin(mOrderDetails, address)}
         }
 
         getProductList()
@@ -263,7 +264,7 @@ class CheckoutActivity : BaseActivity() {
         for (product in mProductsList) {
             for (cart in cartList) {
                 if (product.product_id == cart.product_id) {
-                    cart.stock_quantity = product.stock_quantity
+                    cart.stock_quantity = product.stock_quantity.toInt()
                 }
             }
         }
@@ -384,43 +385,19 @@ class CheckoutActivity : BaseActivity() {
         }
     }
 
-//    private fun sendEmail(user: User, order: Order) {
-//        Log.i("Send email", "")
-////        val TO = arrayOf("")
-//        val CC = arrayOf("")
-//        val emailIntent = Intent(Intent.ACTION_SEND)
-//        emailIntent.data = Uri.parse("mailto:")
-//        emailIntent.type = "text/plain"
-//        emailIntent.putExtra(Intent.EXTRA_EMAIL, user.email)
-//        emailIntent.putExtra(Intent.EXTRA_CC, CC)
-//        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order PLAGRO.ID dengan id ${order.id}")
-//        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hai ${user.firstName} {${user.lastName},\n\n" +
-//                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
-//                "Berikut ini adalah detail order anda:\n\n" +
-//                "Order ID: ${order.id}\n" +
-//                "Tanggal Pemesanan: ${order.order_datetime}\n" +
-//                "Sub Total: ${order.sub_total_amount}\n" +
-//                "Biaya Pengiriman: ${order.shipping_charge}\n" +
-//                "Total Biaya: ${order.total_amount}\n" +
-//                "Alamat Pengiriman: ${order.address}\n\n" +
-//                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
-//                "Salam,\n" +
-//                "PLAGRO.ID")
-//        try {
-//            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
-//            finish()
-//            Log.i("Finished sending email...", "")
-//        } catch (ex: ActivityNotFoundException) {
-//            Toast.makeText(
-//                this@CheckoutActivity,
-//                "There is no email client installed.",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
-//    }
 
 
     private fun sendEmail(user: User, order: Order, address: Address) {
+        // Date Format in which the date will be displayed in the UI.
+        val dateFormat = "dd MMM yyyy HH:mm"
+        // Create a DateFormatter object for displaying date in specified format.
+        val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.timeInMillis = order.order_datetime
+
+        val orderDateTime = formatter.format(calendar.time)
         try {
             val stringSenderEmail = Constants.EMAIL_SENDER
             val stringReceiverEmail = user.email
@@ -438,11 +415,11 @@ class CheckoutActivity : BaseActivity() {
             })
             val mimeMessage = MimeMessage(session)
             mimeMessage.addRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
-            mimeMessage.subject = "Subject: Order PLAGRO.ID dengan id PLAGRO.ID-" + System.currentTimeMillis().toString()
+            mimeMessage.subject = "Subject: Order PLAGRO.ID Atas Nama ${user.firstName} ${user.lastName}"
             mimeMessage.setText("Hai ${user.firstName} ${user.lastName},\n\n" +
-                "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
                 "Berikut ini adalah detail order anda:\n\n" +
                 "Order ID: PLAGRO.ID-" + System.currentTimeMillis().toString() + "\n" +
+                "Waktu Pemesanan: ${orderDateTime}\n" +
                 "Sub Total: Rp. ${order.sub_total_amount}\n" +
                 "Biaya Pengiriman: Rp. ${order.shipping_charge}\n" +
                 "Total Biaya: Rp. ${order.total_amount}\n" +
@@ -450,6 +427,63 @@ class CheckoutActivity : BaseActivity() {
                 "Terima kasih telah berbelanja di PLAGRO.ID.\n\n" +
                 "Salam,\n" +
                 "PLAGRO.ID")
+            val thread = Thread {
+                try {
+                    Transport.send(mimeMessage)
+                } catch (e: MessagingException) {
+                    e.printStackTrace()
+                }
+            }
+            thread.start()
+        } catch (e: AddressException) {
+            e.printStackTrace()
+        } catch (e: MessagingException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun sendEmailToAdmin(order: Order, address: Address) {
+
+        // Date Format in which the date will be displayed in the UI.
+        val dateFormat = "dd MMM yyyy HH:mm"
+        // Create a DateFormatter object for displaying date in specified format.
+        val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.timeInMillis = order.order_datetime
+
+        val orderDateTime = formatter.format(calendar.time)
+        try {
+            val stringSenderEmail = Constants.EMAIL_SENDER
+            val stringReceiverEmail = Constants.EMAIL_ADMIN
+            val stringPasswordSenderEmail = Constants.EMAIL_PASSWORD
+            val stringHost = "smtp.gmail.com"
+            val properties = System.getProperties()
+            properties["mail.smtp.host"] = stringHost
+            properties["mail.smtp.port"] = "465"
+            properties["mail.smtp.ssl.enable"] = "true"
+            properties["mail.smtp.auth"] = "true"
+            val session = Session.getInstance(properties, object : Authenticator() {
+                override fun getPasswordAuthentication(): PasswordAuthentication {
+                    return PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail)
+                }
+            })
+            val mimeMessage = MimeMessage(session)
+            mimeMessage.addRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
+            mimeMessage.subject = "Subject: Order Baru dari aplikasi E-commerce PLAGRO.ID"
+            mimeMessage.setText("Hai Admin PLAGRO!,\n\n" +
+                    "Berikut ini adalah detail orderan baru dari aplikasi E-commerce anda:\n\n" +
+                    "Order ID: PLAGRO.ID-" + System.currentTimeMillis().toString() + "\n" +
+                    "Nama Penerima: ${address.name}\n" +
+                    "Waktu Pemesanan: $orderDateTime\n" +
+                    "Sub Total: Rp. ${order.sub_total_amount}\n" +
+                    "Biaya Pengiriman: Rp. ${order.shipping_charge}\n" +
+                    "Total Biaya: Rp. ${order.total_amount}\n" +
+                    "Alamat Pengiriman: ${address.address}\n\n" +
+                    "Segera kemas dan kirimkan pesanan\n\n" +
+                    "Salam,\n" +
+                    "PLAGRO.ID")
             val thread = Thread {
                 try {
                     Transport.send(mimeMessage)
